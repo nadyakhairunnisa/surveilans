@@ -209,12 +209,12 @@ $data = mysqli_fetch_array(mysqli_query($conn, "SELECT * FROM identitas_pasien i
                 <div class="active tab-pane" id="activity">
                 <!-- Start Informasi Keadaan -->
                 <br>
-                  <strong><i class="fa fa-medkit margin-r-5"></i> Diagnosa Akhir : </strong>DBD<br><br>
+                  <strong><i class="fa fa-medkit margin-r-5"></i> Diagnosa Akhir : </strong><?php echo $data['nama_penyakit']; ?><br><br>
                   <div class="row">
                     <div class="col-md-4">
-                      <strong><i class="fa fa-calendar margin-r-5"></i> Tanggal Masuk : </strong>13 Mei 2018<br><br>
+                      <strong><i class="fa fa-calendar margin-r-5"></i> Tanggal Masuk : </strong><?php echo $data['tanggal_masuk_rs']; ?><br><br>
 
-                      <strong><i class="fa fa-file-text-o margin-r-5"></i> Cara Masuk : </strong>IGD
+                      <strong><i class="fa fa-file-text-o margin-r-5"></i> Cara Masuk : </strong><?php echo $data['cara_masuk']; ?>
                     </div>
                     <div class="col-md-4">
                       <strong><i class="fa fa-calendar margin-r-5"></i> Tanggal Keluar : </strong>-<br><br>
