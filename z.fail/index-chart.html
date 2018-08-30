@@ -1,0 +1,114 @@
+<!-- TABLE -->
+<div class="box box-chart">
+  <div class="box-header with-border">
+    <h3 class="box-title">Kejadian di Ruang Kesehatan Anak Juli 2018</h3>
+
+    <div class="box-tools pull-right">
+      <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+      </button>
+      <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+    </div>
+  </div>
+  <!-- /.box-header -->
+  <div class="box-body">
+    <div class="table-responsive">
+      <table class="table no-margin">
+        <thead>
+          <tr>
+            <th>No.</th>
+            <th>Jenis Infeksi</th>
+            <th>Jumlah</th>
+            <th>Rate MIL</th>
+            <th>Tingkat Rate</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>1.</td>
+            <td>IADP & Phlebitis</td>
+            <td>5</td>
+            <td style="color:red;font-weight:bold;">16.22%</td>
+            <td>
+            <span class="sparkbar">8,9,3,5,8,5,10</span>
+            </td>
+          </tr>
+          <tr>
+            <td>2.</td>
+            <td>ISK</a></td>
+            <td>4</td>
+            <td>1.43%</td>
+            <td>
+              <span class="sparkbar">3,5,8,5,10,8,4</span>
+            </td>
+          </tr>
+          <tr>
+            <td>3.</td>
+            <td>VAP</td>
+            <td>0</td>
+            <td>0%</td>
+            <td>
+              <span class="sparkbar">6,8,9,5,4,2,1</span>
+            </td>
+          </tr>
+          <tr>
+            <td>4.</td>
+            <td>IDO</td>
+            <td>2</td>
+            <td>0.89%</td>
+            <td>
+              <span class="sparkbar">9,4,5,3,2,1,2</span>
+            </td>
+          </tr>
+          <tr>
+            <td>5.</td>
+            <td>ILE</td>
+            <td><span class="label label-success"></span>0</td>
+            <td>0%</td>
+            <td>
+              <span class="sparkbar">1,2,3,0,2,1,0</span>
+            </td>
+          </tr>
+        </tbody>
+        <tfoot>
+        <tr>
+          <th>TOTAL</th>
+          <th></th>
+          <th>11</th>
+          <th>9,08%</th>
+          <th><span class="sparkbar">10,8,9,4,5,11,14</span></th>
+        </tr>
+      </tfoot>
+      </table>
+    </div>
+    <!-- /.table-responsive -->
+  </div>
+  <!-- /.box-body -->
+  <div class="box-footer clearfix">
+    <span class="label label-danger">
+      Satu atau Lebih Rate MIL(0%) Infeksi melebihi Standar
+    </span>
+    <!-- <a href="javascript:void(0)" class="btn btn-sm btn-info btn-flat pull-left">Place New Order</a> -->
+    <a href="index-detail.html" class="btn btn-sm btn-default btn-flat pull-right">Lihat Selengkapnya</a>
+  </div>
+  <!-- /.box-footer -->
+</div>
+<!-- /.box -->
+
+<!-- Sparkline -->
+<script src="bower_components/jquery-sparkline/dist/jquery.sparkline.min.js"></script>
+<script>
+  $(function () {
+    "use strict";
+      //BAR CHART
+      
+      $(".box-chart").boxWidget();
+
+      // Bar charts using inline values
+      $('.sparkbar').sparkline('html', {type: 'bar'});
+
+      // Tri-state charts using inline values
+      $('.sparktristate').sparkline('html', {type: 'tristate'});
+      $('.sparktristatecols').sparkline('html',
+        {type: 'tristate', colorMap: {'-2': '#fa7', '2': '#44f'}});
+    });
+</script>

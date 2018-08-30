@@ -1,0 +1,532 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+  <title>AdminLTE 2 | Morris.js Charts</title>
+  <!-- Tell the browser to be responsive to screen width -->
+  <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+  <!-- Bootstrap 3.3.7 -->
+  <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.min.css">
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="bower_components/font-awesome/css/font-awesome.min.css">
+  <!-- Ionicons -->
+  <link rel="stylesheet" href="bower_components/Ionicons/css/ionicons.min.css">
+  <!-- Data Tables -->
+  <link rel="stylesheet" href="bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css">
+  <!-- Morris charts -->
+  <link rel="stylesheet" href="bower_components/morris.js/morris.css">
+  <!-- Theme style -->
+  <link rel="stylesheet" href="dist/css/AdminLTE.min.css">
+  <!-- AdminLTE Skins. We have chosen the skin-blue for this starter
+  page. However, you can choose any other skin. Make sure you
+  apply the skin class to the body tag so the changes take effect. -->
+  <link rel="stylesheet" href="dist/css/skins/skin-green-light.min.css">
+
+  <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+  <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+  <!--[if lt IE 9]>
+  <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+  <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+  <![endif]-->
+
+  <!-- Google Font -->
+  <link rel="stylesheet"
+  href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
+
+  <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+  <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+  <!--[if lt IE 9]>
+  <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+  <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+  <![endif]-->
+</head>
+
+<body class="hold-transition skin-green-light sidebar-mini">
+  <div class="wrapper">
+
+    <!-- Main Header -->
+    <header class="main-header"  style="background-color: white;">
+
+      <!-- Logo -->
+      <a href="index2.html" class="logo">
+        <!-- mini logo for sidebar mini 50x50 pixels -->
+        <span class="logo-mini"><b>PPI</b></span>
+        <!-- logo for regular state and mobile devices -->
+        <span class="logo-lg"><b>SURVEILANS</b></span>
+      </a>
+      <!-- Header Navbar -->
+
+      <nav class="navbar navbar-static-top">
+        <!-- Sidebar toggle button-->
+        <a href="#" class="sidebar-toggle" data-toggle="push-menu" role="button">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </a>
+        <img role="navigation" src="images/Untitled.png" style="background-repeat: no-repeat;">
+
+        <div class="navbar-custom-menu">
+          <ul class="nav navbar-nav">
+            <!-- Notifications: style can be found in dropdown.less -->
+            <li class="dropdown notifications-menu">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                <i class="fa fa-bell-o"></i>
+                <span class="label label-warning">10</span>
+              </a>
+              <ul class="dropdown-menu">
+                <li class="header">You have 10 notifications</li>
+                <li>
+                  <!-- inner menu: contains the actual data -->
+                  <ul class="menu">
+                    <li>
+                      <a href="#">
+                        <i class="fa fa-users text-aqua"></i> 5 new members joined today
+                      </a>
+                    </li>
+                    <li>
+                      <a href="#">
+                        <i class="fa fa-warning text-yellow"></i> Very long description here that may not fit into the
+                        page and may cause design problems
+                      </a>
+                    </li>
+                    <li>
+                      <a href="#">
+                        <i class="fa fa-users text-red"></i> 5 new members joined
+                      </a>
+                    </li>
+                    <li>
+                      <a href="#">
+                        <i class="fa fa-shopping-cart text-green"></i> 25 sales made
+                      </a>
+                    </li>
+                    <li>
+                      <a href="#">
+                        <i class="fa fa-user text-red"></i> You changed your username
+                      </a>
+                    </li>
+                  </ul>
+                </li>
+                <li class="footer"><a href="#">View all</a></li>
+              </ul>
+            </li>
+            <!-- User Account: style can be found in dropdown.less -->
+            <li class="dropdown user user-menu">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                <img src="dist/img/user2-160x160.jpg" class="user-image" alt="User Image">
+                <span class="hidden-xs">Alexander Pierce</span>
+              </a>
+              <ul class="dropdown-menu">
+                <!-- User image -->
+                <li class="user-header">
+                  <img src="dist/img/user2-160x160.jpg" class="img-circle" alt="User Image">
+                  <p>
+                    Alexander Pierce - Web Developer
+                    <small>Member since Nov. 2012</small>
+                  </p>
+                </li>
+                <!-- Menu Footer-->
+                <li class="user-footer">
+                  <div class="pull-right">
+                    <a href="#" class="btn btn-default btn-flat">Sign out</a>
+                  </div>
+                </li>
+              </ul>
+            </li>            
+          </ul>
+        </div>
+      </nav>
+
+    </header>
+    <!-- Left side column. contains the logo and sidebar -->
+    <aside class="main-sidebar" >
+
+      <!-- sidebar: style can be found in sidebar.less -->
+      <section class="sidebar">
+
+        <!-- search form (Optional) -->
+        <form action="#" method="get" class="sidebar-form">
+          <div class="input-group">
+            <input type="text" name="q" class="form-control" placeholder="Search...">
+            <span class="input-group-btn">
+              <button type="submit" name="search" id="search-btn" class="btn btn-flat"><i class="fa fa-search"></i>
+              </button>
+            </span>
+          </div>
+        </form>
+        <!-- /.search form -->
+
+        <!-- Sidebar Menu -->
+        <ul class="sidebar-menu" data-widget="tree" >
+          <!-- <li class="header">HEADER</li> -->
+          <!-- Optionally, you can add icons to the links -->
+          <li class="active treeview">
+            <a href="#"><i class="glyphicon glyphicon-equalizer"></i> <span>Dashboard</span>
+              <span class="pull-right-container">
+                <i class="fa fa-angle-left pull-right"></i>
+              </span>
+            </a>
+            <ul class="treeview-menu">
+              <li><a href="index.html"><i class="fa fa-minus"></i>Ruangan</a></li>
+              <li class="active"><a href="#"><i class="fa fa-minus"></i>Pemasangan</a></li>
+            </ul>
+          </li>
+          <li><a href="add-data.html"><i class="fa fa-plus-circle"></i> <span>Tambah Data</span></a></li>
+          <li><a href="data-pasien.html"><i class="glyphicon glyphicon-th-list"></i> <span>Data Pasien</span></a></li>
+          <li><a href="notification.html"><i class="fa fa-bell-o"></i> <span>Notification</span></a></li>
+          <li><a href="login.html"><i class="glyphicon glyphicon-log-out"></i> <span>Logout</span></a></li>
+        </ul>
+        <!-- /.sidebar-menu -->
+      </section>
+      <!-- /.sidebar -->
+    </aside>
+
+    <!-- Content Wrapper. Contains page content -->
+    <div class="content-wrapper">
+      <!-- Content Header (Page header) -->
+      <section class="content-header">
+        <h1>
+          DASHBOARD
+          <small>Laporan Bulanan</small>
+        </h1>
+        <ol class="breadcrumb">
+          <li><a href="#"><i class="fa fa-dashboard"></i> Level</a></li>
+          <li class="active">Here</li>
+        </ol>
+      </section>
+
+      <!-- MAIN CONTENT (ISI HALAMAN MULAI) -->
+      <section class="content">
+        <div class="row">
+          <form class="form-horizontal" role="form">
+            <div class="col-sm-4">
+              <div class="form-group">
+                <label for="country" class="col-sm-5 control-label">Jenis Pemasangan</label>
+                <div class="col-sm-7">
+                  <select id="pasang" class="form-control" onchange="showCustomer(this.id)">
+                    <option value="">Pilih Jenis Pemasangan</option>
+                    <option value="perifer">Kateter V Perifer</option>
+                    <option value="central">Kateter V Central</option>
+                    <option value="dower">Dower Kateter Urin</option>
+                    <option value="umbilikal">Umbilikal</option>
+                    <option value="dblumen">Double Lumen</option>
+                    <option value="ventilator">Ventilator</option>
+                    <option value="ilo">ILO</option>
+                    <option value="cpap">CPAP</option>
+                    <option value="vap">VAP</option>
+                  </select>
+                </div>
+              </div>
+              <!-- /.form-group -->
+            </div>
+            <!-- /.col -->
+            <div class="col-sm-3">
+              <div class="form-group">
+                <label for="country" class="col-sm-3 control-label">Bulan</label>
+                <div class="col-sm-8">
+                  <select id="pasang" class="form-control" onchange="showCustomer(this.id)">
+                    <option value="">Pilih Bulan</option>
+                    <option value="perifer">Kateter V Perifer</option>
+                    <option value="central">Kateter V Central</option>
+                    <option value="dower">Dower Kateter Urin</option>
+                    <option value="umbilikal">Umbilikal</option>
+                    <option value="dblumen">Double Lumen</option>
+                    <option value="ventilator">Ventilator</option>
+                    <option value="ilo">ILO</option>
+                    <option value="cpap">CPAP</option>
+                    <option value="vap">VAP</option>
+                  </select>
+                </div>
+              </div>
+              <!-- /.form-group -->
+            </div>
+            <!-- /.col -->
+            <div class="col-sm-3">
+              <div class="form-group">
+                <label for="country" class="col-sm-3 control-label">Tahun</label>
+                <div class="col-sm-8">
+                  <select id="pasang" class="form-control" onchange="showCustomer(this.id)">
+                    <option value="">Pilih Tahun</option>
+                    <option value="perifer">Kateter V Perifer</option>
+                    <option value="central">Kateter V Central</option>
+                    <option value="dower">Dower Kateter Urin</option>
+                    <option value="umbilikal">Umbilikal</option>
+                    <option value="dblumen">Double Lumen</option>
+                    <option value="ventilator">Ventilator</option>
+                    <option value="ilo">ILO</option>
+                    <option value="cpap">CPAP</option>
+                    <option value="vap">VAP</option>
+                  </select>
+                </div>
+              </div>
+              <!-- /.form-group -->
+            </div>
+            <!-- /.col -->
+          </form> <!-- /form -->
+        </div>
+        <!-- /.row -->
+
+        <div class="row">
+          <div class="col-md-6">
+            <!-- BAR CHART -->
+            <div class="box box-success">
+              <div class="box-header with-border">
+                <h3 class="box-title">Kejadian Plehibitis</h3>
+
+                <div class="box-tools pull-right">
+                  <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+                  </button>
+                  <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+                </div>
+              </div>
+              <div class="box-body chart-responsive">
+                <div class="chart" id="bar-chart" style="height: 300px;"></div>
+              </div>
+              <!-- /.box-body -->
+            </div>
+            <!-- /.box -->
+          </div>
+          <!-- /.col (LEFT) -->
+          <div class="col-md-6">
+            <!-- LINE CHART -->
+            <div class="box box-info">
+              <div class="box-header with-border">
+                <h3 class="box-title">Rekap Bulanan</h3>
+                <div class="box-tools pull-right">
+                  <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+                  </button>
+                  <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+                </div>
+              </div>
+              <div class="box-body chart-responsive">
+                <div class="chart" id="line-chart" style="height: 300px;"></div>
+              </div>
+              <!-- /.box-body -->
+            </div>
+            <!-- /.box -->
+          </div>
+          <!-- /.col (RIGHT) -->
+        </div>
+        <!-- /.row -->
+
+        <div class="row">
+          <div class="col-xs-12">
+            <div class="box">
+              <div class="box-header">
+                <h3 class="box-title">Rekapitulasi Penggunaan</h3>
+              </div>
+              <!-- /.box-header -->
+              <div class="box-body">
+                <table id="example1" class="table table-bordered table-striped">
+                  <thead>
+                    <tr>
+                      <th>Ruang</th>
+                      <th>Jumlah Pasien Terpasang</th>
+                      <th>Jumlah Infeksi</th>
+                      <th>Lama Hari Terpasang</th>
+                      <th>Rate MIL (0%)</th>
+                      <!-- <th>Kategori Umur</th>
+                      <th>Tanggal Pasang</th>
+                      <th>Tanggal Lepas</th>
+                      <th>Tanggal Infeksi</th>
+                      <th>Lama Hari Terpasang</th> -->
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>ICU</td>
+                      <td>100</td>
+                      <td>90</td>
+                      <td>100</td>
+                      <td>90</td>
+                      <!-- <td>Trident</td>
+                      <td>Internet Explorer 4.0</td>
+                      <td>Win 95+</td>
+                      <td> 4</td>
+                      <td>X</td> -->
+                    </tr>
+                    <tr>
+                      <td>Anyelir</td>
+                      <td>50</td>
+                      <td>40</td>
+                      <td>100</td>
+                      <td>90</td>
+                      <!-- <td>Trident</td>
+                      <td>Internet Explorer 5.0</td>
+                      <td>Win 95+</td>
+                      <td>5</td>
+                      <td>C</td> -->
+                    </tr>
+                    <tr>
+                      <td>Catleya</td>
+                      <td>50</td>
+                      <td>40</td>
+                      <td>100</td>
+                      <td>90</td>
+                    </tr>
+                    <tr>
+                      <td>Bougenvile</td>
+                      <td>75</td>
+                      <td>65</td>
+                      <td>100</td>
+                      <td>90</td>
+                    </tr>
+                  </tbody>
+                  <tfoot>
+                    <tr>
+                      <th>Total</th>
+                      <th>275</th>
+                      <th>235</th>
+                      <th>400</th>
+                      <th>360</th>
+                    </tr>
+                  </tfoot>
+                </table>
+              </div>
+              <!-- /.box-body -->
+            </div>
+            <!-- /.box -->
+          </div>
+          <!-- /.col -->
+        </div>
+        <!-- /.row -->
+
+        <!-- LINE CHART -->
+        <div class="box box-info">
+          <div class="box-header with-border">
+            <h3 class="box-title">Rekap Tahunan</h3>
+            <div class="box-tools pull-right">
+              <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+              </button>
+              <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+            </div>
+          </div>
+          <div class="box-body chart-responsive">
+          <div class="chart" id="line-charts" style="height: 300px;"></div>
+          </div>
+          <!-- /.box-body -->
+        </div>
+        <!-- /.box -->
+
+      </section>
+      <!-- /.content -->
+    </div>
+    <!-- /.content-wrapper -->
+
+    <!-- Main Footer -->
+    <footer class="main-footer">
+      <!-- To the right -->
+      <div class="pull-right hidden-xs">
+        Universitas Islam Indonesia
+      </div>
+      <!-- Default to the left -->
+      <strong>Copyright &copy; 2018 <a href="#">Informatika</a>.</strong> All rights reserved.
+    </footer>
+
+  </aside>
+</div>
+<!-- ./wrapper -->
+
+<!-- jQuery 3 -->
+<script src="bower_components/jquery/dist/jquery.min.js"></script>
+<!-- Bootstrap 3.3.7 -->
+<script src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+<!-- DataTables -->
+<script src="bower_components/datatables.net/js/jquery.dataTables.min.js"></script>
+<script src="bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
+<!-- Morris.js charts -->
+<script src="bower_components/raphael/raphael.min.js"></script>
+<script src="bower_components/morris.js/morris.min.js"></script>
+<!-- FastClick -->
+<script src="bower_components/fastclick/lib/fastclick.js"></script>
+<!-- AdminLTE App -->
+<script src="dist/js/adminlte.min.js"></script>
+<!-- AdminLTE for demo purposes -->
+<script src="dist/js/demo.js"></script>
+<!-- page script -->
+<script>
+  $(function () {
+    "use strict";
+        // LINE CHART
+        var line = new Morris.Line({
+          element: 'line-chart',
+          resize: true,
+          data: [
+          {y: '2011 Q1', item1: 2666},
+          {y: '2011 Q2', item1: 2778},
+          {y: '2011 Q3', item1: 4912},
+          {y: '2011 Q4', item1: 3767},
+          {y: '2012 Q1', item1: 6810},
+          {y: '2012 Q2', item1: 5670},
+          {y: '2012 Q3', item1: 4820},
+          {y: '2012 Q4', item1: 15073},
+          {y: '2013 Q1', item1: 10687},
+          {y: '2013 Q2', item1: 8432}
+          ],
+          xkey: 'y',
+          ykeys: ['item1'],
+          labels: ['Item 1'],
+          lineColors: ['#3c8dbc'],
+          hideHover: 'auto'
+        });
+        //BAR CHART
+        var bar = new Morris.Bar({
+          element: 'bar-chart',
+          resize: true,
+          data: [
+          {y: 'ICU', a: 100, b: 90, c: 100, d: 90},
+          {y: 'Pav.Melati', a: 75, b: 65, c: 100, d: 90},
+          {y: 'Anyelir', a: 50, b: 40, c: 100, d: 90},
+          {y: 'Pav.Mawar', a: 75, b: 65, c: 100, d: 90},
+          {y: 'Catleya', a: 50, b: 40, c: 100, d: 90},
+          {y: 'Bougenvile', a: 75, b: 65, c: 100, d: 90},
+          {y: 'Dahlia', a: 100, b: 90, c: 100, d: 90}
+          ],
+          barColors: ['#00a65a', '#f56954', '#00a65a', '#f56954'],
+          xkey: 'y',
+          ykeys: ['a', 'b', 'c', 'd'],
+          labels: ['Jml. Pasien Terpasang', 'Jml. Infeksi (Plehibitis)', 'Lama Hari Terpasang', 'Rate MIL (%0)'],
+          hideHover: 'auto'
+        });
+        // LINE CHARTS
+        var line = new Morris.Line({
+          element: 'line-charts',
+          resize: true,
+          data: [
+          {y: '2011 Q1', item1: 2666},
+          {y: '2011 Q2', item1: 2778},
+          {y: '2011 Q3', item1: 4912},
+          {y: '2011 Q4', item1: 3767},
+          {y: '2012 Q1', item1: 6810},
+          {y: '2012 Q2', item1: 5670},
+          {y: '2012 Q3', item1: 4820},
+          {y: '2012 Q4', item1: 15073},
+          {y: '2013 Q1', item1: 10687},
+          {y: '2013 Q2', item1: 8432}
+          ],
+          xkey: 'y',
+          ykeys: ['item1'],
+          labels: ['Item 1'],
+          lineColors: ['#3c8dbc'],
+          hideHover: 'auto'
+        });
+      });
+    </script>
+    <script>
+      $(function () {
+        $('#example1').DataTable()
+        $('#example2').DataTable({
+          'paging'      : true,
+          'lengthChange': false,
+          'searching'   : false,
+          'ordering'    : true,
+          'info'        : true,
+          'autoWidth'   : true
+        })
+      })
+    </script>
+  </body>
+  </html>
