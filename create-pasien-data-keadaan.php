@@ -8,7 +8,7 @@ $norm=$_GET['id'];
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>AdminLTE 2 | Advanced form elements</title>
+  <title>SURVEILANS PPI | RSUI Harapan Anda</title>
   <!-- Tell the browser to be responsive to screen width -->
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
   <!-- Bootstrap 3.3.7 -->
@@ -53,7 +53,7 @@ $norm=$_GET['id'];
     <header class="main-header"  style="background-color: white;">
 
       <!-- Logo -->
-      <a href="index2.html" class="logo">
+      <a href="index.php" class="logo">
         <!-- mini logo for sidebar mini 50x50 pixels -->
         <span class="logo-mini"><b>PPI</b></span>
         <!-- logo for regular state and mobile devices -->
@@ -145,7 +145,7 @@ $norm=$_GET['id'];
             </a>
             <ul class="treeview-menu">
               <li><a href="data-pasien.php"><i class="fa fa-circle-o"></i>Pasien</a></li>
-              <li><a href="data-terpajan.php"><i class="fa fa-circle-o"></i>Perawat</a></li>
+              <li><a href="data-terpajan.php"><i class="fa fa-circle-o"></i>Terpajan</a></li>
               <li><a href="data-dokter.php"><i class="fa fa-circle-o"></i>Dokter</a></li>
               <li><a href="data-ruangan.php"><i class="fa fa-circle-o"></i>Ruangan</a></li>
             </ul>
@@ -260,7 +260,7 @@ $norm=$_GET['id'];
               <div class="form-group">
                 <label for="outDate" class="col-sm-2 control-label">Tanggal Keluar</label>
                 <div class="col-sm-9">
-                  <input type="date" name="outDate" class="form-control" required>
+                  <input type="date" name="outDate" class="form-control">
                 </div>
               </div>
               <div class="form-group">
@@ -269,7 +269,7 @@ $norm=$_GET['id'];
                   <div class="row">
                     <div class="col-sm-2">
                       <label class="radio-inline">
-                        <input type="radio" name="keadaan" id="HidupRad" value="Hidup" checked>Hidup
+                        <input type="radio" name="keadaan" id="HidupRad" value="Hidup">Hidup
                       </label>
                     </div>
                     <div class="col-sm-2">
@@ -317,7 +317,6 @@ $norm=$_GET['id'];
                     <div class="col-sm-3">
                       <div class="checkbox">
                         <label>
-                          <input type="hidden" name="tanda[]" id="" value="" checked>
                           <input type="checkbox" name="faktor[]" id="dm" value="Diabetes Melistus">Diabetes Melistus
                         </label>
                       </div>
@@ -384,6 +383,7 @@ $norm=$_GET['id'];
                       <div class="checkbox">
                         <label>
                           <input type="checkbox" name="faktor[]" id="lansia" value="Lanjut Usia">Lanjut Usia
+                          <input type="hidden" name="tanda[]" id="" value="" checked>
                         </label>
                       </div>
                     </div>
@@ -392,11 +392,11 @@ $norm=$_GET['id'];
               </div><br> <!-- /.form-group -->
 
               <div class="form-group">
-                <div class="col-sm-3 col-sm-offset-3">
-                  <!-- <button type="submit" class="btn btn-primary btn-block">Register</button> -->
-                  <a onclick="prevStep()" class="btn btn-danger btn-block" href="create-pasien-data.php">Sebelumnya</a>
-                </div>
-                <div class="col-sm-3">
+                <!-- <div class="col-sm-3 col-sm-offset-3">
+                  <button type="submit" class="btn btn-primary btn-block">Register</button>
+                  <a onclick="prevStep()" class="btn btn-danger btn-block" href="update-pasien-data.php?id=<?php echo $norm; ?>">Sebelumnya</a>
+                </div> -->
+                <!-- <div class="col-sm-3"> --><div class="col-sm-9 col-sm-offset-2">
                   <button type="submit" class="btn btn-primary btn-block">Selanjutnya</button>
                   <!-- <a class="btn btn-primary btn-block" href="create-pasien-data-ruangan.php">Selanjutnya</a> -->
                 </div>

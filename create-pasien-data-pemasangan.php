@@ -9,7 +9,7 @@ $data = mysqli_fetch_array(mysqli_query($conn, "SELECT tanggal_masuk_rs FROM kea
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>AdminLTE 2 | Advanced form elements</title>
+  <title>SURVEILANS PPI | RSUI Harapan Anda</title>
   <!-- Tell the browser to be responsive to screen width -->
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
   <!-- Bootstrap 3.3.7 -->
@@ -54,7 +54,7 @@ $data = mysqli_fetch_array(mysqli_query($conn, "SELECT tanggal_masuk_rs FROM kea
     <header class="main-header"  style="background-color: white;">
 
       <!-- Logo -->
-      <a href="index2.html" class="logo">
+      <a href="index.php" class="logo">
         <!-- mini logo for sidebar mini 50x50 pixels -->
         <span class="logo-mini"><b>PPI</b></span>
         <!-- logo for regular state and mobile devices -->
@@ -146,7 +146,7 @@ $data = mysqli_fetch_array(mysqli_query($conn, "SELECT tanggal_masuk_rs FROM kea
             </a>
             <ul class="treeview-menu">
               <li><a href="data-pasien.php"><i class="fa fa-circle-o"></i>Pasien</a></li>
-              <li><a href="data-terpajan.php"><i class="fa fa-circle-o"></i>Perawat</a></li>
+              <li><a href="data-terpajan.php"><i class="fa fa-circle-o"></i>Terpajan</a></li>
               <li><a href="data-dokter.php"><i class="fa fa-circle-o"></i>Dokter</a></li>
               <li><a href="data-ruangan.php"><i class="fa fa-circle-o"></i>Ruangan</a></li>
             </ul>
@@ -240,12 +240,12 @@ $data = mysqli_fetch_array(mysqli_query($conn, "SELECT tanggal_masuk_rs FROM kea
 
               <div class="form-group">
                 <div class="row">
-                  <div class="col-sm-3 col-md-offset-3">
-                    <!-- <button type="submit" class="btn btn-primary btn-block">Register</button> -->
-                    <a onclick="prevStep()" class="btn btn-danger btn-block" href="create-pasien-data-ruangan.php">Sebelumnya</a>
+                  <!-- <div class="col-sm-3 col-md-offset-4"> --><div class="col-sm-5 col-sm-offset-4">
+                    <button type="submit" class="btn btn-primary btn-block">Simpan</button>
+                    <!-- <a onclick="prevStep()" class="btn btn-danger btn-block" href="create-pasien-data-ruangan.php">Sebelumnya</a> -->
                   </div>
                   <div class="col-sm-3">
-                    <button type="submit" class="btn btn-primary btn-block">Simpan</button>
+                    <!-- <button type="submit" class="btn btn-primary btn-block">Simpan</button> -->
                     <!-- <a class="btn btn-primary btn-block" href="riwayat-pasien.php">Simpan</a> -->
                   </div>
                 </div>

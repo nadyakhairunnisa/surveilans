@@ -1,9 +1,16 @@
+<?php
+include("connect/connect.php");
+$this_month = date('m');
+$last_month = $this_month - 1;
+$this_year = date('Y');
+?>
+
 <!DOCTYPE html>
 <html>
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>AdminLTE 2 | Advanced form elements</title>
+  <title>SURVEILANS PPI | RSUI Harapan Anda</title>
   <!-- Tell the browser to be responsive to screen width -->
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
   <!-- Bootstrap 3.3.7 -->
@@ -16,6 +23,8 @@
   <link rel="stylesheet" href="bower_components/morris.js/morris.css">
   <!-- jvectormap -->
   <link rel="stylesheet" href="bower_components/jvectormap/jquery-jvectormap.css">
+  <!-- Data Tables -->
+  <link rel="stylesheet" href="bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css">
   <!-- Theme style -->
   <link rel="stylesheet" href="dist/css/AdminLTE.min.css">
   <!-- AdminLTE Skins. Choose a skin from the css/skins
@@ -37,7 +46,7 @@
     <!-- Main Header -->
     <header class="main-header" style="background-color: white;">
       <!-- Logo -->
-      <a href="index2.html" class="logo">
+      <a href="index.php" class="logo">
         <!-- mini logo for sidebar mini 50x50 pixels -->
         <span class="logo-mini"><b>PPI</b></span>
         <!-- logo for regular state and mobile devices -->
@@ -129,7 +138,7 @@
             </a>
             <ul class="treeview-menu">
               <li><a href="data-pasien.php"><i class="fa fa-circle-o"></i>Pasien</a></li>
-              <li><a href="data-terpajan.php"><i class="fa fa-circle-o"></i>Perawat</a></li>
+              <li><a href="data-terpajan.php"><i class="fa fa-circle-o"></i>Terpajan</a></li>
               <li><a href="data-dokter.php"><i class="fa fa-circle-o"></i>Dokter</a></li>
               <li><a href="data-ruangan.php"><i class="fa fa-circle-o"></i>Ruangan</a></li>
             </ul>
@@ -154,47 +163,50 @@
                   JUMLAH KEJADIAN INFEKSI
                 </div>
                 <small>
+                <form action="indexbulan.php" method="post">
                   <div class="col-sm-2" style="margin-right:-50px;">
                     <div class="form-group">
-                      <select id="ruangan" class="form-control" data-placeholder="Pilih Bulan" style="width: 80%;">
-                        <option>Januari</option>
-                        <option>Februari</option>
-                        <option>Maret</option>
-                        <option>April</option>
-                        <option>Mei</option>
-                        <option>Juni</option>
-                        <option selected>Juli</option>
-                        <option>Agustus</option>
-                        <option>September</option>
-                        <option>Oktober</option>
-                        <option>November</option>
-                        <option>Desember</option>
+                      <select name="bulan" id="ruangan" class="form-control" data-placeholder="Pilih Bulan" style="width: 80%;">
+                        <option value="01" <?php if("01"==date('m')){echo "selected";} ?>>Januari</option>
+                        <option value="02" <?php if("02"==date('m')){echo "selected";} ?>>Februari</option>
+                        <option value="03" <?php if("03"==date('m')){echo "selected";} ?>>Maret</option>
+                        <option value="04" <?php if("04"==date('m')){echo "selected";} ?>>April</option>
+                        <option value="05" <?php if("05"==date('m')){echo "selected";} ?>>Mei</option>
+                        <option value="06" <?php if("06"==date('m')){echo "selected";} ?>>Juni</option>
+                        <option value="07" <?php if("07"==date('m')){echo "selected";} ?>>Juli</option>
+                        <option value="08" <?php if("08"==date('m')){echo "selected";} ?>>Agustus</option>
+                        <option value="09" <?php if("09"==date('m')){echo "selected";} ?>>September</option>
+                        <option value="10" <?php if("10"==date('m')){echo "selected";} ?>>Oktober</option>
+                        <option value="11" <?php if("11"==date('m')){echo "selected";} ?>>November</option>
+                        <option value="12" <?php if("12"==date('m')){echo "selected";} ?>>Desember</option>
                       </select>
                     </div> <!-- /.form-group -->
                   </div>
                   <div class="col-sm-1">
                     <div class="form-group">
-                      <select id="ruangan" class="form-control" data-placeholder="Pilih Tahun" style="width: 140%;">
-                        <option>2018</option>
-                        <option>2017</option>
-                        <option>2015</option>
-                        <option>2014</option>
-                        <option>2013</option>
-                        <option>2012</option>
-                        <option>2011</option>
-                        <option>2010</option>
-                        <option>2009</option>
-                        <option>2008</option>
-                        <option>2007</option>
-                        <option>2006</option>
+                      <select name="tahun" id="ruangan" class="form-control" data-placeholder="Pilih Tahun" style="width: 140%;">
+                        <?php
+                        $mulai= date('Y') - 4;
+                        for($i = $mulai;$i<$mulai+5;$i++){
+                          $sel = $i == date('Y') ? ' selected="selected"' : '';
+                          echo '<option value="'.$i.'"'.$sel.'>'.$i.'</option>';
+                        }
+                        ?>
                       </select>
                     </div> <!-- /.form-group -->
                   </div>
+                  <div class="col-sm-1">
+                    <button class="btn btn-primary" type="submit" style="border-color:gray;">Filter</button>
+                  </div>
                   <div class="col-sm-2">
-                    <a href="index-rekapitulasi.php" class="btn btn-sm btn-default btn-flat pull-right" style="border-color:gray;">Lihat Rekapitulasi</a>
-                  </div><div class="col-sm-2">
-                  <a href="index-harian.php" class="btn btn-sm btn-default btn-flat pull-right" style="border-color:gray;">Lihat Dashboard Harian</a>
-                </div>
+                    <a href="index2.php" class="btn btn-primary" style="border-color:gray;">Lihat Data Hari Ini</a>
+                    <!-- <button class="btn btn-primary" type="submit" style="border-color:gray;">Lihat Hari Ini</button> -->
+                  </div>
+                  <div class="col-sm-1">
+                    <a href="index-rekapitulasi.php" class="btn btn-primary" style="border-color:gray;">Lihat Rekapitulasi</a>
+                    <!-- <button class="btn btn-primary" type="submit" style="border-color:gray;">Lihat Hari Ini</button> -->
+                  </div>
+                </form>
               </small>
             </h1>
           </section>
@@ -210,256 +222,165 @@
           <div class="box box-default">
             <div class="box-body">
               <div class="box-header with-border">
-                <h3 class="box-title">Berdasarkan Ruang Rawat Inap (Bulanan)</h3>          
+                <h3 class="box-title">Berdasarkan Ruang Rawat Inap (Bulan Ini)</h3>          
               </div><br>
+
+              <?php
+
+              $query1 = mysqli_query($conn, "SELECT * FROM ruangan");
+              foreach ($query1 as $index => $data1){
+
+                $kode = $data1['kode_ruangan'];
+                $ruangan = $data1['nama_ruangan'];
+
+                $surv = mysqli_query($conn, "SELECT DISTINCT(jenis_surveilans) FROM keadaan_pasien");
+                $count = 0;
+                $countlast = 0;
+                while($row = mysqli_fetch_array($surv)){
+
+                  $svlns = strtolower($row['jenis_surveilans']);
+
+                  $countquery = mysqli_fetch_array(mysqli_query($conn, "SELECT COUNT(s.id_surv) FROM surv_$svlns s 
+                    JOIN keadaan_pasien kp ON (s.id_keadaan = kp.id_keadaan)
+                    JOIN pemakaian_ruangan pr ON (pr.id_keadaan = kp.id_keadaan)
+                    WHERE s.terjadi_infeksi = 'Ya' AND pr.kode_ruangan = '$kode' AND month(s.tanggal_infeksi) = $this_month AND year(s.tanggal_infeksi) = $this_year"));
+                  $countdata = $countquery['COUNT(s.id_surv)'];
+                  $count = $count + $countdata;
+
+                  $countquerylast = mysqli_fetch_array(mysqli_query($conn, "SELECT COUNT(s.id_surv) FROM surv_$svlns s 
+                    JOIN keadaan_pasien kp ON (s.id_keadaan = kp.id_keadaan)
+                    JOIN pemakaian_ruangan pr ON (pr.id_keadaan = kp.id_keadaan)
+                    WHERE s.terjadi_infeksi = 'Ya' AND pr.kode_ruangan = '$kode' AND month(s.tanggal_infeksi) = $last_month AND year(s.tanggal_infeksi) = $this_year"));
+                  $countdatalast = $countquerylast['COUNT(s.id_surv)'];
+                  $countlast = $countlast + $countdatalast;
+                }
+
+                $diff = $count - $countlast;
+
+              ?>
+
               <div class="col-lg-3 col-xs-6" id="index-chart">
                 <!-- small box -->
                 <div class="small-box bg-white">
                   <div class="inner">
-                    <h3> 2</h3>
+                    <h3><?php echo $count; ?></h3>
                   </div>
                   <div class="icon">
-                    <i class="fa fa-caret-up"></i>2
+                    <?php if($diff>0){
+                        echo "<i class='fa fa-caret-up'></i>".$diff;
+                      } else if($diff==0){
+                        echo "<i class='fa fa-exchange'></i>";
+                      } else {
+                        echo "<i class='fa fa-caret-down'></i>".$diff;
+                      }
+                    ?>
+                    <!-- <i class="fa fa-caret-up"></i>1 -->
                   </div>
-                  <a href="#" class="small-box-footer">PAV.MELATI <i class="fa fa-arrow-circle-right"></i></a>
+                  <a class="small-box-footer" data-toggle="modal" data-target="#myModal-<?php echo $index; ?>"><?php echo $ruangan ?>
+                  <!-- <i class="fa fa-arrow-circle-right"></i> -->
+                  </a>
                 </div>
               </div>
               <!-- ./col -->
-              <div class="col-lg-3 col-xs-6" id="index-chart">
-                <!-- small box -->
-                <div class="small-box bg-white">
-                  <div class="inner">
-                    <h3> 2</h3>
+
+              <!-- Modal -->
+              <div class="modal fade" id="myModal-<?php echo $index; ?>" role="dialog">
+                <div class="modal-dialog">
+
+                  <!-- Modal content-->
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <button type="button" class="close" data-dismiss="modal">&times;</button>
+                      <h4 class="modal-title">Kejadian di Ruang <?php echo $ruangan; ?></h4>
+                    </div>
+                    <div class="modal-body">
+                      <!-- TABLE -->
+                      <div class="table-responsive">
+                        <table class="table no-margin">
+                          <thead>
+                            <tr>
+                              <th>No.</th>
+                              <th>Jenis Infeksi</th>
+                              <th>Jumlah</th>
+                              <th>Rate MIL</th>
+                              <th>Tingkat Rate</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            <tr>
+                              <td>1.</td>
+                              <td>IADP & Phlebitis</td>
+                              <td>5</td>
+                              <td style="color:red;font-weight:bold;">16.22%</td>
+                              <td>
+                                <span class="sparkbar">8,9,3,5,8,5,10</span>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>2.</td>
+                              <td>ISK</a></td>
+                              <td>4</td>
+                              <td>1.43%</td>
+                              <td>
+                                <span class="sparkbar">3,5,8,5,10,8,4</span>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>3.</td>
+                              <td>VAP</td>
+                              <td>0</td>
+                              <td>0%</td>
+                              <td>
+                                <span class="sparkbar">6,8,9,5,4,2,1</span>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>4.</td>
+                              <td>IDO</td>
+                              <td>2</td>
+                              <td>0.89%</td>
+                              <td>
+                                <span class="sparkbar">9,4,5,3,2,1,2</span>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>5.</td>
+                              <td>ILE</td>
+                              <td><span class="label label-success"></span>0</td>
+                              <td>0%</td>
+                              <td>
+                                <span class="sparkbar">1,2,3,0,2,1,0</span>
+                              </td>
+                            </tr>
+                          </tbody>
+                          <tfoot>
+                            <tr>
+                              <th>TOTAL</th>
+                              <th></th>
+                              <th>11</th>
+                              <th>9,08%</th>
+                              <th><span class="sparkbar">10,8,9,4,5,11,14</span></th>
+                            </tr>
+                          </tfoot>
+                        </table>
+                      </div>
+                      <!-- /.table-responsive --><br>
+
+                      <span class="label label-danger">
+                        Satu atau Lebih Rate MIL(0%) Infeksi melebihi Standar
+                      </span>
+                    </div>
+                    <div class="modal-footer">
+                      <a href="index-ruang-detail.php" class="btn btn-default">Lihat Selengkapnya</a>
+                      <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    </div>
                   </div>
-                  <div class="icon">
-                    <i class="fa fa-exchange"></i>
-                  </div>
-                  <a href="#" class="small-box-footer">PAV.MAWAR <i class="fa fa-arrow-circle-right"></i></a>
+
                 </div>
               </div>
-              <!-- ./col -->
-              <div class="col-lg-3 col-xs-6" id="index-chart">
-                <!-- small box -->
-                <div class="small-box bg-white">
-                  <div class="inner">
-                    <h3> 2</h3>
-                  </div>
-                  <div class="icon">
-                    <i class="fa fa-exchange"></i>
-                  </div>
-                  <a href="#" class="small-box-footer">PAV.ANYELIR <i class="fa fa-arrow-circle-right"></i></a>
-                </div>
-              </div>
-              <!-- ./col -->
-              <div class="col-lg-3 col-xs-6" id="index-chart">
-                <!-- small box -->
-                <div class="small-box bg-white">
-                  <div class="inner">
-                    <h3> 2</h3>
-                  </div>
-                  <div class="icon">
-                    <i class="fa fa-exchange"></i>
-                  </div>
-                  <a href="#" class="small-box-footer">PAV.ALAMANDA <i class="fa fa-arrow-circle-right"></i></a>
-                </div>
-              </div>
-              <!-- ./col -->
-              <div class="col-lg-3 col-xs-6" id="index-chart">
-                <!-- small box -->
-                <div class="small-box bg-white">
-                  <div class="inner">
-                    <h3> 2</h3>
-                  </div>
-                  <div class="icon">
-                    <i class="fa fa-caret-down"></i>2
-                  </div>
-                  <a href="#" class="small-box-footer">PAV.DAHLIA <i class="fa fa-arrow-circle-right"></i></a>
-                </div>
-              </div>
-              <!-- ./col -->
-              <div class="col-lg-3 col-xs-6" id="index-chart">
-                <!-- small box -->
-                <div class="small-box bg-white">
-                  <div class="inner">
-                    <h3> 2</h3>
-                  </div>
-                  <div class="icon">
-                    <i class="fa fa-caret-down"></i>2
-                  </div>
-                  <a href="#" class="small-box-footer">PAV.AMARILIS <i class="fa fa-arrow-circle-right"></i></a>
-                </div>
-              </div>
-              <!-- ./col -->
-              <div class="col-lg-3 col-xs-6">
-                <!-- small box -->
-                <div class="small-box bg-red" id="index-chart">
-                  <div class="inner">
-                    <h3> 11</h3>
-                  </div>
-                  <div class="icon">
-                    <i class="fa fa-caret-up"></i>3
-                  </div>
-                  <a class="small-box-footer" data-toggle="modal" data-target="#myModal">KES.ANAK <i class="fa fa-arrow-circle-right"></i></a>
-                  <!-- <div class="small-box-button" type="button" data-toggle="modal" data-target="#myModal">KES.ANAK<</div> -->
-                </div>
-              </div>
-              <!-- ./col -->
-              <div class="col-lg-3 col-xs-6">
-                <!-- small box -->
-                <div class="small-box bg-white" id="index-chart">
-                  <div class="inner">
-                    <h3> 2</h3>
-                  </div>
-                  <div class="icon">
-                    <i class="fa fa-caret-up"></i>2
-                  </div>
-                  <a href="#" class="small-box-footer">NUSA INDAH <i class="fa fa-arrow-circle-right"></i></a>
-                </div>
-              </div>
-              <!-- ./col -->
-              <div class="col-lg-3 col-xs-6" id="index-chart">
-                <!-- small box -->
-                <div class="small-box bg-white">
-                  <div class="inner">
-                    <h3> 2</h3>
-                  </div>
-                  <div class="icon">
-                    <i class="fa fa-exchange"></i>
-                  </div>
-                  <a href="#" class="small-box-footer">ICU <i class="fa fa-arrow-circle-right"></i></a>
-                </div>
-              </div>
-              <!-- ./col -->
-              <div class="col-lg-3 col-xs-6" id="index-chart">
-                <!-- small box -->
-                <div class="small-box bg-white">
-                  <div class="inner">
-                    <h3> 2</h3>
-                  </div>
-                  <div class="icon">
-                    <i class="fa fa-exchange"></i>
-                  </div>
-                  <a href="#" class="small-box-footer">KEBIDANAN <i class="fa fa-arrow-circle-right"></i></a>
-                </div>
-              </div>
-              <!-- ./col -->
-              <div class="col-lg-3 col-xs-6" id="index-chart">
-                <!-- small box -->
-                <div class="small-box bg-white">
-                  <div class="inner">
-                    <h3> 2</h3>
-                  </div>
-                  <div class="icon">
-                    <i class="fa fa-exchange"></i>
-                  </div>
-                  <a href="#" class="small-box-footer">FLAMBOYAN <i class="fa fa-arrow-circle-right"></i></a>
-                </div>
-              </div>
-              <!-- ./col -->
-              <div class="col-lg-3 col-xs-6" id="index-chart">
-                <!-- small box -->
-                <div class="small-box bg-white">
-                  <div class="inner">
-                    <h3> 2</h3>
-                  </div>
-                  <div class="icon">
-                    <i class="fa fa-caret-down"></i>2
-                  </div>
-                  <a href="#" class="small-box-footer">CASABLANCA <i class="fa fa-arrow-circle-right"></i></a>
-                </div>
-              </div>
-              <!-- ./col -->
-              <div class="col-lg-3 col-xs-6" id="index-chart">
-                <!-- small box -->
-                <div class="small-box bg-white">
-                  <div class="inner">
-                    <h3> 2</h3>
-                  </div>
-                  <div class="icon">
-                    <i class="fa fa-caret-down"></i>2
-                  </div>
-                  <a href="#" class="small-box-footer">CATLEYA <i class="fa fa-arrow-circle-right"></i></a>
-                </div>
-              </div>
-              <!-- ./col -->
-              <div class="col-lg-3 col-xs-6" id="index-chart">
-                <!-- small box -->
-                <div class="small-box bg-white">
-                  <div class="inner">
-                    <h3> 2</h3>
-                  </div>
-                  <div class="icon">
-                    <i class="fa fa-caret-down"></i>2
-                  </div>
-                  <a href="#" class="small-box-footer">ANGGREK <i class="fa fa-arrow-circle-right"></i></a>
-                </div>
-              </div>
-              <!-- ./col -->
-              <div class="col-lg-3 col-xs-6" id="index-chart">
-                <!-- small box -->
-                <div class="small-box bg-white">
-                  <div class="inner">
-                    <h3> 2</h3>
-                  </div>
-                  <div class="icon">
-                    <i class="fa fa-caret-down"></i>2
-                  </div>
-                  <a href="#" class="small-box-footer">TULIP <i class="fa fa-arrow-circle-right"></i></a>
-                </div>
-              </div>
-              <!-- ./col -->
-              <div class="col-lg-3 col-xs-6" id="index-chart">
-                <!-- small box -->
-                <div class="small-box bg-white">
-                  <div class="inner">
-                    <h3> 2</h3>
-                  </div>
-                  <div class="icon">
-                    <i class="fa fa-caret-down"></i>2
-                  </div>
-                  <a href="#" class="small-box-footer">KEMUNING <i class="fa fa-arrow-circle-right"></i></a>
-                </div>
-              </div>
-              <!-- ./col -->
-              <div class="col-lg-3 col-xs-6" id="index-chart">
-                <!-- small box -->
-                <div class="small-box bg-white">
-                  <div class="inner">
-                    <h3> 2</h3>
-                  </div>
-                  <div class="icon">
-                    <i class="fa fa-caret-down"></i>2
-                  </div>
-                  <a href="#" class="small-box-footer">PERISTI <i class="fa fa-arrow-circle-right"></i></a>
-                </div>
-              </div>
-              <!-- ./col -->
-              <div class="col-lg-3 col-xs-6" id="index-chart">
-                <!-- small box -->
-                <div class="small-box bg-white">
-                  <div class="inner">
-                    <h3> 2</h3>
-                  </div>
-                  <div class="icon">
-                    <i class="fa fa-caret-down"></i>2
-                  </div>
-                  <a href="#" class="small-box-footer">BOUGENVILE <i class="fa fa-arrow-circle-right"></i></a>
-                </div>
-              </div>
-              <!-- ./col -->
-              <div class="col-lg-3 col-xs-6" id="index-chart">
-                <!-- small box -->
-                <div class="small-box bg-white">
-                  <div class="inner">
-                    <h3> 2</h3>
-                  </div>
-                  <div class="icon">
-                    <i class="fa fa-caret-down"></i>2
-                  </div>
-                  <a href="#" class="small-box-footer">SAKURA <i class="fa fa-arrow-circle-right"></i></a>
-                </div>
-              </div>
-              <!-- ./col -->
+              <!-- /.Modal -->
+
+              <?php } ?>
             </div>
             <!-- ./box-body -->
           </div>
@@ -474,106 +395,177 @@
           <div class="box box-default">
             <div class="box-body">
               <div class="box-header with-border">
-                <h3 class="box-title">Berdasarkan Jenis Infeksi (Bulanan)</h3>          
+                <h3 class="box-title">Berdasarkan Jenis Infeksi (Bulan Ini)</h3>          
               </div><br>
+
+              <?php
+
+              $query = mysqli_query($conn, "SELECT nama_infeksi FROM infeksi");
+              foreach ($query as $index1 => $data){
+
+                $surveilans = $data['nama_infeksi'];
+
+                $count = 0;
+                $countlast = 0;
+
+                $countquery = mysqli_fetch_array(mysqli_query($conn, "SELECT COUNT(s.id_surv) FROM surv_$surveilans s 
+                  JOIN keadaan_pasien kp ON (s.id_keadaan = kp.id_keadaan)
+                  JOIN pemakaian_ruangan pr ON (pr.id_keadaan = kp.id_keadaan)
+                  WHERE s.terjadi_infeksi = 'Ya' AND month(s.tanggal_infeksi) = $this_month AND year(s.tanggal_infeksi) = $this_year"));
+                $count = $countquery['COUNT(s.id_surv)'];
+                // $count = $count + $countdata;
+
+                $countquerylast = mysqli_fetch_array(mysqli_query($conn, "SELECT COUNT(s.id_surv) FROM surv_$surveilans s 
+                  JOIN keadaan_pasien kp ON (s.id_keadaan = kp.id_keadaan)
+                  JOIN pemakaian_ruangan pr ON (pr.id_keadaan = kp.id_keadaan)
+                  WHERE s.terjadi_infeksi = 'Ya' AND month(s.tanggal_infeksi) = $last_month AND year(s.tanggal_infeksi) = $this_year"));
+                $countlast = $countquerylast['COUNT(s.id_surv)'];
+                // $countlast = $countlast + $countdatalast;
+
+                $diff = $count - $countlast;
+
+              ?>
+
               <div class="col-lg-3 col-xs-6">
                 <!-- small box -->
-                <div class="small-box bg-red" id="index-chart">
+                <div class="small-box bg-white" id="index-chart">
                   <div class="inner">
                     <!-- <p>IADP & Phlebitis</p> -->
-                    <h3>5</h3>
+                    <h3><?php echo $count; ?></h3>
                   </div>
                   <div class="icon">
-                    <i class="fa fa-caret-up"></i>3
+                    <?php if($diff>0){
+                        echo "<i class='fa fa-caret-up'></i>".$diff;
+                      } else if($diff==0){
+                        echo "<i class='fa fa-exchange'></i>";
+                      } else {
+                        echo "<i class='fa fa-caret-down'></i>".$diff;
+                      }
+                    ?>
                   </div>
                   <!-- <a href="content/index2-chart.html" class="small-box-footer">IADP & Phlebitis <i class="fa fa-arrow-circle-right"></i></a> -->
-                  <a class="small-box-footer" data-toggle="modal" data-target="#myModal2">Phlebitis <i class="fa fa-arrow-circle-right"></i></a>
+                  <a class="small-box-footer" data-toggle="modal" data-target="#myModal2-<?php echo $index1; ?>"><?php echo $surveilans; ?>
+                  <!-- <i class="fa fa-arrow-circle-right"></i> -->
+                  </a>
                 </div>
               </div>
               <!-- ./col -->
-              <div class="col-lg-3 col-xs-6">
-                <!-- small box -->
-                <div class="small-box bg-white">
-                  <div class="inner">
-                    <!-- <p>ISK</p> -->
-                    <h3>2</h3>
+
+              <!-- Modal -->
+              <div class="modal fade" id="myModal2-<?php echo $index1; ?>" role="dialog">
+                <div class="modal-dialog modal-lg">
+
+                  <!-- Modal content-->
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <button type="button" class="close" data-dismiss="modal">&times;</button>
+                      <h4 class="modal-title">Kejadian <?php echo $surveilans; ?> Bulan Juli 2018</h4>
+                    </div>
+                    <div class="modal-body">
+                      <!-- TABLE -->
+                      <table id="example2" class="table table-bordered table-hover">
+                        <thead>
+                          <tr>
+                            <th>Jenis Pemasangan</th>
+                            <th>Jumlah Pasien Terpasang</th>
+                            <th>Jumlah Terjadi Infeksi</th>
+                            <th>Lama Hari Terpasang</th>
+                            <th>Rate MIL (0%)</th>
+                            <th>Aksi</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr>
+                            <td>Kateter V Perifer</td>
+                            <td>73</td>
+                            <td>3</td>
+                            <td>185</td>
+                            <td style="color:red;font-weight:bold;">16.22</td>
+                            <td><a type="button" class="btn btn-block btn-primary btn-xs" href="index-jenis-detail.php">Lihat Selengkapnya</a></td>
+                          </tr>
+                          <tr>
+                            <td>Kateter V Central</td>
+                            <td>0</td>
+                            <td>0</td>
+                            <td>0</td>
+                            <td>0</td>
+                            <td><a type="button" class="btn btn-block btn-primary btn-xs" href="riwayat-pasien.php">Lihat Selengkapnya</a></td>
+                          </tr>
+                          <tr>
+                            <td>Umbilikal</td>
+                            <td>13</td>
+                            <td>0</td>
+                            <td>72</td>
+                            <td>0</td>
+                            <td><a type="button" class="btn btn-block btn-primary btn-xs" href="riwayat-pasien.php">Lihat Selengkapnya</a></td>
+                          </tr>
+                          <tr>
+                            <td>Double Lumen</td>
+                            <td>22</td>
+                            <td>2</td>
+                            <td>1398</td>
+                            <td>1.43</td>
+                            <td><a type="button" class="btn btn-block btn-primary btn-xs" href="riwayat-pasien.php">Lihat Selengkapnya</a></td>
+                          </tr>
+                        </tbody>
+                        <tfoot>
+                          <tr>
+                            <th>Total</th>
+                            <th>108</th>
+                            <th>5</th>
+                            <th>1655</th>
+                            <th>3.02</th>
+                          </tr>
+                        </tfoot>
+                      </table><br>
+                    </div>
+                    <div class="modal-footer">
+                      <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    </div>
                   </div>
-                  <div class="icon">
-                    <i class="fa fa-caret-up"></i>2
-                  </div>
-                  <a href="#" class="small-box-footer">IADP <i class="fa fa-arrow-circle-right"></i></a>
+
                 </div>
               </div>
-              <!-- ./col -->
+              <!-- /.Modal -->
+
+              <?php }
+
+              // <!-- TERPAJAN -->
+
+              $countpjn = 0;
+              $countpjnlast = 0;
+
+                $countquerypjn = mysqli_fetch_array(mysqli_query($conn, "SELECT COUNT(id_kejadian_terpajan) FROM surv_terpajan WHERE month(tanggal_pajanan) = $this_month AND year(tanggal_pajanan) = $this_year"));
+                $countpjn = $countquerypjn['COUNT(id_kejadian_terpajan)'];
+
+                $countquerypjnlast = mysqli_fetch_array(mysqli_query($conn, "SELECT COUNT(id_kejadian_terpajan) FROM surv_terpajan WHERE month(tanggal_pajanan) = $last_month AND year(tanggal_pajanan) = $this_year"));
+                $countpjnlast = $countquerypjnlast['COUNT(id_kejadian_terpajan)'];
+
+                $diff = $countpjn - $countpjnlast;
+
+              ?>
+
               <div class="col-lg-3 col-xs-6">
                 <!-- small box -->
-                <div class="small-box bg-white">
+                <div class="small-box bg-white" id="index-chart">
                   <div class="inner">
-                    <!-- <p>ISK</p> -->
-                    <h3>2</h3>
+                    <!-- <p>IADP & Phlebitis</p> -->
+                    <h3><?php echo $countpjn; ?></h3>
                   </div>
                   <div class="icon">
-                    <i class="fa fa-caret-up"></i>2
+                    <?php if($diff>0){
+                        echo "<i class='fa fa-caret-up'></i>".$diff;
+                      } else if($diff==0){
+                        echo "<i class='fa fa-exchange'></i>";
+                      } else {
+                        echo "<i class='fa fa-caret-down'></i>".$diff;
+                      }
+                    ?>
                   </div>
-                  <a href="#" class="small-box-footer">ISK <i class="fa fa-arrow-circle-right"></i></a>
-                </div>
-              </div>
-              <!-- ./col -->
-              <div class="col-lg-3 col-xs-6">
-                <!-- small box -->
-                <div class="small-box bg-white">
-                  <div class="inner">
-                    <!-- <p>VAP</p> -->
-                    <h3>2</h3>
-                  </div>
-                  <div class="icon">
-                    <i class="fa fa-caret-up"></i>2
-                  </div>
-                  <a href="#" class="small-box-footer">VAP <i class="fa fa-arrow-circle-right"></i></a>
-                </div>
-              </div>
-              <!-- ./col -->
-              <!-- <div class="col-lg-1 col-xs-6"></div> -->
-              <div class="col-lg-3 col-xs-6">
-                <!-- small box -->
-                <div class="small-box bg-white">
-                  <div class="inner">
-                    <!-- <p>IDO</p> -->
-                    <h3>2</h3>
-                  </div>
-                  <div class="icon">
-                    <i class="fa fa-exchange"></i>
-                  </div>
-                  <a href="#" class="small-box-footer">IDO <i class="fa fa-arrow-circle-right"></i></a>
-                </div>
-              </div>
-              <!-- </div> -->
-              <!-- ./col -->
-              <div class="col-lg-3 col-xs-6">
-                <!-- small box -->
-                <div class="small-box bg-white">
-                  <div class="inner">
-                    <!-- <p>ILE</p> -->
-                    <h3>2</h3>
-                  </div>
-                  <div class="icon">
-                    <i class="fa fa-exchange"></i>
-                  </div>
-                  <a href="#" class="small-box-footer">Dekubitus <i class="fa fa-arrow-circle-right"></i></a>
-                </div>
-              </div>
-              <!-- ./col -->
-              <div class="col-lg-3 col-xs-6">
-                <!-- small box -->
-                <div class="small-box bg-white">
-                  <div class="inner">
-                    <!-- <p>ILE</p> -->
-                    <h3>2</h3>
-                  </div>
-                  <div class="icon">
-                    <i class="fa fa-caret-down"></i>2
-                  </div>
-                  <a href="#" class="small-box-footer">Terpajan <i class="fa fa-arrow-circle-right"></i></a>
+                  <!-- <a href="content/index2-chart.html" class="small-box-footer">IADP & Phlebitis <i class="fa fa-arrow-circle-right"></i></a> -->
+                  <a class="small-box-footer" data-toggle="modal" data-target="#myModal2-<?php echo $index1; ?>">Terpajan
+                  <!-- <i class="fa fa-arrow-circle-right"></i> -->
+                  </a>
                 </div>
               </div>
               <!-- ./col -->
@@ -592,28 +584,28 @@
               <table class="table table-hover">
                 <tr>
                   <th>Kejadian</th>
-                  <th>Pemasangan</th>
+                  <th>Invasif</th>
                   <th>Ruangan</th>
                   <th>Tanggal</th>
                 </tr>
-                <tr>
-                  <td>Infeksi Phlebitis</td>
-                  <td>Kateter V Perifer</td>
-                  <td>Catleya</td>
-                  <td>12 Agustus 2018</td>
+                <?php
+
+                $infeksi_query = mysqli_query($conn, "SELECT id_keadaan, jenis_surveilans FROM keadaan_pasien");
+                while($infeksi_data = mysqli_fetch_array($infeksi_query)){
+
+                  $svlns = $infeksi_data['jenis_surveilans'];
+
+                  $news_data = mysqli_query($conn, "SELECT sv.jenis_invasif, r.nama_ruangan, sv.tanggal_infeksi FROM keadaan_pasien kp JOIN surv_$svlns sv ON (kp.id_keadaan = sv.id_keadaan) JOIN pemakaian_ruangan pr ON (kp.id_keadaan = pr.id_keadaan) JOIN ruangan r ON (pr.kode_ruangan = r.kode_ruangan) WHERE month(sv.tanggal_infeksi) = $this_month AND year(sv.tanggal_infeksi) = $this_year ORDER BY sv.tanggal_infeksi DESC LIMIT 5");
+                  while($news = mysqli_fetch_array($news_data)){
+
+                ?>
+                <tr>                
+                  <!-- <td>Infeksi <?php echo $svlns ?></td>
+                  <td><?php echo $news['jenis_invasif']; ?></td>
+                  <td><?php echo $news['nama_ruangan']; ?></td>
+                  <td><?php echo $news['tanggal_infeksi']; ?></td> -->
                 </tr>
-                <tr>
-                  <td>Infeksi Saluran Kemih</td>
-                  <td>Kateter Urine</td>
-                  <td>Pav.Dahlia</td>
-                  <td>9 Agustus 2018</td>
-                </tr>
-                <tr>
-                  <td>Infeksi IADP</td>
-                  <td>Kateter V Central</td>
-                  <td>Peristi</td>
-                  <td>6 Agustus 2018</td>
-                </tr>
+                <?php } } ?>
               </table>
             </div>
             <!-- /.box-body -->
@@ -623,180 +615,6 @@
         <!-- ./col-md-6 -->
       </div>
       <!-- ./row -->
-
-      <!-- Modal -->
-      <div class="modal fade" id="myModal" role="dialog">
-        <div class="modal-dialog">
-
-          <!-- Modal content-->
-          <div class="modal-content">
-            <div class="modal-header">
-              <button type="button" class="close" data-dismiss="modal">&times;</button>
-              <h4 class="modal-title">Kejadian di Ruang Kesehatan Anak Juli 2018</h4>
-            </div>
-            <div class="modal-body">
-              <!-- TABLE -->
-              <div class="table-responsive">
-                <table class="table no-margin">
-                  <thead>
-                    <tr>
-                      <th>No.</th>
-                      <th>Jenis Infeksi</th>
-                      <th>Jumlah</th>
-                      <th>Rate MIL</th>
-                      <th>Tingkat Rate</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td>1.</td>
-                      <td>IADP & Phlebitis</td>
-                      <td>5</td>
-                      <td style="color:red;font-weight:bold;">16.22%</td>
-                      <td>
-                        <span class="sparkbar">8,9,3,5,8,5,10</span>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td>2.</td>
-                      <td>ISK</a></td>
-                      <td>4</td>
-                      <td>1.43%</td>
-                      <td>
-                        <span class="sparkbar">3,5,8,5,10,8,4</span>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td>3.</td>
-                      <td>VAP</td>
-                      <td>0</td>
-                      <td>0%</td>
-                      <td>
-                        <span class="sparkbar">6,8,9,5,4,2,1</span>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td>4.</td>
-                      <td>IDO</td>
-                      <td>2</td>
-                      <td>0.89%</td>
-                      <td>
-                        <span class="sparkbar">9,4,5,3,2,1,2</span>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td>5.</td>
-                      <td>ILE</td>
-                      <td><span class="label label-success"></span>0</td>
-                      <td>0%</td>
-                      <td>
-                        <span class="sparkbar">1,2,3,0,2,1,0</span>
-                      </td>
-                    </tr>
-                  </tbody>
-                  <tfoot>
-                    <tr>
-                      <th>TOTAL</th>
-                      <th></th>
-                      <th>11</th>
-                      <th>9,08%</th>
-                      <th><span class="sparkbar">10,8,9,4,5,11,14</span></th>
-                    </tr>
-                  </tfoot>
-                </table>
-              </div>
-              <!-- /.table-responsive --><br>
-
-              <span class="label label-danger">
-                Satu atau Lebih Rate MIL(0%) Infeksi melebihi Standar
-              </span>
-            </div>
-            <div class="modal-footer">
-              <a href="index-ruang-detail.php" class="btn btn-default">Lihat Selengkapnya</a>
-              <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-            </div>
-          </div>
-
-        </div>
-      </div>
-      <!-- /.Modal -->
-
-      <!-- Modal -->
-      <div class="modal fade" id="myModal2" role="dialog">
-        <div class="modal-dialog modal-lg">
-
-          <!-- Modal content-->
-          <div class="modal-content">
-            <div class="modal-header">
-              <button type="button" class="close" data-dismiss="modal">&times;</button>
-              <h4 class="modal-title">Kejadian di Ruang Kesehatan Anak Juli 2018</h4>
-            </div>
-            <div class="modal-body">
-              <!-- TABLE -->
-              <table id="example2" class="table table-bordered table-hover">
-                <thead>
-                  <tr>
-                    <th>Jenis Pemasangan</th>
-                    <th>Jumlah Pasien Terpasang</th>
-                    <th>Jumlah Terjadi Infeksi</th>
-                    <th>Lama Hari Terpasang</th>
-                    <th>Rate MIL (0%)</th>
-                    <th>Aksi</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <td>Kateter V Perifer</td>
-                    <td>73</td>
-                    <td>3</td>
-                    <td>185</td>
-                    <td style="color:red;font-weight:bold;">16.22</td>
-                    <td><a type="button" class="btn btn-block btn-primary btn-xs" href="index-jenis-detail.php">Lihat Selengkapnya</a></td>
-                  </tr>
-                  <tr>
-                    <td>Kateter V Central</td>
-                    <td>0</td>
-                    <td>0</td>
-                    <td>0</td>
-                    <td>0</td>
-                    <td><a type="button" class="btn btn-block btn-primary btn-xs" href="riwayat-pasien.php">Lihat Selengkapnya</a></td>
-                  </tr>
-                  <tr>
-                    <td>Umbilikal</td>
-                    <td>13</td>
-                    <td>0</td>
-                    <td>72</td>
-                    <td>0</td>
-                    <td><a type="button" class="btn btn-block btn-primary btn-xs" href="riwayat-pasien.php">Lihat Selengkapnya</a></td>
-                  </tr>
-                  <tr>
-                    <td>Double Lumen</td>
-                    <td>22</td>
-                    <td>2</td>
-                    <td>1398</td>
-                    <td>1.43</td>
-                    <td><a type="button" class="btn btn-block btn-primary btn-xs" href="riwayat-pasien.php">Lihat Selengkapnya</a></td>
-                  </tr>
-                </tbody>
-                <tfoot>
-                  <tr>
-                    <th>Total</th>
-                    <th>108</th>
-                    <th>5</th>
-                    <th>1655</th>
-                    <th>3.02</th>
-                  </tr>
-                </tfoot>
-              </table><br>
-            </div>
-            <div class="modal-footer">
-              <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-            </div>
-          </div>
-
-        </div>
-      </div>
-      <!-- /.Modal -->
 
     </section>
     <!-- /.content (ISI HALAMAN SELESAI) -->
@@ -834,6 +652,9 @@
 <script src="bower_components/jquery-slimscroll/jquery.slimscroll.min.js"></script>
 <!-- ChartJS -->
 <script src="bower_components/chart.js/Chart.js"></script>
+<!-- DataTables -->
+<script src="bower_components/datatables.net/js/jquery.dataTables.min.js"></script>
+<script src="bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
 <!-- AdminLTE for demo purposes -->
 <script src="dist/js/demo.js"></script>
 <!-- page script -->
@@ -889,5 +710,5 @@
     Both of these plugins are recommended to enhance the
     user experience. -->
 
-  </body>
-  </html>
+</body>
+</html>

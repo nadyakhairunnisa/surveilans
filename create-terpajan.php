@@ -7,7 +7,7 @@ include("connect/connect.php");
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>AdminLTE 2 | Advanced form elements</title>
+  <title>SURVEILANS PPI | RSUI Harapan Anda</title>
   <!-- Tell the browser to be responsive to screen width -->
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
   <!-- Bootstrap 3.3.7 -->
@@ -52,7 +52,7 @@ include("connect/connect.php");
     <header class="main-header"  style="background-color: white;">
 
       <!-- Logo -->
-      <a href="index2.html" class="logo">
+      <a href="index.php" class="logo">
         <!-- mini logo for sidebar mini 50x50 pixels -->
         <span class="logo-mini"><b>PPI</b></span>
         <!-- logo for regular state and mobile devices -->
@@ -144,7 +144,7 @@ include("connect/connect.php");
             </a>
             <ul class="treeview-menu">
               <li><a href="data-pasien.php"><i class="fa fa-circle-o"></i>Pasien</a></li>
-              <li><a href="data-terpajan.php"><i class="fa fa-circle-o"></i>Perawat</a></li>
+              <li><a href="data-terpajan.php"><i class="fa fa-circle-o"></i>Terpajan</a></li>
               <li><a href="data-dokter.php"><i class="fa fa-circle-o"></i>Dokter</a></li>
               <li><a href="data-ruangan.php"><i class="fa fa-circle-o"></i>Ruangan</a></li>
             </ul>
@@ -181,27 +181,33 @@ include("connect/connect.php");
               <div class="form-group">
                 <label for="birthDate" class="col-sm-2 control-label">Tanggal Laporan</label>
                 <div class="col-sm-3">
-                  <input type="date" name="lapDate" class="form-control">
+                  <input type="date" name="lapDate" class="form-control" required>
                 </div>
                 <label for="inTime" class="col-sm-1 control-label">Jam</label>
                 <div class="col-sm-2">
-                  <input type="time" name="lapTime" class="form-control">
+                  <input type="time" name="lapTime" class="form-control" required>
+                </div>
+                <div class="col-sm-4">
+                  <span class="help-block">Format AM (00:00-11:59) dan PM (12:00-23:59)</span>
                 </div>
               </div>
               <div class="form-group">
                 <label for="birthDate" class="col-sm-2 control-label">Tanggal Pajanan</label>
                 <div class="col-sm-3">
-                  <input type="date" name="pjnDate" class="form-control">
+                  <input type="date" name="pjnDate" class="form-control" required>
                 </div>
                 <label for="inTime" class="col-sm-1 control-label">Jam</label>
                 <div class="col-sm-2">
-                  <input type="time" name="pjnTime" class="form-control">
+                  <input type="time" name="pjnTime" class="form-control" required>
+                </div>
+                <div class="col-sm-4">
+                  <span class="help-block">Format AM (00:00-11:59) dan PM (12:00-23:59)</span>
                 </div>
               </div>
               <div class="form-group">
                 <label for="country" class="col-sm-2 control-label">Tempat Kejadian</label>
                 <div class="col-sm-6">
-                  <select name="ruangan" class="form-control select2" style="width: 100%;">
+                  <select name="ruangan" class="form-control select2" style="width: 100%;" required>
                     <option value="" selected disabled>Pilih Ruang Kejadian</option>
 
                     <?php 
@@ -218,28 +224,28 @@ include("connect/connect.php");
               <div class="form-group">
                 <label for="firstName" class="col-sm-2 control-label">Unit Kerja Terpajan</label>
                 <div class="col-sm-6">
-                  <input type="text" name="unit" placeholder="Unit Kerja" class="form-control">
+                  <input type="text" name="unit" placeholder="Unit Kerja" class="form-control" required>
                 </div>                
               </div>
               <div class="box-header with-border"></div><br>
               <div class="form-group">
                 <label for="firstName" class="col-sm-2 control-label">Nama Terpajan</label>
                 <div class="col-sm-3">
-                  <input type="text" name="namaPj" placeholder="Nama" class="form-control">
+                  <input type="text" name="namaPj" placeholder="Nama" class="form-control" required>
                 </div>
                 <label for="firstName" class="col-sm-1 control-label">Alamat</label>
                 <div class="col-sm-5">
-                  <input type="text" name="alamatPj" placeholder="Alamat" class="form-control">
+                  <input type="text" name="alamatPj" placeholder="Alamat" class="form-control" required>
                 </div>
               </div>
               <div class="form-group">
                 <label for="firstName" class="col-sm-2 control-label">Atasan Langsung</label>
                 <div class="col-sm-3">
-                  <input type="text" name="namaAts" placeholder="Nama" class="form-control">
+                  <input type="text" name="namaAts" placeholder="Nama" class="form-control" required>
                 </div>
                 <label for="firstName" class="col-sm-1 control-label">Alamat</label>
                 <div class="col-sm-5">
-                  <input type="text" name="alamatAts" placeholder="Alamat" class="form-control">
+                  <input type="text" name="alamatAts" placeholder="Alamat" class="form-control" required>
                 </div>
               </div>
               <div class="box-header with-border"></div><br>
@@ -249,7 +255,7 @@ include("connect/connect.php");
                   <div class="row">
                     <div class="col-sm-3">
                       <label class="radio-inline">
-                        <input type="radio" name="rute" id="femaleRadio" value="Kateter IV">Kateter IV
+                        <input type="radio" name="rute" id="femaleRadio" value="Kateter IV" checked>Kateter IV
                       </label>
                     </div>
                     <div class="col-sm-4">
@@ -300,7 +306,7 @@ include("connect/connect.php");
                   <div class="row">
                     <div class="col-sm-3">
                       <label class="radio-inline">
-                        <input type="radio" name="sumberpjn" id="femaleRadio" value="Darah">Darah
+                        <input type="radio" name="sumberpjn" id="femaleRadio" value="Darah" checked>Darah
                       </label>
                     </div>
                     <div class="col-sm-3">
@@ -322,7 +328,7 @@ include("connect/connect.php");
                   <div class="row">
                     <div class="col-sm-3">
                       <label class="radio-inline">
-                        <input type="radio" name="sumberpjn" id="femaleRadio">Lain-Lain
+                        <input type="radio" name="sumberpjn" id="femaleRadio" value="Lain-Lain">Lain-Lain
                       </label>
                     </div>
                     <div class="col-sm-3">
@@ -337,7 +343,7 @@ include("connect/connect.php");
                   <div class="row">
                     <div class="col-sm-3">
                       <label class="radio-inline">
-                        <input type="radio" name="sumberps" id="femaleRadio" value="HIV - AIDS">HIV - AIDS
+                        <input type="radio" name="sumberps" id="femaleRadio" value="HIV - AIDS" checked>HIV - AIDS
                       </label>
                     </div>
                     <div class="col-sm-3">
@@ -347,11 +353,12 @@ include("connect/connect.php");
                     </div>
                     <div class="col-sm-3">
                       <label class="radio-inline">
-                        <input type="radio" name="sumberps" id="femaleRadio">Lain-Lain
+                        <input type="radio" name="sumberps" id="femaleRadio" value="Lain-Lain">Lain-Lain
                       </label>
                     </div>
                     <div class="col-sm-3">
                       <input type="text" name="sumberpslain" placeholder="Sebutkan" class="form-control">
+                      <span class="help-block">Isi sumber pasien lainnya</span>
                     </div>
                   </div>
                 </div>
@@ -359,13 +366,13 @@ include("connect/connect.php");
               <div class="form-group">
                 <label for="firstName" class="col-sm-2 control-label">Bagian Tubuh Terpajan</label>
                 <div class="col-sm-9">
-                  <input type="text" name="bagTbh" placeholder="Sebutkan secara jelas" class="form-control">
+                  <input type="text" name="bagTbh" placeholder="Sebutkan secara jelas" class="form-control" required>
                 </div>
               </div>
               <div class="form-group">
                 <label for="address" class="col-sm-2 control-label">Urutan Kejadian</label>
                 <div class="col-sm-9">
-                  <textarea placeholder="Jelaskan ..." rows="3" class="form-control" type="text" name="keterangan"></textarea>
+                  <textarea placeholder="Jelaskan ..." rows="3" class="form-control" type="text" name="keterangan" required></textarea>
                 </div>
               </div>
               <div class="form-group">
@@ -401,14 +408,15 @@ include("connect/connect.php");
                     </div>
                     <div class="col-sm-5">
                       <input type="text" name="jenis" placeholder="Jenis" class="form-control">
+                      <span class="help-block">Isi jika menggunakan alat pelindung</span>
                     </div>
                   </div>
                 </div>
-              </div><br> <!-- /.form-group -->
+              </div> <!-- /.form-group -->
               <div class="form-group">
                 <label for="firstName" class="col-sm-2 control-label">Pertolongan Pertama</label>
                 <div class="col-sm-9">
-                  <input type="text" name="pp" placeholder="Sebutkan" class="form-control">
+                  <input type="text" name="pp" placeholder="Sebutkan" class="form-control" required>
                 </div>
               </div>
               <div class="form-group">

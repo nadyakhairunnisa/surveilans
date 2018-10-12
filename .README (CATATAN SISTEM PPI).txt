@@ -1,0 +1,28 @@
+Fitur yang sudah dapat digunakan :
+
+- Dashboard bulanan (meiputi jumlah kejadian berdasarkan ruangan dan jenis, serta berita terbaru)
+
+- Tambah Pasien
+- Tambah Terpajan
+
+- Data Pasien (meliputi Lihat Riwayat dan prosesnya)
+- Data Terpajan (meliputi proses edit, dan hapus)
+- Data Dokter (meliputi proses tambah, edit, dan hapus)
+- Data Ruangan (meliputi proses tambah, edit, dan hapus)
+
+
+Fitur yang belum dapat digunakan :
+- Laporan
+
+
+Fitur yang sedang dalam pengembangan :
+
+- Dashboard harian (meiputi jumlah kejadian berdasarkan ruangan dan jenis)
+- Detail dashboard (per ruangan dan jenis surveilans, meliputi rekapitulasi data dan grafik)
+- Rekapitulasi dashboard (menampilkan rekapitulasi seluruh data per ruangan dan jenis surveilans)
+- Rekapitulasi terpajan
+- Laporan
+- Beberapa error minor
+
+
+NOTE : File database terdapat di folder database/surveilans.sql

@@ -1,9 +1,15 @@
+<?php
+include("connect/connect.php");
+$id=$_GET['id'];
+$dt=mysqli_fetch_array(mysqli_query($conn, "SELECT * FROM pemakaian_ruangan WHERE id_pemakaian_ruangan = $id"));
+?>
+
 <!DOCTYPE html>
 <html>
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>AdminLTE 2 | Advanced form elements</title>
+  <title>SURVEILANS PPI | RSUI Harapan Anda</title>
   <!-- Tell the browser to be responsive to screen width -->
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
   <!-- Bootstrap 3.3.7 -->
@@ -48,7 +54,7 @@
     <header class="main-header"  style="background-color: white;">
 
       <!-- Logo -->
-      <a href="index2.html" class="logo">
+      <a href="index.php" class="logo">
         <!-- mini logo for sidebar mini 50x50 pixels -->
         <span class="logo-mini"><b>PPI</b></span>
         <!-- logo for regular state and mobile devices -->
@@ -121,14 +127,14 @@
           <!-- <li class="header">HEADER</li> -->
           <!-- Optionally, you can add icons to the links -->
           <li><a href="index.php"><i class="glyphicon glyphicon-stats"></i><span>DASHBOARD</span></a></li>
-          <li class="active treeview">
+          <li class="treeview">
             <a href="#"><i class="fa fa-plus-circle"></i> <span>Tambah Data</span>
               <span class="pull-right-container">
                 <i class="fa fa-angle-left pull-right"></i>
               </span>
             </a>
             <ul class="treeview-menu">
-              <li class="active"><a href="#"><i class="fa fa-plus"></i>Pasien</a></li>
+              <li><a href="create-pasien-data.php"><i class="fa fa-plus"></i>Pasien</a></li>
               <li><a href="create-terpajan.php"><i class="fa fa-plus"></i>Perawat</a></li>
             </ul>
           </li>
@@ -140,7 +146,7 @@
             </a>
             <ul class="treeview-menu">
               <li><a href="data-pasien.php"><i class="fa fa-circle-o"></i>Pasien</a></li>
-              <li><a href="data-terpajan.php"><i class="fa fa-circle-o"></i>Perawat</a></li>
+              <li><a href="data-terpajan.php"><i class="fa fa-circle-o"></i>Terpajan</a></li>
               <li><a href="data-dokter.php"><i class="fa fa-circle-o"></i>Dokter</a></li>
               <li><a href="data-ruangan.php"><i class="fa fa-circle-o"></i>Ruangan</a></li>
             </ul>
@@ -158,132 +164,97 @@
       <!-- Content Header (Page header) -->
       <section class="content-header">
         <h1>
-          TAMBAH DATA
-          <small>Pasien</small>
+          UBAH DATA
+          <small>Ruangan</small>
         </h1>
         <ol class="breadcrumb">
-          <li><a href="#"><i class="fa fa-plus-circle"></i>Tambah Data</a></li>
-          <li>Step 1</li>
-          <li>Step 2</li>
-          <li class="active">Step 3</li>
-          <li>Step 4</li>
+          <li><a href="#"><i class="fa fa-plus-circle"></i>Update Data Ruangan</a></li>
         </ol>
       </section>
 
       <!-- Main content -->
       <section class="content">
 
-        <div class="row form-group">
-          <div class="col-xs-12">
-            <ul class="nav nav-pills nav-justified thumbnail setup-panel" id="myNav">
-              <li id="navStep1" class="li-nav disabled" step="#step-1">
-                <a>
-                  <h4 class="list-group-item-heading">Step 1</h4>
-                  <p class="list-group-item-text">Tambah Data Pasien</p>
-                </a>
-              </li>
-              <li id="navStep2" class="li-nav disabled" step="#step-2">
-                <a>
-                  <h4 class="list-group-item-heading">Step 2</h4>
-                  <p class="list-group-item-text">Tambah Data Informasi Keadaan</p>
-                </a>
-              </li>
-              <li id="navStep3" class="li-nav active" step="#step-3">
-                <a>
-                  <h4 class="list-group-item-heading">Step 3</h4>
-                  <p class="list-group-item-text">Tambah Data Pemakaian Ruangan</p>
-                </a>
-              </li>
-              <li id="navStep4" class="li-nav disabled" step="#step-4">
-                <a>
-                  <h4 class="list-group-item-heading">Step 4</h4>
-                  <p class="list-group-item-text">Tambah Data Pemasangan</p>
-                </a>
-              </li>
-            </ul>
-          </div>
-        </div>
-
         <!-- SELECT2 EXAMPLE -->
         <div class="box box-default">
           <div class="box-body">
 
-            <form class="form-horizontal" role="form">
+            <form class="form-horizontal" role="form" role="form" method="post" action="process/edit-data-ruangan.php" align="">
 
-              <div class="box-header with-border">
-                <h3 class="box-title">Riwayat Pemakaian Ruangan</h3>
-              </div>
-              <!-- /.box-header -->
+              <input type="hidden" value="<?php echo $id ?>" name="id_pmk_ruang">
 
               <div class="form-group">
-                <label for="country" class="col-sm-2 control-label">Ruang/Kelas</label>
+                <label for="country" class="col-sm-2 control-label">Ruang</label>
                 <div class="col-sm-9">
-                  <select id="ruangan" class="form-control select2" data-placeholder="Pilih Ruangan"
-                  style="width: 100%;">
-                    <option>PAV. Melati</option>
-                    <option>PAV. Mawar</option>
-                    <option>ICU</option>
-                    <option>Kesehatan Anak</option>
-                    <option>Anyelir</option>
-                    <option>Alamanda</option>
-                    <option>Kebidanan</option>
-                    <option>Flamboyan</option>
-                    <option>Dahlia</option>
-                    <option>Amarilis</option>
-                    <option>Nusa Indah</option>
-                    <option>Casablanca</option>
-                    <option>Catleya</option>
-                    <option>Anggrek</option>
-                    <option>Tulip</option>
-                    <option>Kemuning</option>
+                  <select name="ruangan" class="form-control select2" style="width: 100%;" required>
+                    <option value="" selected disabled>Pilih Ruangan</option>
+                    <?php 
+                    $query = mysqli_query($conn, "SELECT * FROM ruangan");
+                    while($data = mysqli_fetch_assoc($query)) {
+                      $id_r = $data['kode_ruangan'];
+                      $nama_r = $data['nama_ruangan'];
+                      if($id_r == $dt['kode_ruangan']){
+                        echo "<option value='$id_r' selected>$nama_r</option>";
+                      } else {
+                        echo "<option value='$id_r'>$nama_r</option>";
+                      }
+                    }
+                    ?>
                   </select>
                 </div>
-              </div> <!-- /.form-group -->
+              </div>
+              <!-- /.form-group -->
               <div class="form-group">
-                <label for="inDate" class="col-sm-2 control-label">Tanggal Masuk</label>
+                <label for="outroomDate" class="col-sm-2 control-label">Tanggal Masuk</label>
                 <div class="col-sm-9">
-                  <input type="date" id="inDate" class="form-control">
+                  <input type="date" name="inDate" class="form-control" value="<?php echo $dt['tanggal_masuk_ruangan'] ?>" required>
                 </div>
               </div>
               <div class="form-group">
                 <label for="inTime" class="col-sm-2 control-label">Jam Masuk</label>
                 <div class="col-sm-9">
-                  <input type="time" id="inTime" class="form-control">
+                  <input type="time" name="inTime" class="form-control" value="<?php echo $dt['jam_masuk'] ?>" required>
                 </div>
               </div>
               <div class="form-group">
                 <label for="outroomDate" class="col-sm-2 control-label">Tanggal Keluar</label>
                 <div class="col-sm-9">
-                  <input type="date" id="outroomDate" class="form-control">
+                  <input type="date" name="outDate" class="form-control" value="<?php echo $dt['tanggal_keluar_ruangan'] ?>" required>
                 </div>
               </div>
               <div class="form-group">
                 <label for="outTime" class="col-sm-2 control-label">Jam Keluar</label>
                 <div class="col-sm-9">
-                  <input type="time" id="outTime" class="form-control">
+                  <input type="time" name="outTime" class="form-control" value="<?php echo $dt['jam_keluar'] ?>" required>
                 </div>
               </div>
               <div class="form-group">
-                <label for="firstName" class="col-sm-2 control-label">Dokter</label>
-                <div class="col-sm-9">
-                  <input type="text" id="dokter" placeholder="Nama Dokter" class="form-control">
+                <label for="country" class="col-sm-2 control-label">Dokter</label>
+                <div class="col-sm-5">
+                  <select name="dokter" class="form-control select2" style="width: 100%;" required>
+                    <option value="" selected disabled>Pilih Dokter</option>
+                    <?php 
+                    $query = mysqli_query($conn, "SELECT * FROM dokter");
+                    while($data = mysqli_fetch_assoc($query)) {
+                      $id_d = $data['id_dokter'];
+                      $nama_d = $data['nama_dokter'];
+                      if($id_d == $dt['id_dokter']){
+                        echo "<option value='$id_d' selected>$nama_d</option>";
+                      } else {
+                        echo "<option value='$id_d'>$nama_d</option>";
+                      }
+                    }
+                    ?>
+                  </select>
                 </div>
-              </div><br>
+              </div> <!-- /.form-group --><br>
               <div class="form-group">
                 <div class="row">
-                  <div class="col-md-8 col-md-offset-2">
-                    <div class="col-sm-4">
-                      <!-- <button type="submit" class="btn btn-primary btn-block">Register</button> -->
-                      <a onclick="prevStep()" class="btn btn-danger btn-block" href="create-pasien-data-keadaan.php">Sebelumnya</a>
-                    </div>
-                    <div class="col-sm-4">
-                      <!-- <button type="submit" class="btn btn-primary btn-block">Register</button> -->
-                      <a class="btn btn-warning btn-block" href="create-pasien-data-ruangan.php">Tambah Ruangan</a>
-                    </div>
-                    <div class="col-sm-4">
-                      <!-- <button type="submit" class="btn btn-primary btn-block">Register</button> -->
-                      <a class="btn btn-primary btn-block" href="create-pasien-data-pemasangan.php">Selanjutnya</a>
-                    </div>
+                  <div class="col-sm-3 col-md-offset-3">
+                    <button type="submit" class="btn btn-primary btn-block">Simpan</button>
+                  </div>
+                  <div class="col-sm-3">
+                    <a class="btn btn-danger btn-block" href="process/delete-data-ruangan.php?id=<?php echo $id; ?>"><div onclick="return konfirmasi_hapus()" >Hapus</div></a>
                   </div>
                 </div>
               </div>
@@ -313,6 +284,8 @@
   </div>
   <!-- ./wrapper -->
 
+  <!-- JS -->
+  <script src="js/js.js"></script>
   <!-- jQuery 3 -->
   <script src="bower_components/jquery/dist/jquery.min.js"></script>
   <!-- Bootstrap 3.3.7 -->

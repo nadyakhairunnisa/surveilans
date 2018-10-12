@@ -17,28 +17,43 @@ foreach ($faktor as $faktor_r)
 $selected_faktor = substr($selected_faktor, 0, -2);
 
 
-// echo"$selected_faktor";
-// die;
+//Pengecekan tanggal
+$tanggal_masuk = date_create($inDate);
+$tanggal_keluar = date_create($outDate);
+$today = date_create();
+
 
 mysqli_begin_transaction($conn);
 
-$sql = mysqli_query($conn, "INSERT INTO keadaan_pasien (tanggal_masuk_rs, cara_masuk, tanggal_keluar_rs, keadaan_keluar, faktor_resiko, no_rm, kode_penyakit) values ('$inDate', '$caramasuk', '$outDate', '$keadaan', '$selected_faktor', '$norm', '$diagnosa')");
+if($tanggal_masuk <= $today && $tanggal_keluar <= $today){
+	if($tanggal_masuk <= $tanggal_keluar){
+		$sql = mysqli_query($conn, "INSERT INTO keadaan_pasien (tanggal_masuk_rs, cara_masuk, tanggal_keluar_rs, keadaan_keluar, faktor_resiko, no_rm, kode_penyakit) values ('$inDate', '$caramasuk', '$outDate', '$keadaan', '$selected_faktor', '$norm', '$diagnosa')");
 
-if($sql) {
-	mysqli_commit($conn);
+		if($sql) {
+			mysqli_commit($conn);
 
-	$id = mysqli_fetch_array(mysqli_query($conn, "SELECT MAX(id_keadaan) FROM keadaan_pasien LIMIT 1"));
+			$id = mysqli_fetch_array(mysqli_query($conn, "SELECT MAX(id_keadaan) FROM keadaan_pasien LIMIT 1"));
 
-	echo "<script>alert('Data berhasil disimpan!');
-	window.location.href='../create-pasien-data-ruangan.php?id=".$id['MAX(id_keadaan)']."' </script>";
+			echo "<script>alert('Data berhasil disimpan!');
+			window.location.href='../create-pasien-data-ruangan.php?id=".$id['MAX(id_keadaan)']."' </script>";
+		} else {
+			echo mysqli_error ($conn );
+			die;
+			mysqli_rollback($conn);
+			echo "<script>alert('Data gagal disimpan.".mysqli_error ($conn)."');
+			window.location.href='../create-pasien-data-keadaan.php?id=$norm' </script>";
+
+		}
+	} else {
+		echo "<script>alert('Data gagal disimpan. Note: Tanggal Keluar tidak sesuai.');
+		window.location.href='../create-pasien-data-keadaan.php?id=$norm' </script>";
+	}
 } else {
-	echo mysqli_error ($conn );
-	die;
-	mysqli_rollback($conn);
-	echo "<script>alert('Data gagal disimpan.".mysqli_error ($conn)."');
+	echo "<script>alert('Data gagal disimpan. Note: Tanggal Masuk/Keluar tidak sesuai.');
 	window.location.href='../create-pasien-data-keadaan.php?id=$norm' </script>";
-
 }
+
+
 
 mysqli_close();
 

@@ -11,14 +11,14 @@ if($pasang=="phlebitis"){
 	$tujuan = $_POST['tujuan'];
 	$keterangan = $_POST['keterangan'];
 
-	$sql = mysqli_query($conn, "INSERT INTO surv_phlebitis (id_keadaan, jenis_invasif, tujuan_pemasangan, keterangan) values ('$id_keadaan', '$jenis', '$tujuan', '$keterangan')");
+	$sql = mysqli_query($conn, "INSERT INTO surv_phlebitis (id_keadaan, jenis_invasif, tujuan_pemasangan, keterangan) values ('$id_keadaan', '$jenis', '$tujuan', '$keterangan')") && mysqli_query($conn, "UPDATE keadaan_pasien SET jenis_surveilans = '$pasang' WHERE id_keadaan = '$id_keadaan'");
 
 } else if($pasang=="iadp"){
 	
 	$tujuan = $_POST['tujuan'];
 	$keterangan = $_POST['keterangan'];
 	
-	$sql = mysqli_query($conn, "INSERT INTO surv_iadp (id_keadaan, tujuan_pemasangan, keterangan) values ('$id_keadaan', '$tujuan', '$keterangan')");
+	$sql = mysqli_query($conn, "INSERT INTO surv_iadp (id_keadaan, tujuan_pemasangan, keterangan) values ('$id_keadaan', '$tujuan', '$keterangan')") && mysqli_query($conn, "UPDATE keadaan_pasien SET jenis_surveilans = '$pasang' WHERE id_keadaan = '$id_keadaan'");
 
 } else if($pasang=="isk"){
 
@@ -27,7 +27,7 @@ if($pasang=="phlebitis"){
 	$date = $_POST['date'];
 	$keterangan = $_POST['keterangan'];
 
-	$sql = mysqli_query($conn, "INSERT INTO surv_isk (id_keadaan, jenis_invasif, jenis_pemeriksaan, tanggal_pemeriksaan, keterangan_pemeriksaan) values ('$id_keadaan', '$jenis', '$pemeriksaan', '$date', '$keterangan')");
+	$sql = mysqli_query($conn, "INSERT INTO surv_isk (id_keadaan, jenis_invasif, jenis_pemeriksaan, tanggal_pemeriksaan, keterangan_pemeriksaan) values ('$id_keadaan', '$jenis', '$pemeriksaan', '$date', '$keterangan')") && mysqli_query($conn, "UPDATE keadaan_pasien SET jenis_surveilans = '$pasang' WHERE id_keadaan = '$id_keadaan'");
 
 } else if($pasang=="vap"){
 
@@ -39,6 +39,7 @@ if($pasang=="phlebitis"){
 	$bundles4 = $_POST['bundles4'];
 	$bundles5 = $_POST['bundles5'];
 	$lepasDate = $_POST['lepasDate'];
+	$infeksiDate = $_POST['infeksiDate'];
 	$keterangan = $_POST['keterangan'];
 	$thorax = $_POST['thorax'];
 	$dateKultur = $_POST['dateKultur'];
@@ -59,7 +60,7 @@ if($pasang=="phlebitis"){
 		$terjadi_infeksi = "Tidak";
 	}
 
-	$sql = mysqli_query($conn, "INSERT INTO surv_vap (id_keadaan, no_ventilator, tanggal_pasang, bundles_posisi, bundles_kebersihan_tangan, bundles_kebersihan_mulut, bundles_manajemen_sekresi, bundles_pengkajian, tanggal_lepas, terjadi_infeksi, tanda_infeksi, keterangan_infeksi, foto_thorax, tanggal_kultur, hasil_kultur) values ('$id_keadaan', '$no', '$pasangDate', '$bundles1', '$bundles2', '$bundles3', '$bundles4', '$bundles5', '$lepasDate', '$terjadi_infeksi', '$selected_tanda', '$keterangan', '$thorax', '$dateKultur', '$hasilKultur')");
+	$sql = mysqli_query($conn, "INSERT INTO surv_vap (id_keadaan, no_ventilator, tanggal_pasang, bundles_posisi, bundles_kebersihan_tangan, bundles_kebersihan_mulut, bundles_manajemen_sekresi, bundles_pengkajian, tanggal_lepas, terjadi_infeksi, tanggal_infeksi, tanda_infeksi, keterangan_infeksi, foto_thorax, tanggal_kultur, hasil_kultur) values ('$id_keadaan', '$no', '$pasangDate', '$bundles1', '$bundles2', '$bundles3', '$bundles4', '$bundles5', '$lepasDate', '$terjadi_infeksi', '$infeksiDate','$selected_tanda', '$keterangan', '$thorax', '$dateKultur', '$hasilKultur')") && mysqli_query($conn, "UPDATE keadaan_pasien SET jenis_surveilans = '$pasang' WHERE id_keadaan = '$id_keadaan'");;
 
 } else if($pasang=="ido"){
 
@@ -81,12 +82,13 @@ if($pasang=="phlebitis"){
 	$implantTrauma = $_POST['implantTrauma'];
 	$endoscopi = $_POST['endoscopi'];
 	$endoscopiTrauma = $_POST['endoscopiTrauma'];
+	$inTime = $_POST['inTime'];
 	$skorASA = $_POST['skorASA'];
 	$pjKamarOpr = $_POST['pjKamarOpr'];
 	$dateKultur = $_POST['dateKultur'];
 	$hasilKultur = $_POST['hasilKultur'];
 
-	$sql = mysqli_query($conn, "INSERT INTO surv_ido (id_keadaan, tanggal_operasi, tindakan_operasi, bundles_tidak_mencukur, bundles_cukur, bundles_suhu, bundles_antibiotik, bundles_kontrol_guladarah, id_dokter_konsultan, dokter_operator, sifat_operasi_emergensi, jenis_operasi, anestesi_umum, no_kamar_operasi, ronde_operasi, jenis_implant, trauma_implant, jenis_endoscopi, trauma_endoscopi, lama_operasi, skor_asa, pj_kamar_operasi, tanggal_kultur, hasil_kultur, ) values ('$id_keadaan', '$operasiDate', '$tindakanOpr', '$bundles1', '$bundles2', '$bundles3', '$bundles4', '$bundles5', '$dokterKons', '$dokterOpr', '$emergensi', '$jenisOperasi', '$anestesi', '$noKamarOpr', '$rondeKamarOpr', '$implant', '$implantTrauma', '$endoscopi', '$endoscopiTrauma', '$skorASA', '$pjKamarOpr', '$dateKultur', '$hasilKultur')");
+	$sql = mysqli_query($conn, "INSERT INTO surv_ido (id_keadaan, tanggal_operasi, tindakan_operasi, bundles_tidak_mencukur, bundles_cukur, bundles_suhu, bundles_antibiotik, bundles_kontrol_guladarah, id_dokter_konsultan, dokter_operator, sifat_operasi_emergensi, jenis_operasi, anestesi_umum, no_kamar_operasi, ronde_operasi, jenis_implant, trauma_implant, jenis_endoscopi, trauma_endoscopi, lama_operasi, skor_asa, pj_kamar_operasi, tanggal_kultur, hasil_kultur) values ('$id_keadaan', '$operasiDate', '$tindakanOpr', '$bundles1', '$bundles2', '$bundles3', '$bundles4', '$bundles5', '$dokterKons', '$dokterOpr', '$emergensi', '$jenisOperasi', '$anestesi', '$noKamarOpr', '$rondeKamarOpr', '$implant', '$implantTrauma', '$endoscopi', '$endoscopiTrauma', '$inTime', '$skorASA', '$pjKamarOpr', '$dateKultur', '$hasilKultur')") && mysqli_query($conn, "UPDATE keadaan_pasien SET jenis_surveilans = '$pasang' WHERE id_keadaan = '$id_keadaan'");;
 
 } else if($pasang=="antibiotik"){
 
@@ -96,7 +98,7 @@ if($pasang=="phlebitis"){
 	$jenis = $_POST['jenis'];
 	$indikasi = $_POST['indikasi'];
 
-	$sql = mysqli_query($conn, "INSERT INTO pemakaian_antibiotik (id_keadaan, nama_obat, tanggal_pemakaian, dosis, jenis, indikasi) values ('$id_keadaan', '$namaObat', '$pemakaianDate', '$dosis', '$jenis', '$indikasi')");
+	$sql = mysqli_query($conn, "INSERT INTO pemakaian_antibiotik (id_keadaan, nama_obat, tanggal_pemakaian, dosis, jenis, indikasi) values ('$id_keadaan', '$namaObat', '$pemakaianDate', '$dosis', '$jenis', '$indikasi')") && mysqli_query($conn, "UPDATE keadaan_pasien SET jenis_surveilans = '$pasang' WHERE id_keadaan = '$id_keadaan'");
 }
 
 
@@ -107,7 +109,7 @@ if($sql) {
 	$id = mysqli_fetch_array(mysqli_query($conn, "SELECT no_rm FROM keadaan_pasien WHERE id_keadaan = $id_keadaan LIMIT 1"));
 
 	echo "<script>alert('Data berhasil disimpan!');
-	window.location.href='../riwayat-pasien.php?id=".$id['no_rm']."' </script>";
+	window.location.href='../riwayat-pasien.php?id=".$id['no_rm']."#timeline' </script>";
 } else {
 	echo mysqli_error ($conn );
 	die;

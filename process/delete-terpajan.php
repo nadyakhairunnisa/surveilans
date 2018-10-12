@@ -3,7 +3,7 @@
 	$id = $_GET['id'];
 
 	mysqli_begin_transaction($conn);
-	$sql = mysqli_query($conn, "DELETE FROM kejadian_terpajan WHERE id_kejadian = '$id'");
+	$sql = mysqli_query($conn, "DELETE FROM surv_terpajan WHERE id_kejadian_terpajan = '$id'");
 
 	if($sql){
 		mysqli_commit($conn);

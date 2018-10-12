@@ -1,3 +1,7 @@
+<?php
+include("../connect/connect.php");
+?>
+
 <div class="form-group">
   <label for="operasiDate" class="col-sm-2 control-label">Tanggal Operasi</label>
   <div class="col-sm-9">
@@ -20,12 +24,12 @@
     <div class="row">
       <div class="col-sm-4">
         <label class="radio-inline">
-          <input type="radio" name="bundles1" id="obat" value="Pemberian Obat" checked>Ya
+          <input type="radio" name="bundles1" id="obat" value="Ya" checked>Ya
         </label>
       </div>
       <div class="col-sm-4">
         <label class="radio-inline">
-          <input type="radio" name="bundles1" id="transfusi" value="Transfusi">Tidak
+          <input type="radio" name="bundles1" id="Tidak" value="Tidak">Tidak
         </label>
       </div>
     </div>
@@ -35,12 +39,12 @@
     <div class="row">
       <div class="col-sm-4">
         <label class="radio-inline">
-          <input type="radio" name="bundles2" id="obat" value="Pemberian Obat" checked>Ya
+          <input type="radio" name="bundles2" id="obat" value="Ya" checked>Ya
         </label>
       </div>
       <div class="col-sm-4">
         <label class="radio-inline">
-          <input type="radio" name="bundles2" id="transfusi" value="Transfusi">Tidak
+          <input type="radio" name="bundles2" id="Tidak" value="Tidak">Tidak
         </label>
       </div>
     </div>
@@ -53,12 +57,12 @@
     <div class="row">
       <div class="col-sm-4">
         <label class="radio-inline">
-          <input type="radio" name="bundles3" id="obat" value="Pemberian Obat" checked>Ya
+          <input type="radio" name="bundles3" id="obat" value="Ya" checked>Ya
         </label>
       </div>
       <div class="col-sm-4">
         <label class="radio-inline">
-          <input type="radio" name="bundles3" id="transfusi" value="Transfusi">Tidak
+          <input type="radio" name="bundles3" id="Tidak" value="Tidak">Tidak
         </label>
       </div>
     </div>
@@ -68,12 +72,12 @@
     <div class="row">
       <div class="col-sm-4">
         <label class="radio-inline">
-          <input type="radio" name="bundles4" id="obat" value="Pemberian Obat" checked>Ya
+          <input type="radio" name="bundles4" id="obat" value="Ya" checked>Ya
         </label>
       </div>
       <div class="col-sm-4">
         <label class="radio-inline">
-          <input type="radio" name="bundles4" id="transfusi" value="Transfusi">Tidak
+          <input type="radio" name="bundles4" id="Tidak" value="Tidak">Tidak
         </label>
       </div>
     </div>
@@ -86,12 +90,12 @@
     <div class="row">
       <div class="col-sm-4">
         <label class="radio-inline">
-          <input type="radio" name="bundles5" id="obat" value="Pemberian Obat" checked>Ya
+          <input type="radio" name="bundles5" id="obat" value="Ya" checked>Ya
         </label>
       </div>
       <div class="col-sm-4">
         <label class="radio-inline">
-          <input type="radio" name="bundles5" id="transfusi" value="Transfusi">Tidak
+          <input type="radio" name="bundles5" id="Tidak" value="Tidak">Tidak
         </label>
       </div>
     </div>
@@ -104,7 +108,7 @@
   <label for="country" class="col-sm-2 control-label">Dokter Konsultan</label>
   <div class="col-sm-5">
     <select name="dokterKons" class="form-control select2" style="width: 100%;" required>
-      <option value="" selected disabled>Pilih Dokter</option>
+      <option value="" selected disabled>Pilih Dokter Konsultan</option>
       <?php 
       $query = mysqli_query($conn, "SELECT * FROM dokter");
       while($data = mysqli_fetch_assoc($query)) {
@@ -119,7 +123,7 @@
 <div class="form-group">
   <label for="dokterKons" class="col-sm-2 control-label">Dokter Operator</label>
   <div class="col-sm-9">
-    <input type="text" name="dokterOpr" placeholder="Dokter Konsultan" class="form-control" required>
+    <input type="text" name="dokterOpr" placeholder="Dokter Operator" class="form-control" required>
   </div>
 </div>
 
@@ -192,10 +196,10 @@
   <div class="col-sm-9">
     <div class="row">
       <div class="col-sm-6">
-        <input type="text" name="noKamarOpr" placeholder="Nomor" class="form-control" required>
+        <input type="text" name="noKamarOpr" placeholder="Nomor" class="form-control" onkeypress="return hanyaAngka(event)" required>
       </div>
       <div class="col-sm-6">
-        <input type="text" name="rondeKamarOpr" placeholder="Ronde Ke-" class="form-control" required>
+        <input type="text" name="rondeKamarOpr" placeholder="Ronde Ke-" class="form-control" onkeypress="return hanyaAngka(event)" required>
       </div>
     </div><br>
   </div>
@@ -247,8 +251,13 @@
 
 <div class="form-group">
   <label for="inTime" class="col-sm-2 control-label">Lama Operasi</label>
-  <div class="col-sm-9">
-    <input type="time" name="inTime" class="form-control" required>
+  <div class="row">
+    <div class="col-sm-3">
+    <input type="text" name="inTime" placeholder="Total Jam Operasi" class="form-control" onkeypress="return hanyaAngka(event)" required>
+    </div>
+    <div class="col-sm-5">
+      <span class="help-block">Masukkan waktu dalam format total jam operasi (Contoh: 5)</span>
+    </div>
   </div>
 </div>
 
@@ -292,11 +301,22 @@
   <div class="col-sm-9">
     <div class="row">
       <div class="col-sm-3">
-        <input type="date" name="dateKultur" class="form-control" required>
+        <input type="date" name="dateKultur" class="form-control">
       </div>
       <div class="col-sm-6">
-        <input type="text" name="hasilKultur" placeholder="Hasil" class="form-control" required>
+        <input type="text" name="hasilKultur" placeholder="Hasil" class="form-control">
       </div>
     </div>
   </div>
 </div><br><!-- /.form-group -->
+
+<script>
+  //Hanya Angka
+  function hanyaAngka(evt) {
+    var charCode = (evt.which) ? evt.which : event.keyCode
+    if (charCode > 31 && (charCode < 48 || charCode > 57))
+     
+      return false;
+    return true;
+  }
+</script>

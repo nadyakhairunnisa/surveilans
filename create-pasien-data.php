@@ -7,7 +7,7 @@ include("connect/connect.php");
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>AdminLTE 2 | Advanced form elements</title>
+  <title>SURVEILANS PPI | RSUI Harapan Anda</title>
   <!-- Tell the browser to be responsive to screen width -->
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
   <!-- Bootstrap 3.3.7 -->
@@ -28,6 +28,8 @@ include("connect/connect.php");
   <link rel="stylesheet" href="plugins/timepicker/bootstrap-timepicker.min.css">
   <!-- Select2 -->
   <link rel="stylesheet" href="bower_components/select2/dist/css/select2.min.css">
+  <!-- CSS file -->
+  <link rel="stylesheet" href="autocomplete/easy-autocomplete.min.css">
   <!-- Theme style -->
   <link rel="stylesheet" href="dist/css/AdminLTE.min.css">
   <!-- AdminLTE Skins. Choose a skin from the css/skins
@@ -52,7 +54,7 @@ include("connect/connect.php");
     <header class="main-header"  style="background-color: white;">
 
       <!-- Logo -->
-      <a href="index2.html" class="logo">
+      <a href="index.php" class="logo">
         <!-- mini logo for sidebar mini 50x50 pixels -->
         <span class="logo-mini"><b>PPI</b></span>
         <!-- logo for regular state and mobile devices -->
@@ -144,7 +146,7 @@ include("connect/connect.php");
             </a>
             <ul class="treeview-menu">
               <li><a href="data-pasien.php"><i class="fa fa-circle-o"></i>Pasien</a></li>
-              <li><a href="data-terpajan.php"><i class="fa fa-circle-o"></i>Perawat</a></li>
+              <li><a href="data-terpajan.php"><i class="fa fa-circle-o"></i>Terpajan</a></li>
               <li><a href="data-dokter.php"><i class="fa fa-circle-o"></i>Dokter</a></li>
               <li><a href="data-ruangan.php"><i class="fa fa-circle-o"></i>Ruangan</a></li>
             </ul>
@@ -220,9 +222,15 @@ include("connect/connect.php");
               <!-- /.box-header -->
 
               <div class="form-group">
+                <label for="email" class="col-sm-2 control-label">Nomor RM</label>
+                <div class="col-sm-9">
+                  <input type="text" name="norm" placeholder="Nomor RM" class="form-control" onkeypress="return hanyaAngka(event)" required autofocus>
+                </div>
+              </div>
+              <div class="form-group">
                 <label for="firstName" class="col-sm-2 control-label">Nama Lengkap</label>
                 <div class="col-sm-9">
-                  <input type="text" name="nama" placeholder="Nama Lengkap" class="form-control" autofocus required>
+                  <input type="text" name="nama" placeholder="Nama Lengkap" class="form-control" required>
                   <!-- <span class="help-block">Last Name, First Name, eg.: Smith, Harry</span> -->
                 </div>
               </div>
@@ -237,18 +245,12 @@ include("connect/connect.php");
                     </div>
                     <div class="col-sm-3">
                       <label class="radio-inline">
-                        <input type="radio" name="gender" id="maleRadio" value="Laki-Laki">Laki-Laki
+                        <input type="radio" name="gender" id="maleRadio" value="Laki-laki">Laki-Laki
                       </label>
                     </div>
                   </div>
                 </div>
               </div> <!-- /.form-group -->
-              <div class="form-group">
-                <label for="email" class="col-sm-2 control-label">Nomor RM</label>
-                <div class="col-sm-9">
-                  <input type="text" name="norm" placeholder="Nomor RM" class="form-control" required>
-                </div>
-              </div>
               <div class="form-group">
                 <label for="birthDate" class="col-sm-2 control-label">Tanggal Lahir</label>
                 <div class="col-sm-9">
@@ -297,6 +299,8 @@ include("connect/connect.php");
 
   <!-- jQuery 3 -->
   <script src="bower_components/jquery/dist/jquery.min.js"></script>
+  <!-- JS file -->
+  <script src="autocomplete/jquery.easy-autocomplete.min.js"></script> 
   <!-- Bootstrap 3.3.7 -->
   <script src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
   <!-- Multiple Step Form -->
@@ -328,6 +332,15 @@ include("connect/connect.php");
   <script src="dist/js/demo.js"></script>
   <!-- Page script -->
   <script>
+    //Hanya Angka
+    function hanyaAngka(evt) {
+      var charCode = (evt.which) ? evt.which : event.keyCode
+      if (charCode > 31 && (charCode < 48 || charCode > 57))
+
+        return false;
+      return true;
+    }
+
     $(function () {
     //Initialize Select2 Elements
     $('.select2').select2()
@@ -394,5 +407,47 @@ include("connect/connect.php");
     })
   })
 </script>
+
+<script>
+  var options = {
+    url: function(phrase) { 
+      return "autocomplete-data-pasien.php?q=" + phrase;
+    },
+
+    getValue: "no_rm",
+
+    ajaxSettings: {},
+
+    list: {
+      onChooseEvent: function() {
+        var selectedItem = $('[name="norm"]').getSelectedItemData();
+        $('[name="nama"]').val(selectedItem["nama_pasien"]);
+        $('[name="birthDate"]').val(selectedItem["tanggal_lahir"]);
+        $('[name="alamat"]').val(selectedItem["alamat"]);
+        $('[name="gender"][value="'+selectedItem["jenis_kelamin"]+'"]').prop("checked", true);
+      },
+      onLoadEvent: function () {
+        $('[name="nama"]').val("");
+        $('[name="birthDate"]').val("");
+        $('[name="alamat"]').val("");
+      }
+    },
+
+    requestDelay: 300,
+
+    theme: "round"
+  };
+
+  $('[name="norm"]').easyAutocomplete(options);
+
+  $('[name="norm"]').change(function(){
+    if ($(this).val() == "") {
+      $('[name="nama"]').val("");
+      $('[name="birthDate"]').val("");
+      $('[name="alamat"]').val("");
+    }
+  });
+</script>
+
 </body>
 </html>

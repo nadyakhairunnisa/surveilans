@@ -1,7 +1,7 @@
 <div class="form-group">
     <label for="infeksiDate" class="col-sm-2 control-label">Tanggal Infeksi</label>
     <div class="col-sm-9">
-      <input type="date" id="lepasDate" class="form-control">
+      <input type="date" name="infeksiDate" class="form-control" required>
   </div>
 </div>
 
@@ -12,35 +12,35 @@
         <div class="col-sm-2">
           <div class="checkbox">
             <label>
-              <input type="checkbox" id="suhu" value="Suhu >38C">Suhu >38C
+              <input type="checkbox" name="tanda[]" id="suhu" value="Suhu >38C">Suhu >38C
             </label>
           </div>
         </div>
         <div class="col-sm-2">
           <div class="checkbox">
             <label>
-              <input type="checkbox" id="suhu" value="Suhu <37C">Suhu <37C
+              <input type="checkbox" name="tanda[]" id="suhu" value="Suhu <37C">Suhu <37C
             </label>
           </div>
         </div>
         <div class="col-sm-3">
           <div class="checkbox">
             <label>
-              <input type="checkbox" id="sistolik" value="Nadi <100/m">Frek. Nadi <100/m
+              <input type="checkbox" name="tanda[]" id="sistolik" value="Nadi <100/m">Frek. Nadi <100/m
             </label>
           </div>
         </div>
         <div class="col-sm-3">
           <div class="checkbox">
             <label>
-              <input type="checkbox" id="apnu" value="Apnu">Apnu
+              <input type="checkbox" name="tanda[]" id="apnu" value="Apnu">Apnu
             </label>
           </div>
         </div>
         <div class="col-sm-2">
           <div class="checkbox">
             <label>
-              <input type="checkbox" id="Pus" value="Pus">Pus
+              <input type="checkbox" name="tanda[]" id="Pus" value="Pus">Pus
             </label>
           </div>
         </div>
@@ -49,45 +49,39 @@
         <div class="col-sm-2">
           <div class="checkbox">
             <label>
-              <input type="checkbox" id="Letargi" value="Letargi">Letargi
+              <input type="checkbox" name="tanda[]" id="Letargi" value="Letargi">Letargi
             </label>
           </div>
         </div>
         <div class="col-sm-2">
           <div class="checkbox">
             <label>
-              <input type="checkbox" id="Muntah" value="Muntah">Muntah
+              <input type="checkbox" name="tanda[]" id="Muntah" value="Muntah">Muntah
             </label>
           </div>
         </div>
         <div class="col-sm-3">
           <div class="checkbox">
             <label>
-              <input type="checkbox" id="Anyang-anyangan" value="Anyang-anyangan">Anyang-anyangan
+              <input type="checkbox" name="tanda[]" id="Anyang-anyangan" value="Anyang-anyangan">Anyang-anyangan
             </label>
           </div>
         </div>
         <div class="col-sm-3">
           <div class="checkbox">
             <label>
-              <input type="checkbox" id="Nyeri-Supra-Publik" value="Nyeri Supra Publik">Nyeri Supra Publik
+              <input type="checkbox" name="tanda[]" id="Nyeri-Supra-Publik" value="Nyeri Supra Publik">Nyeri Supra Publik
             </label>
           </div>
         </div>
         <div class="col-sm-2">
           <div class="checkbox">
             <label>
-              <input type="checkbox" id="Nyeri-Berkemih" value="Nyeri Berkemih">Nyeri Berkemih
+              <input type="checkbox" name="tanda[]" id="Nyeri-Berkemih" value="Nyeri Berkemih">Nyeri Berkemih
+              <input type="hidden" name="tanda[]" id="" value="" checked>
             </label>
           </div>
         </div>
       </div>
     </div>
 </div> <!-- /.form-group --><br>
-
-<div class="form-group">
-  <label for="keterangan" class="col-sm-2 control-label">Keterangan</label>
-    <div class="col-sm-9">
-      <textarea placeholder="Masukkan Keterangan Tanda-Tanda Infeksi" rows="3" class="form-control"></textarea>
-    </div>
-</div><!-- /.form-group --><br>

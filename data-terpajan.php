@@ -9,7 +9,7 @@ include("connect/connect.php");
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
-  <title>Bootstrap 101 Template</title>
+  <title>SURVEILANS PPI | RSUI Harapan Anda</title>
 
   <!-- Bootstrap -->
   <link href="css/bootstrap.min.css" rel="stylesheet">
@@ -68,7 +68,7 @@ include("connect/connect.php");
     <header class="main-header"  style="background-color: white;">
 
       <!-- Logo -->
-      <a href="index2.html" class="logo">
+      <a href="index.php" class="logo">
         <!-- mini logo for sidebar mini 50x50 pixels -->
         <span class="logo-mini"><b>PPI</b></span>
         <!-- logo for regular state and mobile devices -->
@@ -160,7 +160,7 @@ include("connect/connect.php");
             </a>
             <ul class="treeview-menu">
               <li><a href="data-pasien.php"><i class="fa fa-circle-o"></i>Pasien</a></li>
-              <li class="active"><a href="#"><i class="fa fa-circle-o"></i>Perawat</a></li>
+              <li class="active"><a href="#"><i class="fa fa-circle-o"></i>Terpajan</a></li>
               <li><a href="data-dokter.php"><i class="fa fa-circle-o"></i>Dokter</a></li>
               <li><a href="data-ruangan.php"><i class="fa fa-circle-o"></i>Ruangan</a></li>
             </ul>
@@ -176,35 +176,20 @@ include("connect/connect.php");
     <!-- Content Wrapper. Contains page content -->
     <div class="content-wrapper">
       <!-- Content Header (Page header) -->
-      <div class="dashboard">
-        <div class="col-sm-12 coba">
-          <div class="row">
-            <section class="content-header">
-              <h1>
-                <div class="col-md-4">
-                  DATA PERAWAT TERPAJAN
-                </div>
-                <small>
-                  <div class="col-sm-2">
-                    <a href="data-terpajan-rekapitulasi.php" class="btn btn-sm btn-default btn-flat pull-right" style="border-color:gray;">Lihat Rekapitulasi</a>
-                  </div>
-                </small>
-              </h1>
-              <ol class="breadcrumb">
-                <li><a href="#"><i class="fa fa-dashboard"></i>Surveilans</a></li>
-                <li class="active">Data Perawat</li>
-                <li>Rekapitulasi</li>
-              </ol>
-            </section>
-          </div>
-        </div>
-      </div>
+      <section class="content-header">
+        <h1 style="font-size: 30px; text-decoration: underline;">
+          DATA TERPAJAN
+          <small>
+          <!-- <a href="data-terpajan-rekapitulasi.php" class="btn btn-sm btn-primary btn-flat pull-right" style="border-color:gray;">Lihat Rekapitulasi</a> -->
+          </small>
+        </h1>
+      </section>
 
       <!-- MAIN CONTENT (ISI HALAMAN MULAI) -->
       <section class="content container-fluid">
         <div class="row">
           <div class="col-xs-12">
-            <div class="box">
+            <div class="box box-default">
               <!-- /.box-header -->
               <div class="box-body">
                 <table id="example1" class="table table-bordered table-striped">
@@ -220,7 +205,7 @@ include("connect/connect.php");
                   </thead>
                   <tbody>
                     <?php
-                      $result = mysqli_query($conn, "SELECT kt.id_kejadian, kt.nama_terpajan, kt.tanggal_laporan, r.nama_ruangan, kt.rute_pajanan, kt.sumber_pajanan FROM kejadian_terpajan kt JOIN ruangan r ON kt.kode_ruangan = r.kode_ruangan"); 
+                      $result = mysqli_query($conn, "SELECT kt.id_kejadian_terpajan, kt.nama_terpajan, kt.tanggal_laporan, r.nama_ruangan, kt.rute_pajanan, kt.sumber_pajanan FROM surv_terpajan kt JOIN ruangan r ON kt.kode_ruangan = r.kode_ruangan"); 
                       foreach ($result as $index => $row) { ?>
 
                     <tr>
@@ -230,23 +215,14 @@ include("connect/connect.php");
                       <td><?php echo $row['rute_pajanan']; ?></td>
                       <td><?php echo $row['sumber_pajanan']; ?></td>
                       <td style="font-size:20px">
-                        <div class="col-sm-2"><a href="update-terpajan.php?id=<?php echo $row['id_kejadian']; ?>"><i class="fa fa-pencil"></i></a></div>
-                        <div class="col-sm-1"><a href="process/delete-terpajan.php?id=<?php echo $row['id_kejadian']; ?>"><i class="fa fa-trash-o"></i></a></div>
+                        <div class="col-sm-2"><a href="update-terpajan.php?id=<?php echo $row['id_kejadian_terpajan']; ?>"><i class="fa fa-pencil"></i></a></div>
+                        <div class="col-sm-1"><a href="process/delete-terpajan.php?id=<?php echo $row['id_kejadian_terpajan']; ?>"><i class="fa fa-trash-o"></i></a></div>
                       </td>
                     </tr>
 
                     <?php } ?>
 
                   </tbody>
-                  <!-- <tfoot>
-                    <tr>
-                      <th>Rendering engine</th>
-                      <th>Browser</th>
-                      <th>Platform(s)</th>
-                      <th>Engine version</th>
-                      <th>CSS grade</th>
-                    </tr>
-                  </tfoot> -->
                 </table>
               </div>
               <!-- /.box-body -->

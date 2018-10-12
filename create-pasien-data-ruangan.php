@@ -1,7 +1,13 @@
 <?php
 include("connect/connect.php");
 $id=$_GET['id'];
-$data = mysqli_fetch_array(mysqli_query($conn, "SELECT tanggal_masuk_rs FROM keadaan_pasien WHERE id_keadaan =$id LIMIT 1"));
+$data = mysqli_fetch_array(mysqli_query($conn, "SELECT cara_masuk, tanggal_masuk_rs, tanggal_keluar_rs FROM keadaan_pasien WHERE id_keadaan =$id LIMIT 1"));
+
+$id_ruang = "";
+if($data['cara_masuk'] == "IGD"){
+  $id_ruang = "R020";
+}
+
 ?>
 
 <!DOCTYPE html>
@@ -9,7 +15,7 @@ $data = mysqli_fetch_array(mysqli_query($conn, "SELECT tanggal_masuk_rs FROM kea
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>AdminLTE 2 | Advanced form elements</title>
+  <title>SURVEILANS PPI | RSUI Harapan Anda</title>
   <!-- Tell the browser to be responsive to screen width -->
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
   <!-- Bootstrap 3.3.7 -->
@@ -54,7 +60,7 @@ $data = mysqli_fetch_array(mysqli_query($conn, "SELECT tanggal_masuk_rs FROM kea
     <header class="main-header"  style="background-color: white;">
 
       <!-- Logo -->
-      <a href="index2.html" class="logo">
+      <a href="index.php" class="logo">
         <!-- mini logo for sidebar mini 50x50 pixels -->
         <span class="logo-mini"><b>PPI</b></span>
         <!-- logo for regular state and mobile devices -->
@@ -146,7 +152,7 @@ $data = mysqli_fetch_array(mysqli_query($conn, "SELECT tanggal_masuk_rs FROM kea
             </a>
             <ul class="treeview-menu">
               <li><a href="data-pasien.php"><i class="fa fa-circle-o"></i>Pasien</a></li>
-              <li><a href="data-terpajan.php"><i class="fa fa-circle-o"></i>Perawat</a></li>
+              <li><a href="data-terpajan.php"><i class="fa fa-circle-o"></i>Terpajan</a></li>
               <li><a href="data-dokter.php"><i class="fa fa-circle-o"></i>Dokter</a></li>
               <li><a href="data-ruangan.php"><i class="fa fa-circle-o"></i>Ruangan</a></li>
             </ul>
@@ -219,10 +225,22 @@ $data = mysqli_fetch_array(mysqli_query($conn, "SELECT tanggal_masuk_rs FROM kea
               <input type="hidden" value="<?php echo $id ?>" name="id_keadaan">
 
               <div class="form-group">
-                <label for="country" class="col-sm-2 control-label">Ruang/Kelas</label>
+                <label for="country" class="col-sm-2 control-label">Ruang</label>
                 <div class="col-sm-9">
                   <select name="ruangan" class="form-control select2" style="width: 100%;" required>
-                    <option selected value="R020">IGD</option>
+                    <option value="" selected disabled>Pilih Ruangan</option>
+                    <?php 
+                    $query = mysqli_query($conn, "SELECT * FROM ruangan");
+                    while($data2 = mysqli_fetch_assoc($query)) {
+                      $id_r = $data2['kode_ruangan'];
+                      $nama_r = $data2['nama_ruangan'];
+                      if($id_r == $id_ruang){
+                        echo "<option value='$id_r' selected>$nama_r</option>";
+                      } else {
+                        echo "<option value='$id_r'>$nama_r</option>";
+                      } 
+                    }
+                    ?>
                   </select>
                 </div>
               </div>
@@ -237,18 +255,21 @@ $data = mysqli_fetch_array(mysqli_query($conn, "SELECT tanggal_masuk_rs FROM kea
                 <label for="inTime" class="col-sm-2 control-label">Jam Masuk</label>
                 <div class="col-sm-9">
                   <input type="time" name="inTime" class="form-control" required>
+                  <span class="help-block">Menggunakan format AM (00:00-11:59) dan PM (12:00-23:59)</span>
                 </div>
               </div>
               <div class="form-group">
                 <label for="outroomDate" class="col-sm-2 control-label">Tanggal Keluar</label>
                 <div class="col-sm-9">
-                  <input type="date" name="outDate" class="form-control" required>
+                  <input type="date" name="outDate" class="form-control">
+                  <span class="help-block">Tanggal Keluar RS : <?php echo $data['tanggal_keluar_rs']; ?></span>
                 </div>
               </div>
               <div class="form-group">
                 <label for="outTime" class="col-sm-2 control-label">Jam Keluar</label>
                 <div class="col-sm-9">
-                  <input type="time" name="outTime" class="form-control" required>
+                  <input type="time" name="outTime" class="form-control">
+                  <span class="help-block">Menggunakan format AM (00:00-11:59) dan PM (12:00-23:59)</span>
                 </div>
               </div>
               <div class="form-group">
@@ -258,9 +279,9 @@ $data = mysqli_fetch_array(mysqli_query($conn, "SELECT tanggal_masuk_rs FROM kea
                     <option value="" selected disabled>Pilih Dokter</option>
                     <?php 
                     $query = mysqli_query($conn, "SELECT * FROM dokter");
-                    while($data = mysqli_fetch_assoc($query)) {
-                      $id_d = $data['id_dokter'];
-                      $nama_d = $data['nama_dokter'];
+                    while($data3 = mysqli_fetch_assoc($query)) {
+                      $id_d = $data3['id_dokter'];
+                      $nama_d = $data3['nama_dokter'];
                       echo "<option value='$id_d'>$nama_d</option>"; }
                     ?>
                   </select>
@@ -268,16 +289,16 @@ $data = mysqli_fetch_array(mysqli_query($conn, "SELECT tanggal_masuk_rs FROM kea
               </div> <!-- /.form-group --><br>
               <div class="form-group">
                 <div class="row">
-                  <div class="col-md-8 col-md-offset-3">
-                    <div class="col-sm-4">
-                      <!-- <button type="submit" class="btn btn-primary btn-block">Selanjutnya</button> -->
+                  <!-- <div class="col-md-8 col-md-offset-3"> -->
+                    <!-- <div class="col-sm-4">
+                      <button type="submit" class="btn btn-primary btn-block">Selanjutnya</button>
                       <a onclick="prevStep()" class="btn btn-danger btn-block" href="create-pasien-data-keadaan.php">Sebelumnya</a>
-                    </div>
-                    <div class="col-sm-4">
+                    </div> -->
+                    <!-- <div class="col-sm-4"> --><div class="col-sm-9 col-sm-offset-2">
                       <button type="submit" class="btn btn-primary btn-block">Selanjutnya</button>
                       <!-- <a class="btn btn-primary btn-block" href="create-pasien-data-pemasangan.php">Selanjutnya</a> -->
                     </div>
-                  </div>
+                  <!-- </div> -->
                 </div>
               </div>
             </form> <!-- /form -->

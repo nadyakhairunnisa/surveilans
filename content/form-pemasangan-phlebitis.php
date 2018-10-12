@@ -54,6 +54,6 @@
 <div class="form-group">
   <label for="address" class="col-sm-2 control-label">Keterangan</label>
   <div class="col-sm-9">
-    <textarea name="keterangan" placeholder="Keterangan Tujuan Pemasangan ..." rows="3" class="form-control" required></textarea>
+    <textarea name="keterangan" placeholder="Keterangan Tujuan Pemasangan ..." rows="3" class="form-control"></textarea>
   </div>
 </div><br>

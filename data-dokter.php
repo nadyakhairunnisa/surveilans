@@ -9,7 +9,7 @@ include("connect/connect.php");
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
-  <title>Bootstrap 101 Template</title>
+  <title>SURVEILANS PPI | RSUI Harapan Anda</title>
 
   <!-- Bootstrap -->
   <link href="css/bootstrap.min.css" rel="stylesheet">
@@ -62,7 +62,7 @@ include("connect/connect.php");
     <header class="main-header"  style="background-color: white;">
 
       <!-- Logo -->
-      <a href="index2.html" class="logo">
+      <a href="index.php" class="logo">
         <!-- mini logo for sidebar mini 50x50 pixels -->
         <span class="logo-mini"><b>PPI</b></span>
         <!-- logo for regular state and mobile devices -->
@@ -254,7 +254,7 @@ include("connect/connect.php");
                   <td><?php echo $row['nama_spesialis']; ?></td>
                   <td style='font-size:20px'>
                     <div class='col-sm-2'><a data-toggle='modal' data-target='#editModal-<?php echo $index; ?>' style='cursor:pointer;'><i class='fa fa-pencil'></i></a></div>
-                    <div class='col-sm-1'><a href='process/delete-dokter.php?id=<?php echo $row['id_dokter']; ?>'><i class='fa fa-trash-o'></i></a></div>                     
+                    <div class='col-sm-1'><a href='process/delete-dokter.php?id=<?php echo $row['id_dokter']; ?>'><div onclick="return konfirmasi_hapus()" ><i class='fa fa-trash-o'></i></div></a></div>                     
                   </td>
                 </tr>
                 <!-- Modal -->
@@ -344,6 +344,8 @@ include("connect/connect.php");
 </div>
 <!-- ./wrapper -->
 
+<!-- JS -->
+<script src="js/js.js"></script>
 <!-- jQuery 3 -->
 <script src="bower_components/jquery/dist/jquery.min.js"></script>
 <!-- jQuery UI 1.11.4 -->

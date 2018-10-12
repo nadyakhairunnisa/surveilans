@@ -1,9 +1,14 @@
+<?php
+include("connect/connect.php");
+$id=$_GET['id'];
+?>
+
 <!DOCTYPE html>
 <html>
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>AdminLTE 2 | Advanced form elements</title>
+  <title>SURVEILANS PPI | RSUI Harapan Anda</title>
   <!-- Tell the browser to be responsive to screen width -->
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
   <!-- Bootstrap 3.3.7 -->
@@ -48,7 +53,7 @@
     <header class="main-header"  style="background-color: white;">
 
       <!-- Logo -->
-      <a href="index2.html" class="logo">
+      <a href="index.php" class="logo">
         <!-- mini logo for sidebar mini 50x50 pixels -->
         <span class="logo-mini"><b>PPI</b></span>
         <!-- logo for regular state and mobile devices -->
@@ -140,7 +145,7 @@
             </a>
             <ul class="treeview-menu">
               <li class="active"><a href="data-pasien.php"><i class="fa fa-circle-o"></i>Pasien</a></li>
-              <li><a href="data-terpajan.php"><i class="fa fa-circle-o"></i>Perawat</a></li>
+              <li><a href="data-terpajan.php"><i class="fa fa-circle-o"></i>Terpajan</a></li>
               <li><a href="data-dokter.php"><i class="fa fa-circle-o"></i>Dokter</a></li>
               <li><a href="data-ruangan.php"><i class="fa fa-circle-o"></i>Ruangan</a></li>
             </ul>
@@ -174,14 +179,15 @@
         <div class="box box-default">
           <div class="box-body">
 
-            <form class="form-horizontal" role="form">
+            <form class="form-horizontal" role="form" method="post" action="process/add-surveilans-phlebitis.php" align="">
+              <input type="hidden" value="<?php echo $id ?>" name="id_surv">
               <div class="form-group">
                 <label class="control-label col-sm-2">Lokasi</label>
                 <div class="col-sm-6">
                   <div class="row">
                     <div class="col-sm-3">
                       <label class="radio-inline">
-                        <input type="radio" name="lokasi" id="taka" value="Ta-Ka">Tangan Kanan
+                        <input type="radio" name="lokasi" id="taka" value="Ta-Ka" checked>Tangan Kanan
                       </label>
                     </div>
                     <div class="col-sm-3">
@@ -206,7 +212,7 @@
               <div class="form-group">
                 <label for="pasangDate" class="col-sm-2 control-label">Tanggal Pasang</label>
                 <div class="col-sm-9">
-                  <input type="date" id="pasangDate" class="form-control">
+                  <input type="date" name="pasangDate" class="form-control" required>
                 </div>
               </div>
 
@@ -218,12 +224,12 @@
                   <div class="row">
                     <div class="col-sm-4">
                       <label class="radio-inline">
-                        <input type="radio" name="tujuan" id="obat" value="Pemberian Obat">Ya
+                        <input type="radio" name="bundles1" id="ya" value="Ya" checked>Ya
                       </label>
                     </div>
                     <div class="col-sm-4">
                       <label class="radio-inline">
-                        <input type="radio" name="tujuan" id="transfusi" value="Transfusi">Tidak
+                        <input type="radio" name="bundles1" id="tidak" value="Tidak">Tidak
                       </label>
                     </div>
                   </div>
@@ -233,12 +239,12 @@
                   <div class="row">
                     <div class="col-sm-4">
                       <label class="radio-inline">
-                        <input type="radio" name="tujuan" id="obat" value="Pemberian Obat">Ya
+                        <input type="radio" name="bundles2" id="ya" value="Ya" checked>Ya
                       </label>
                     </div>
                     <div class="col-sm-4">
                       <label class="radio-inline">
-                        <input type="radio" name="tujuan" id="transfusi" value="Transfusi">Tidak
+                        <input type="radio" name="bundles2" id="tidak" value="Tidak">Tidak
                       </label>
                     </div>
                   </div>
@@ -251,12 +257,12 @@
                   <div class="row">
                     <div class="col-sm-4">
                       <label class="radio-inline">
-                        <input type="radio" name="tujuan" id="obat" value="Pemberian Obat">Ya
+                        <input type="radio" name="bundles3" id="ya" value="Ya" checked>Ya
                       </label>
                     </div>
                     <div class="col-sm-4">
                       <label class="radio-inline">
-                        <input type="radio" name="tujuan" id="transfusi" value="Transfusi">Tidak
+                        <input type="radio" name="bundles3" id="tidak" value="Tidak">Tidak
                       </label>
                     </div>
                   </div>
@@ -266,12 +272,12 @@
                   <div class="row">
                     <div class="col-sm-4">
                       <label class="radio-inline">
-                        <input type="radio" name="tujuan" id="obat" value="Pemberian Obat">Ya
+                        <input type="radio" name="bundles4" id="ya" value="Ya" checked>Ya
                       </label>
                     </div>
                     <div class="col-sm-4">
                       <label class="radio-inline">
-                        <input type="radio" name="tujuan" id="transfusi" value="Transfusi">Tidak
+                        <input type="radio" name="bundles4" id="tidak" value="Tidak">Tidak
                       </label>
                     </div>
                   </div>
@@ -284,12 +290,12 @@
                   <div class="row">
                     <div class="col-sm-3">
                       <label class="radio-inline">
-                        <input type="radio" name="tujuan" id="obat" value="Pemberian Obat">Ya
+                        <input type="radio" name="bundles5" id="ya" value="Ya" checked>Ya
                       </label>
                     </div>
                     <div class="col-sm-3">
                       <label class="radio-inline">
-                        <input type="radio" name="tujuan" id="transfusi" value="Transfusi">Tidak
+                        <input type="radio" name="bundles5" id="tidak" value="Tidak">Tidak
                       </label>
                     </div>
                   </div>
@@ -301,14 +307,14 @@
               <div class="form-group">
                 <label for="lepasDate" class="col-sm-2 control-label">Tanggal Lepas</label>
                 <div class="col-sm-9">
-                  <input type="date" id="lepasDate" class="form-control">
+                  <input type="date" name="lepasDate" class="form-control">
                 </div>
               </div>
 
               <div class="form-group">
                 <label for="country" class="col-sm-2 control-label">Terdapat Tanda Infeksi</label>
                 <div class="col-sm-9">
-                  <select id="tanda" class="form-control select2">
+                  <select id="terjadi" name="terjadi" class="form-control select2" required>
                     <option value="" selected disabled>Apakah terdapat tanda infeksi?</option>
                     <option value="ya">Ya</option>
                     <option value="tidak">Tidak</option>
@@ -322,12 +328,8 @@
               <div class="form-group">
                 <div class="row">
                   <div class="col-sm-3 col-md-offset-3">
-                    <!-- <button type="submit" class="btn btn-primary btn-block">Register</button> -->
-                    <a onclick="prevStep()" class="btn btn-danger btn-block" href="create-pasien-data-ruangan.php">Sebelumnya</a>
-                  </div>
-                  <div class="col-sm-3">
-                    <!-- <button type="submit" class="btn btn-primary btn-block">Register</button> -->
-                    <a class="btn btn-primary btn-block" href="riwayat-pasien.php">Submit</a>
+                    <button type="submit" class="btn btn-primary btn-block">Submit</button>
+                    <!-- <a onclick="prevStep()" class="btn btn-danger btn-block" href="create-pasien-data-ruangan.php">Sebelumnya</a> -->
                   </div>
                 </div>
               </div>
@@ -457,8 +459,8 @@
     })
 
     var cache = {};
-    var tandaLama = $("#tanda").val();
-    $("#tanda").change(function(){
+    var tandaLama = $("#terjadi").val();
+    $("#terjadi").change(function(){
       var input = $(this);
 
       var tandaBaru = input.val();

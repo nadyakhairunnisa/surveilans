@@ -9,7 +9,7 @@ include("connect/connect.php");
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
-  <title>Bootstrap 101 Template</title>
+  <title>SURVEILANS PPI | RSUI Harapan Anda</title>
 
   <!-- Bootstrap -->
   <link href="css/bootstrap.min.css" rel="stylesheet">
@@ -25,14 +25,8 @@ include("connect/connect.php");
   <link rel="stylesheet" href="bower_components/Ionicons/css/ionicons.min.css">
   <!-- Data Tables -->
   <link rel="stylesheet" href="bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css">
-  <!-- Morris chart -->
-  <link rel="stylesheet" href="bower_components/morris.js/morris.css">
-  <!-- jvectormap -->
-  <link rel="stylesheet" href="bower_components/jvectormap/jquery-jvectormap.css">
-  <!-- Date Picker -->
-  <link rel="stylesheet" href="bower_components/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css">
-  <!-- Daterange picker -->
-  <link rel="stylesheet" href="bower_components/bootstrap-daterangepicker/daterangepicker.css">
+  <!-- Select2 -->
+  <link rel="stylesheet" href="bower_components/select2/dist/css/select2.min.css">
   <!-- bootstrap wysihtml5 - text editor -->
   <link rel="stylesheet" href="plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css">
   <!-- Theme style -->
@@ -68,7 +62,7 @@ include("connect/connect.php");
     <header class="main-header"  style="background-color: white;">
 
       <!-- Logo -->
-      <a href="index2.html" class="logo">
+      <a href="index.php" class="logo">
         <!-- mini logo for sidebar mini 50x50 pixels -->
         <span class="logo-mini"><b>PPI</b></span>
         <!-- logo for regular state and mobile devices -->
@@ -160,7 +154,7 @@ include("connect/connect.php");
             </a>
             <ul class="treeview-menu">
               <li class="active"><a href="#"><i class="fa fa-circle-o"></i>Pasien</a></li>
-              <li><a href="data-terpajan.php"><i class="fa fa-circle-o"></i>Perawat</a></li>
+              <li><a href="data-terpajan.php"><i class="fa fa-circle-o"></i>Terpajan</a></li>
               <li><a href="data-dokter.php"><i class="fa fa-circle-o"></i>Dokter</a></li>
               <li><a href="data-ruangan.php"><i class="fa fa-circle-o"></i>Ruangan</a></li>
             </ul>
@@ -177,7 +171,7 @@ include("connect/connect.php");
     <div class="content-wrapper">
       <!-- Content Header (Page header) -->
       <section class="content-header">
-        <h1>
+        <h1 style="font-size: 30px; text-decoration: underline;">
           DATA PASIEN
           <small></small>
         </h1>
@@ -190,63 +184,62 @@ include("connect/connect.php");
 
       <!-- MAIN CONTENT (ISI HALAMAN MULAI) -->
       <section class="content container-fluid">
-        <div class="row">
-          <div class="col-xs-12">
-            <div class="box">
-              <!-- /.box-header -->
-              <div class="box-body">
-                <table id="example1" class="table table-bordered table-striped">
-                  <thead>
-                    <tr>
-                      <th>Nama Pasien</th>
-                      <th>No.RM</th>
-                      <th>Ruangan</th>
-                      <th>Usia (Kategori)</th>
-                      <th>Aksi</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                    <?php 
-                    $row = mysqli_query($conn, "SELECT * FROM identitas_pasien ip JOIN keadaan_pasien kp ON (ip.no_rm = kp.no_rm) JOIN pemakaian_ruangan pr ON (pr.id_keadaan = kp.id_keadaan)");
-                    while ($data = mysqli_fetch_array($row)) {
-                    ?>
-                      <td><?php echo $data['nama_pasien']; ?></td>
-                      <td><?php echo $data['no_rm']; ?></td>
-                      <td></td>
-                      <td><?php echo $data['tanggal_lahir']; ?></td>
-                      <td><a type="button" class="btn btn-block btn-primary btn-xs" href="riwayat-pasien.php?id=<?php echo $data['no_rm']; ?>">Lihat Riwayat</a></td>
-                    </tr>
-                    <?php } ?>
-                  </tbody>
-                </table>
-              </div>
-              <!-- /.box-body -->
-            </div>
-            <!-- /.box -->
+
+        <div class="box box-default">
+
+          <div class="box-body" style="background-color:transparent;">
+            <div class="box-header">
+              <table id="example1" class="table table-bordered table-striped" style="border-color:#dbdbdb">
+                <thead>
+                  <tr>
+                    <th>No.RM</th>
+                    <th>Nama Pasien</th>
+                    <th>Jenis Kelamin</th>
+                    <th>Usia (Kategori)</th>
+                    <th>Aksi</th>
+                  </tr>
+                </thead>
+                <tbody>
+
+                <?php
+                $result = mysqli_query($conn, "SELECT * FROM identitas_pasien");
+                foreach ($result as $index => $row) { ?>
+
+                <tr>
+                  <td><?php echo $row['no_rm']; ?></td>
+                  <td><?php echo $row['nama_pasien']; ?></td>
+                  <td><?php echo $row['jenis_kelamin']; ?></td>
+                  <td><?php echo $row['usia']; ?> Tahun (<?php echo $row['kategori_usia']; ?>)</td>
+                  <td><a type="button" class="btn btn-block btn-primary btn-xs" href="riwayat-pasien.php?id=<?php echo $row['no_rm']; ?>">Lihat Riwayat</a></td>
+                </tr>
+                <?php } ?>
+              </tbody>
+            </table>
           </div>
-          <!-- /.col -->
+          <!-- /.box-header -->
         </div>
-        <!-- /.row -->
-
-      </section>
-      <!-- /.content (ISI HALAMAN SELESAI) -->
-
-    </div>
-    <!-- /.content-wrapper -->
-
-    <!-- Main Footer -->
-    <footer class="main-footer">
-      <!-- To the right -->
-      <div class="pull-right hidden-xs">
-        Universitas Islam Indonesia
+        <!-- /.box-body -->
       </div>
-      <!-- Default to the left -->
-      <strong>Copyright &copy; 2018 <a href="#">Informatika</a>.</strong> All rights reserved.
-    </footer>
+      <!-- /.box -->
+
+    </section>
+    <!-- /.content (ISI HALAMAN SELESAI) -->
 
   </div>
-  <!-- ./wrapper -->
+  <!-- /.content-wrapper -->
+
+  <!-- Main Footer -->
+  <footer class="main-footer">
+    <!-- To the right -->
+    <div class="pull-right hidden-xs">
+      Universitas Islam Indonesia
+    </div>
+    <!-- Default to the left -->
+    <strong>Copyright &copy; 2018 <a href="#">Informatika</a>.</strong> All rights reserved.
+  </footer>
+
+</div>
+<!-- ./wrapper -->
 
 <!-- jQuery 3 -->
 <script src="bower_components/jquery/dist/jquery.min.js"></script>
@@ -261,21 +254,10 @@ include("connect/connect.php");
 <!-- DataTables -->
 <script src="bower_components/datatables.net/js/jquery.dataTables.min.js"></script>
 <script src="bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
-<!-- Morris.js charts -->
-<script src="bower_components/raphael/raphael.min.js"></script>
-<script src="bower_components/morris.js/morris.min.js"></script>
+<!-- Select2 -->
+<script src="bower_components/select2/dist/js/select2.full.min.js"></script>
 <!-- Sparkline -->
 <script src="bower_components/jquery-sparkline/dist/jquery.sparkline.min.js"></script>
-<!-- jvectormap -->
-<script src="plugins/jvectormap/jquery-jvectormap-1.2.2.min.js"></script>
-<script src="plugins/jvectormap/jquery-jvectormap-world-mill-en.js"></script>
-<!-- jQuery Knob Chart -->
-<script src="bower_components/jquery-knob/dist/jquery.knob.min.js"></script>
-<!-- daterangepicker -->
-<script src="bower_components/moment/min/moment.min.js"></script>
-<script src="bower_components/bootstrap-daterangepicker/daterangepicker.js"></script>
-<!-- datepicker -->
-<script src="bower_components/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js"></script>
 <!-- Bootstrap WYSIHTML5 -->
 <script src="plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.all.min.js"></script>
 <!-- SlimScroll -->
@@ -290,6 +272,9 @@ include("connect/connect.php");
 <!-- page script -->
 <script>
   $(function () {
+    //Initialize Select2 Elements
+    $('.select2').select2()
+
     $('#example1').DataTable()
     $('#example2').DataTable({
       'paging'      : true,

@@ -1,9 +1,14 @@
+<?php
+include("connect/connect.php");
+$id=$_GET['id'];
+?>
+
 <!DOCTYPE html>
 <html>
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>AdminLTE 2 | Advanced form elements</title>
+  <title>SURVEILANS PPI | RSUI Harapan Anda</title>
   <!-- Tell the browser to be responsive to screen width -->
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
   <!-- Bootstrap 3.3.7 -->
@@ -48,7 +53,7 @@
     <header class="main-header"  style="background-color: white;">
 
       <!-- Logo -->
-      <a href="index2.html" class="logo">
+      <a href="index.php" class="logo">
         <!-- mini logo for sidebar mini 50x50 pixels -->
         <span class="logo-mini"><b>PPI</b></span>
         <!-- logo for regular state and mobile devices -->
@@ -140,7 +145,7 @@
             </a>
             <ul class="treeview-menu">
               <li class="active"><a href="data-pasien.php"><i class="fa fa-circle-o"></i>Pasien</a></li>
-              <li><a href="data-terpajan.php"><i class="fa fa-circle-o"></i>Perawat</a></li>
+              <li><a href="data-terpajan.php"><i class="fa fa-circle-o"></i>Terpajan</a></li>
               <li><a href="data-dokter.php"><i class="fa fa-circle-o"></i>Dokter</a></li>
               <li><a href="data-ruangan.php"><i class="fa fa-circle-o"></i>Ruangan</a></li>
             </ul>
@@ -174,11 +179,12 @@
         <div class="box box-default">
           <div class="box-body">
 
-            <form class="form-horizontal" role="form">
+            <form class="form-horizontal" role="form" method="post" action="process/add-surveilans-ido.php" align="">
+              <input type="hidden" value="<?php echo $id ?>" name="id_surv">
               <div class="form-group">
                 <label for="pasangDate" class="col-sm-2 control-label">Tanggal Kejadian</label>
                 <div class="col-sm-3">
-                  <input type="date" id="pasangDate" class="form-control">
+                  <input type="date" name="infeksiDate" class="form-control" required>
                 </div>
               </div>
 
@@ -189,35 +195,36 @@
                     <div class="col-sm-2">
                       <div class="checkbox">
                         <label>
-                          <input type="checkbox" id="suhu" value="Suhu>38C">Suhu >38C
+                          <input type="checkbox" name="tanda[]" id="suhu" value="Suhu>38C">Suhu >38C
                         </label>
                       </div>
                     </div>
                     <div class="col-sm-2">
                       <div class="checkbox">
                         <label>
-                          <input type="checkbox" id="drainase" value="Drainase">Drainase
+                          <input type="checkbox" name="tanda[]" id="drainase" value="Drainase">Drainase
                         </label>
                       </div>
                     </div>
                     <div class="col-sm-2">
                       <div class="checkbox">
                         <label>
-                          <input type="checkbox" id="pus" value="Pus">Pus
+                          <input type="checkbox" name="tanda[]" id="pus" value="Pus">Pus
                         </label>
                       </div>
                     </div>
                     <div class="col-sm-2">
                       <div class="checkbox">
                         <label>
-                          <input type="checkbox" id="perforasi" value="Perforasi">Perforasi
+                          <input type="checkbox" name="tanda[]" id="perforasi" value="Perforasi">Perforasi
                         </label>
                       </div>
                     </div>
                     <div class="col-sm-2">
                       <div class="checkbox">
                         <label>
-                          <input type="checkbox" id="fistula" value="Fistula">Fistula
+                          <input type="checkbox" name="tanda[]" id="fistula" value="Fistula">Fistula
+                          <input type="hidden" name="tanda[]" id="" value="" checked>
                         </label>
                       </div>
                     </div>
@@ -228,7 +235,7 @@
               <div class="form-group">
                 <label for="keterangan" class="col-sm-2 control-label">Keterangan</label>
                 <div class="col-sm-9">
-                  <textarea placeholder="Masukkan Keterangan Tanda-Tanda Infeksi" rows="3" class="form-control"></textarea>
+                  <textarea name="keterangan" placeholder="Masukkan Keterangan Tanda-Tanda Infeksi" rows="3" class="form-control"></textarea>
                 </div>
               </div><!-- /.form-group -->
 
@@ -237,10 +244,10 @@
                 <div class="col-sm-9">
                   <div class="row">
                     <div class="col-sm-3">
-                      <input type="date" id="dateKultur" class="form-control">
+                      <input type="date" name="dateKultur" class="form-control">
                     </div>
                     <div class="col-sm-6">
-                      <input type="text" id="hasilKultur" placeholder="Hasil" class="form-control">
+                      <input type="text" name="hasilKultur" placeholder="Hasil" class="form-control">
                     </div>
                   </div>
                 </div>
@@ -249,12 +256,8 @@
               <div class="form-group">
                 <div class="row">
                   <div class="col-sm-3 col-md-offset-3">
-                    <!-- <button type="submit" class="btn btn-primary btn-block">Register</button> -->
-                    <a onclick="prevStep()" class="btn btn-danger btn-block" href="create-pasien-data-ruangan.php">Sebelumnya</a>
-                  </div>
-                  <div class="col-sm-3">
-                    <!-- <button type="submit" class="btn btn-primary btn-block">Register</button> -->
-                    <a class="btn btn-primary btn-block" href="riwayat-pasien.php">Submit</a>
+                    <button type="submit" class="btn btn-primary btn-block">Simpan</button>
+                    <!-- <a onclick="prevStep()" class="btn btn-danger btn-block" href="create-pasien-data-ruangan.php">Sebelumnya</a> -->
                   </div>
                 </div>
               </div>

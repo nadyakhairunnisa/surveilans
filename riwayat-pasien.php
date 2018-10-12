@@ -1,7 +1,25 @@
 <?php
 include("connect/connect.php");
 $norm=$_GET['id'];
-$data = mysqli_fetch_array(mysqli_query($conn, "SELECT * FROM identitas_pasien ip JOIN keadaan_pasien kp ON (ip.no_rm = kp.no_rm) JOIN pemakaian_ruangan pr ON (pr.id_keadaan = kp.id_keadaan) WHERE ip.no_rm =$norm LIMIT 1"));
+$dt = mysqli_query($conn, "SELECT * FROM identitas_pasien ip JOIN keadaan_pasien kp ON (ip.no_rm = kp.no_rm) WHERE kp.no_rm =$norm LIMIT 1");
+$data = mysqli_fetch_array($dt);
+
+$surveilans = strtolower($data['jenis_surveilans']);
+
+// $query = mysqli_query($conn, "SELECT * FROM surv_$surveilans WHERE id_keadaan = $data[id_keadaan]");
+// $data3 = mysqli_fetch_array($query);
+
+// if($surveilans=="phlebitis"){
+//   $query = mysqli_query($conn, "SELECT * FROM surv_phlebitis WHERE id_keadaan = $data[id_keadaan]");
+// } else if($surveilans=="iadp"){
+//   $query = mysqli_query($conn, "SELECT * FROM surv_iadp WHERE id_keadaan = $data[id_keadaan]");
+// } else if($surveilans=="isk"){
+//   $query = mysqli_query($conn, "SELECT * FROM surv_isk WHERE id_keadaan = $data[id_keadaan]");
+// } else if($surveilans=="ido"){
+//   $query = mysqli_query($conn, "SELECT * FROM surv_ido WHERE id_keadaan = $data[id_keadaan]");
+// } else {
+//   $query = mysqli_query($conn, "SELECT * FROM surv_vap WHERE id_keadaan = $data[id_keadaan]");
+// }
 ?>
 
 <!DOCTYPE html>
@@ -9,7 +27,7 @@ $data = mysqli_fetch_array(mysqli_query($conn, "SELECT * FROM identitas_pasien i
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>AdminLTE 2 | Advanced form elements</title>
+  <title>SURVEILANS PPI | RSUI Harapan Anda</title>
   <!-- Tell the browser to be responsive to screen width -->
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
   <!-- Bootstrap 3.3.7 -->
@@ -44,7 +62,7 @@ $data = mysqli_fetch_array(mysqli_query($conn, "SELECT * FROM identitas_pasien i
     <header class="main-header"  style="background-color: white;">
 
       <!-- Logo -->
-      <a href="index2.html" class="logo">
+      <a href="index.php" class="logo">
         <!-- mini logo for sidebar mini 50x50 pixels -->
         <span class="logo-mini"><b>PPI</b></span>
         <!-- logo for regular state and mobile devices -->
@@ -118,7 +136,7 @@ $data = mysqli_fetch_array(mysqli_query($conn, "SELECT * FROM identitas_pasien i
           <!-- Optionally, you can add icons to the links -->
           <li><a href="index.php"><i class="glyphicon glyphicon-stats"></i><span>DASHBOARD</span></a></li>
           <li class="treeview">
-            <a href="#"><i class="fa fa-plus-circle"></i> <span>Tambah Data</span>
+            <a href="#"><i class="fa fa-plus-circle"></i><span>Tambah Data</span>
               <span class="pull-right-container">
                 <i class="fa fa-angle-left pull-right"></i>
               </span>
@@ -135,8 +153,8 @@ $data = mysqli_fetch_array(mysqli_query($conn, "SELECT * FROM identitas_pasien i
               </span>
             </a>
             <ul class="treeview-menu">
-              <li class="active"><a href="#"><i class="fa fa-circle-o"></i>Pasien</a></li>
-              <li><a href="data-terpajan.php"><i class="fa fa-circle-o"></i>Perawat</a></li>
+              <li class="active"><a href="data-pasien.php"><i class="fa fa-circle-o"></i>Pasien</a></li>
+              <li><a href="data-terpajan.php"><i class="fa fa-circle-o"></i>Terpajan</a></li>
               <li><a href="data-dokter.php"><i class="fa fa-circle-o"></i>Dokter</a></li>
               <li><a href="data-ruangan.php"><i class="fa fa-circle-o"></i>Ruangan</a></li>
             </ul>
@@ -170,23 +188,26 @@ $data = mysqli_fetch_array(mysqli_query($conn, "SELECT * FROM identitas_pasien i
           <div class="col-md-3">
 
             <!-- Profile Image -->
-            <div class="box box-primary">
+            <div class="box">
               <div class="box-body box-profile">
                 <img class="profile-user-img img-responsive img-circle" src="images/patient.png" alt="User profile picture">
 
-                <h3 class="profile-username text-center"><?php echo $data['nama_pasien']; ?></h3>
+                <h3 class="profile-username text-center" style="font-weight: bold;"><?php echo $data['nama_pasien']; ?></h3>
 
-                <p class="text-muted text-center"><?php echo $data['no_rm']; ?></p>
+                <p class="text-muted text-center">No.RM: <?php echo $data['no_rm']; ?></p>
 
                 <ul class="list-group list-group-unbordered">
-                  <li class="list-group-item">
-                    <b>Ruangan</b> <div class="pull-right" style="color: #689999;">Kesehatan Anak</div>
-                  </li>
                   <li class="list-group-item">
                     <b>Jenis Kelamin</b><div class="pull-right" style="color: #689999;"><?php echo $data['jenis_kelamin']; ?></div>
                   </li>
                   <li class="list-group-item">
                     <b>Tanggal Lahir</b> <div class="pull-right" style="color: #689999;"><?php echo $data['tanggal_lahir']; ?></div>
+                  </li>
+                  <li class="list-group-item">
+                    <b>Usia</b> <div class="pull-right" style="color: #689999;"><?php echo $data['usia']." Tahun"; ?></div>
+                  </li>
+                  <li class="list-group-item">
+                    <b>Kategori Usia</b> <div class="pull-right" style="color: #689999;"><?php echo $data['kategori_usia']; ?></div>
                   </li>
                   <li class="list-group-item">
                     <b>Alamat</b> <p class="text-muted"><?php echo $data['alamat']; ?></p>
@@ -207,169 +228,159 @@ $data = mysqli_fetch_array(mysqli_query($conn, "SELECT * FROM identitas_pasien i
               </ul>
               <div class="tab-content">
                 <div class="active tab-pane" id="activity">
+
                 <!-- Start Informasi Keadaan -->
-                <br>
-                  <strong><i class="fa fa-medkit margin-r-5"></i> Diagnosa Akhir : </strong><?php echo $data['nama_penyakit']; ?><br><br>
-                  <div class="row">
-                    <div class="col-md-4">
-                      <strong><i class="fa fa-calendar margin-r-5"></i> Tanggal Masuk : </strong><?php echo $data['tanggal_masuk_rs']; ?><br><br>
 
-                      <strong><i class="fa fa-file-text-o margin-r-5"></i> Cara Masuk : </strong><?php echo $data['cara_masuk']; ?>
-                    </div>
-                    <div class="col-md-4">
-                      <strong><i class="fa fa-calendar margin-r-5"></i> Tanggal Keluar : </strong>-<br><br>
+                <?php
+                $dt1 = mysqli_query($conn, "SELECT * FROM identitas_pasien ip 
+                  JOIN keadaan_pasien kp ON (ip.no_rm = kp.no_rm)
+                  JOIN penyakit p ON (p.kode_penyakit = kp.kode_penyakit) WHERE kp.no_rm =$norm ORDER BY kp.tanggal_masuk_rs DESC");
+                $no = 0;
+                while($data1 = mysqli_fetch_array($dt1)){
+                ?>
 
-                      <strong><i class="fa fa-file-text-o margin-r-5"></i> Keadaan Keluar : </strong>-
+                <!-- Box Comment -->
+                <div class="box box-widget collapsed-box">
+                  <div class="box-header">
+                    <!-- <div class="user-block"> -->
+                    <span class="username" style="font-size: 20px; color:#72afd2; text-decoration:underline;"><strong>CATATAN MEDIS&nbsp</strong></span>
+                    <span class="description">&nbsp<?php echo $data1['tanggal_masuk_rs']; ?></span>
+                    <!-- </div> -->
+                    <!-- /.user-block -->
+                    <div class="box-tools">
+                      <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-plus"></i></button>
                     </div>
-                    <div class="col-md-4">
-                      <h4><small><a href="create-data-ruangan.php"><i class="fa fa-pencil margin-r-5"></i>Edit Informasi Keadaan</a></small><h4>
-                    </div>
+                    <!-- /.box-tools -->
                   </div>
+                  <!-- /.box-header -->
+                  <div class="box-body">
+                    <strong><i class="fa fa-medkit margin-r-5"></i> Diagnosa Akhir : </strong><?php echo $data1['nama_penyakit']; ?><br><br>
+                    <div class="row">
+                      <div class="col-md-4">
+                        <strong><i class="fa fa-calendar margin-r-5"></i> Tanggal Masuk : </strong><?php echo $data1['tanggal_masuk_rs']; ?><br><br>
 
-                  <hr>
+                        <strong><i class="fa fa-file-text-o margin-r-5"></i> Cara Masuk : </strong><?php echo $data1['cara_masuk']; ?><br><br>
+                      </div>
+                      <div class="col-md-4">
+                        <strong><i class="fa fa-calendar margin-r-5"></i> Tanggal Keluar : </strong><?php echo $data1['tanggal_keluar_rs']; ?><br><br>
 
-                  <div class="row">
-                    <div class="col-md-4">
-                      <h4 style="color: #689999;"><strong>Riwayat Pemakaian Ruangan</strong></h4>
+                        <strong><i class="fa fa-file-text-o margin-r-5"></i> Keadaan Keluar : </strong><?php echo $data1['keadaan_keluar']; ?>
+                      </div>
+                      <div class="col-md-4">
+                        <h4><small><a href="update-data-keadaan.php?id=<?php echo $data1['id_keadaan']; ?>"><i class="fa fa-pencil margin-r-5"></i>Edit Informasi Keadaan</a></small><h4>
+                      </div>
                     </div>
-                    <div class="col-md-4">
-                      <h4><small><a href="create-data-ruangan.php"><i class="fa fa-plus-circle margin-r-5"></i>Tambah Pemakaian Ruangan</a></small><h4>
-                    </div>
-                  </div><br>
+                    <div class="row">
+                      <div class="col-md-12">
+                        <strong><i class="fa fa-file-text-o margin-r-5"></i> Faktor Resiko : </strong><?php echo $data1['faktor_resiko']; ?>
+                      </div>
+                    </div><br>
 
-                  <table id="example1" class="table table-bordered table-striped">
-                    <thead>
-                      <tr>
-                        <th>Ruangan</th>
-                        <th>Tanggal Masuk</th>
-                        <th>Jam Masuk</th>
-                        <th>Tanggal Keluar</th>
-                        <th>Jam Keluar</th>
-                        <th>Dokter</th>
-                        <th></th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <tr>
-                        <td>IGD</td>
-                        <td>13 Mei 2018</td>
-                        <td>08.00</td>
-                        <td>13 Mei 2018</td>
-                        <td>10.00</td>
-                        <td>Anita Putri</td>
-                        <td style="text-align: center;"><a href="create-data-ruangan.php"><i class="fa fa-pencil margin-r-5"></i></a></td>
-                      </tr>
-                      <tr>
-                        <td>Kes.Anak</td>
-                        <td>13 Mei 2018</td>
-                        <td>10.30</td>
-                        <td>-</td>
-                        <td>-</td>
-                        <td>Hendi Wijaya</td>
-                        <td style="text-align: center;"><a href="create-data-ruangan.php"><i class="fa fa-pencil margin-r-5"></i></a></td>
-                      </tr>
-                    </tbody>
-                  </table>
+                    <div class="row">
+                      <div class="col-md-4">
+                        <h4 style="color: #689999;"><strong>Riwayat Pemakaian Ruangan</strong></h4>
+                      </div>
+                      <div class="col-md-4">
 
+                        <h4><small><a href="create-new-data-ruangan.php?id=<?php echo $data1['id_keadaan']; ?>"><i class="fa fa-plus-circle margin-r-5"></i>Tambah Pemakaian Ruangan</a></small><h4>
+                      </div>
+                    </div><br>
+
+                    <table id="example1" class="table table-bordered table-striped">
+                      <thead>
+                        <tr>
+                          <th>Ruangan</th>
+                          <th>Tanggal Masuk</th>
+                          <th>Jam Masuk</th>
+                          <th>Tanggal Keluar</th>
+                          <th>Jam Keluar</th>
+                          <th>Dokter</th>
+                          <th></th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <?php
+
+                        $dt2 = mysqli_query($conn, "SELECT * FROM identitas_pasien ip 
+                          JOIN keadaan_pasien kp ON (ip.no_rm = kp.no_rm) 
+                          JOIN pemakaian_ruangan pr ON (pr.id_keadaan = kp.id_keadaan)
+                          JOIN dokter d ON (pr.id_dokter = d.id_dokter) 
+                          JOIN ruangan r ON (pr.kode_ruangan = r.kode_ruangan) WHERE ip.no_rm =$norm");
+
+                        while($data2 = mysqli_fetch_array($dt2)){
+
+                        ?>
+                        <tr>
+                          <td><?php echo $data2['nama_ruangan']; ?></td>
+                          <td><?php echo $data2['tanggal_masuk_ruangan']; ?></td>
+                          <td><?php echo $data2['jam_masuk']; ?></td>
+                          <td><?php echo $data2['tanggal_keluar_ruangan']; ?></td>
+                          <td><?php echo $data2['jam_keluar']; ?></td>
+                          <td><?php echo $data2['nama_dokter']; ?></td>
+                          <td style="text-align: center;"><a href="update-data-ruangan.php?id=<?php echo $data2['id_pemakaian_ruangan']; ?>"><i class="fa fa-pencil margin-r-5"></i></a></td>
+                        </tr>
+                        <?php } ?>
+                      </tbody>
+                    </table>
+                    <!-- <hr> -->
+                  </div>
+                  <!-- /.box-body -->
+                </div>
+                <!-- /.box -->
+
+                <?php } ?>
+                  
                 </div>
                 <!-- /.End Informasi Keadaan -->
+
+
                 <div class="tab-pane" id="timeline">
                   <!-- Start Informasi Pemasangan -->
-                  <br>
-                  <strong><i class="fa fa-medkit margin-r-5"></i> Jenis Pemasangan : </strong>Kateter V Perifer<br><br>
-                  <strong><i class="fa fa-medkit margin-r-5"></i> Tujuan Pemasangan : </strong>Pemberian Obat Sitostatika<br><br>
+                  <?php
 
-                  <hr>
+                  // $data3 = mysqli_fetch_array(mysqli_query($conn, "SELECT * FROM surv_iadp WHERE id_keadaan = $data[id_keadaan]"));
 
-                  <div class="row">
-                    <div class="col-md-4">
-                      <h4 style="color: #689999;"><strong>Riwayat Pemasangan</strong></h4>
-                    </div>
-                    <div class="col-md-4">
-                      <h4><small><a href="create-data-pemasangan.html"><i class="fa fa-plus-circle margin-r-5"></i>Tambah Pemasangan</a></small><h4>
-                    </div>
-                  </div><br>
+                  // while($data3 = mysqli_fetch_array($query)){
 
-                  <div id="pasang">
-                    <a href="content/tabel-riwayat-pemasangan.html" class="btn btn-block btn-primary btn-xs">Lihat</a>
+                  ?>
+                  
+
+                  <div id="konten-surveilans">
                   </div>
 
-                  <!-- <table id="example1" class="table table-bordered table-striped">
-                    <thead>
-                      <tr>
-                        <th>Lokasi</th>
-                        <th>Tanggal Pasang</th>
-                        <th>Tanggal Lepas</th>
-                        <th>Total Hari</th>
-                        <th>Tanggal Infeksi</th>
-                        <th>Sistolik < 90mmHg</th>
-                        <th>Nadi</th>
-                        <th>Suhu >38C</th>
-                        <th>Suhu < 37C</th>
-                        <th>Apnu</th>
-                        <th>Menggigil</th>
-                        <th>Nyeri</th>
-                        <th>Merah</th>
-                        <th>Kalor</th>
-                        <th>Pus</th>
-                        <th>Bengkak</th>
-                        <th></th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <tr>
-                        <td>IGD</td>
-                        <td>13 Mei 2018</td>
-                        <td>08.00</td>
-                        <td>13 Mei 2018</td>
-                        <td>10.00</td>
-                        <td>Anita Putri</td>
-                        <td style="text-align: center;"><a href="create-data-ruangan.php"><i class="fa fa-pencil margin-r-5"></i></a></td>
-                      </tr>
-                      <tr>
-                        <td>Kes.Anak</td>
-                        <td>13 Mei 2018</td>
-                        <td>10.30</td>
-                        <td>-</td>
-                        <td>-</td>
-                        <td>Hendi Wijaya</td>
-                        <td style="text-align: center;"><a href="create-data-ruangan.php"><i class="fa fa-pencil margin-r-5"></i></a></td>
-                      </tr>
-                    </tbody>
-                  </table> -->
+                  <hr>
                 </div>
                 <!-- /.End Informasi Pemasangan -->
 
                 <div class="tab-pane" id="settings">
                   <!-- Start Edit Informasi -->
-                  <form class="form-horizontal">
+                  <form class="form-horizontal" role="form" method="post" action="process/edit-data-pasien.php" align="">
+                    <input type="hidden" value="edit" name="type">
                     <div class="form-group">
-                      <label for="inputName" class="col-sm-2 control-label">Nama</label>
-
+                      <label for="inputNoRM" class="col-sm-2 control-label">No.RM</label>
                       <div class="col-sm-10">
-                        <input type="text" class="form-control" id="inputName" placeholder="Nama">
+                        <input type="hidden" class="form-control" name="oldnorm" value="<?php echo $data['no_rm']; ?>">
+                        <input type="text" class="form-control" name="newnorm" value="<?php echo $data['no_rm']; ?>" required>
                       </div>
                     </div>
                     <div class="form-group">
-                      <label for="inputNoRM" class="col-sm-2 control-label">No.RM</label>
-
+                      <label for="inputName" class="col-sm-2 control-label">Nama</label>
                       <div class="col-sm-10">
-                        <input type="text" class="form-control" id="inputNoRM" placeholder="No.RM">
+                        <input type="text" class="form-control" name="nama" value="<?php echo $data['nama_pasien']; ?>" required>
                       </div>
                     </div>
                     <div class="form-group">
                       <label for="inputGender" class="col-sm-2 control-label">Jenis Kelamin</label>
-
                       <div class="col-sm-6">
                         <div class="row">
                           <div class="col-sm-3">
                             <label class="radio-inline">
-                              <input type="radio" name="gender" id="femaleRadio" value="Perempuan">Perempuan
+                              <input type="radio" name="gender" id="femaleRadio" value="Perempuan" <?php if($data['jenis_kelamin'] == "Perempuan"){echo "checked";} ?>>Perempuan
                             </label>
                           </div>
                           <div class="col-sm-3">
                             <label class="radio-inline">
-                              <input type="radio" name="gender" id="maleRadio" value="Laki-Laki">Laki-Laki
+                              <input type="radio" name="gender" id="maleRadio" value="Laki-Laki" <?php if($data['jenis_kelamin'] == "Laki-laki"){echo "checked";} ?>>Laki-Laki
                             </label>
                           </div>
                         </div>
@@ -377,21 +388,22 @@ $data = mysqli_fetch_array(mysqli_query($conn, "SELECT * FROM identitas_pasien i
                     </div>
                     <div class="form-group">
                       <label for="inputTanggalLahir" class="col-sm-2 control-label">Tanggal Lahir</label>
-
                       <div class="col-sm-10">
-                        <input type="date" id="inputTanggalLahir" class="form-control">
+                        <input type="date" name="birthDate" class="form-control" value="<?php echo $data['tanggal_lahir']; ?>" required>
                       </div>
                     </div>
                     <div class="form-group">
                       <label for="inputAlamat" class="col-sm-2 control-label">Alamat</label>
-
                       <div class="col-sm-10">
-                        <textarea class="form-control" id="inputAlamat" placeholder="Alamat"></textarea>
+                        <textarea class="form-control" name="alamat" required><?php echo $data['alamat']; ?></textarea>
                       </div>
                     </div>
                     <div class="form-group">
-                      <div class="col-sm-offset-2 col-sm-10">
-                        <button type="submit" class="btn btn-danger">Submit</button>
+                      <div class="col-sm-offset-2 col-sm-2">
+                        <button type="submit" class="btn btn-primary">Submit</button>
+                      </div>
+                      <div class="col-sm-2">
+                        <a href="process/delete-pasien.php?id=<?php echo $data['no_rm']; ?>" class="btn btn-block btn-danger"><div onclick="return konfirmasi_hapus()" >Hapus Pasien</div></a>
                       </div>
                     </div>
                   </form>
@@ -410,63 +422,6 @@ $data = mysqli_fetch_array(mysqli_query($conn, "SELECT * FROM identitas_pasien i
         </div>
 
         <!-- /.row -->
-
-        <!-- <div class="row">
-          <div class="col-md-12">
-            <div class="nav-tabs-custom">
-              <div class="tab-content">
-                <div class="tab-pane" id="tabelriwayat"> -->
-                  <!-- Start Informasi Pemasangan -->
-
-                  <!-- <table id="example1" class="table table-bordered table-striped">
-                    <thead>
-                      <tr>
-                        <th>Lokasi</th>
-                        <th>Tanggal Pasang</th>
-                        <th>Tanggal Lepas</th>
-                        <th>Total Hari</th>
-                        <th>Tanggal Infeksi</th>
-                        <th>Sistolik < 90mmHg</th>
-                        <th>Nadi</th>
-                        <th>Suhu >38C</th>
-                        <th>Suhu < 37C</th>
-                        <th>Apnu</th>
-                        <th>Menggigil</th>
-                        <th>Nyeri</th>
-                        <th>Merah</th>
-                        <th>Kalor</th>
-                        <th>Pus</th>
-                        <th>Bengkak</th>
-                        <th></th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <tr>
-                        <td>IGD</td>
-                        <td>13 Mei 2018</td>
-                        <td>08.00</td>
-                        <td>13 Mei 2018</td>
-                        <td>10.00</td>
-                        <td>Anita Putri</td>
-                        <td style="text-align: center;"><a href="create-data-ruangan.php"><i class="fa fa-pencil margin-r-5"></i></a></td>
-                      </tr>
-                      <tr>
-                        <td>Kes.Anak</td>
-                        <td>13 Mei 2018</td>
-                        <td>10.30</td>
-                        <td>-</td>
-                        <td>-</td>
-                        <td>Hendi Wijaya</td>
-                        <td style="text-align: center;"><a href="create-data-ruangan.php"><i class="fa fa-pencil margin-r-5"></i></a></td>
-                      </tr>
-                    </tbody>
-                  </table>
-                </div> -->
-                <!-- /.End Informasi Pemasangan -->
-              <!-- </div>
-            </div>
-          </div>
-        </div> -->
 
       </section>
       <!-- /.content (ISI HALAMAN SELESAI) -->
@@ -487,6 +442,8 @@ $data = mysqli_fetch_array(mysqli_query($conn, "SELECT * FROM identitas_pasien i
   </div>
   <!-- ./wrapper -->
 
+<!-- JS -->
+<script src="js/js.js"></script>
 <!-- jQuery 3 -->
 <script src="bower_components/jquery/dist/jquery.min.js"></script>
 <!-- Bootstrap 3.3.7 -->
@@ -504,6 +461,10 @@ $data = mysqli_fetch_array(mysqli_query($conn, "SELECT * FROM identitas_pasien i
 <script src="dist/js/demo.js"></script>
 
 <script>
+  $(document).ready(function(){
+      $("#konten-surveilans").load("content/read-riwayat-<?php echo $surveilans; ?>.php?id=<?php echo $data['id_keadaan']; ?>");
+  });
+
   $(function () {
     $("a[data-toggle][data-myrelated]").on("show.bs.tab", function (e) {
       var myrelated = $($(this).data("myrelated"));
@@ -512,22 +473,6 @@ $data = mysqli_fetch_array(mysqli_query($conn, "SELECT * FROM identitas_pasien i
     $("a[data-toggle][data-myrelated]").on("hide.bs.tab", function (e) {
       var myrelated = $($(this).data("myrelated"));
       myrelated.hide();
-    });
-  });
-</script>
-
-<script>
-  $(function () {
-    $("#pasang a").click(function(){
-      url = $(this).attr("href");
-      $("#insert-tabel").load(url);
-      return false;
-    });
-    $(document).ajaxStart(function(){
-      $("#insert-chart").css({'display':'none'});
-    });
-    $(document).ajaxComplete(function(){
-      $("#insert-tabel").slideDown('slow');
     });
   });
 </script>

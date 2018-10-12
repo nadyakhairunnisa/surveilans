@@ -1,9 +1,14 @@
+<?php
+include("connect/connect.php");
+$this_date = $_POST['tanggal'];
+?>
+
 <!DOCTYPE html>
 <html>
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>AdminLTE 2 | Advanced form elements</title>
+  <title>SURVEILANS PPI | RSUI Harapan Anda</title>
   <!-- Tell the browser to be responsive to screen width -->
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
   <!-- Bootstrap 3.3.7 -->
@@ -16,6 +21,8 @@
   <link rel="stylesheet" href="bower_components/morris.js/morris.css">
   <!-- jvectormap -->
   <link rel="stylesheet" href="bower_components/jvectormap/jquery-jvectormap.css">
+  <!-- Data Tables -->
+  <link rel="stylesheet" href="bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css">
   <!-- Theme style -->
   <link rel="stylesheet" href="dist/css/AdminLTE.min.css">
   <!-- AdminLTE Skins. Choose a skin from the css/skins
@@ -34,12 +41,10 @@
 </head>
 <body class="hold-transition skin-green-light sidebar-mini">
   <div class="wrapper">
-
     <!-- Main Header -->
     <header class="main-header" style="background-color: white;">
-
       <!-- Logo -->
-      <a href="index2.html" class="logo">
+      <a href="index.php" class="logo">
         <!-- mini logo for sidebar mini 50x50 pixels -->
         <span class="logo-mini"><b>PPI</b></span>
         <!-- logo for regular state and mobile devices -->
@@ -113,7 +118,7 @@
           <!-- Optionally, you can add icons to the links -->
           <li class="active"><a href="index.php"><i class="glyphicon glyphicon-stats"></i><span>DASHBOARD</span></a></li>
           <li class="treeview">
-            <a href="#"><i class="fa fa-plus-circle"></i> <span>Tambah Data</span>
+            <a href="#"><i class="fa fa-plus-circle"></i><span>Tambah Data</span>
               <span class="pull-right-container">
                 <i class="fa fa-angle-left pull-right"></i>
               </span>
@@ -124,20 +129,20 @@
             </ul>
           </li>
           <li class="treeview">
-            <a href="#"><i class="glyphicon glyphicon-th-list"></i> <span>Data</span>
+            <a href="#"><i class="glyphicon glyphicon-th-list"></i><span>Data</span>
               <span class="pull-right-container">
                 <i class="fa fa-angle-left pull-right"></i>
               </span>
             </a>
             <ul class="treeview-menu">
               <li><a href="data-pasien.php"><i class="fa fa-circle-o"></i>Pasien</a></li>
-              <li><a href="data-terpajan.php"><i class="fa fa-circle-o"></i>Perawat</a></li>
+              <li><a href="data-terpajan.php"><i class="fa fa-circle-o"></i>Terpajan</a></li>
               <li><a href="data-dokter.php"><i class="fa fa-circle-o"></i>Dokter</a></li>
               <li><a href="data-ruangan.php"><i class="fa fa-circle-o"></i>Ruangan</a></li>
             </ul>
           </li>
-          <li><a href="laporan.php"><i class="fa fa-file-excel-o" aria-hidden="true"></i> <span>Laporan</span></a></li>
-          <li><a href="login.html"><i class="glyphicon glyphicon-log-out"></i> <span>Logout</span></a></li>
+          <li><a href="laporan.php"><i class="fa fa-file-excel-o" aria-hidden="true"></i><span>Laporan</span></a></li>
+          <li><a href="login.html"><i class="glyphicon glyphicon-log-out"></i><span>Logout</span></a></li>
         </ul>
         <!-- /.sidebar-menu -->
       </section>
@@ -152,444 +157,409 @@
           <div class="row">
             <section class="content-header">
               <h1>
-                <div class="col-md-5">
-                  JUMLAH KEJADIAN INFEKSI PERIODE TAHUN
+                <div class="col-md-4">
+                  JUMLAH KEJADIAN INFEKSI
                 </div>
                 <small>
-                  <div class="col-sm-1">
-                    <div class="form-group">
-                      <select id="ruangan" class="form-control" data-placeholder="Pilih Tahun" style="width: 180%;">
-                        <option>2018</option>
-                        <option>2017</option>
-                        <option>2015</option>
-                        <option>2014</option>
-                        <option>2013</option>
-                        <option>2012</option>
-                        <option>2011</option>
-                        <option>2010</option>
-                        <option>2009</option>
-                        <option>2008</option>
-                        <option>2007</option>
-                        <option>2006</option>
-                      </select>
-                    </div> <!-- /.form-group -->
+                <form action="indexharian.php" method="post">
+                  <div class="col-sm-2">
+                    <a href="index2.php" class="btn btn-primary" style="border-color:gray;">Lihat Data Hari Ini</a>
+                    <!-- <button class="btn btn-primary" type="submit" style="border-color:gray;">Lihat Hari Ini</button> -->
                   </div>
-                </small>
-              </h1>
-              <ol class="breadcrumb">
-                <li><a href="#"><i class="fa fa-dashboard"></i> Surveilans</a></li>
-                <li class="active">Dashboard Ruang</li>
-              </ol>
-            </section>
-          </div>
+                  <div class="col-sm-1">
+                    <a href="index.php" class="btn btn-primary" style="border-color:gray;">Lihat Data Hari Ini</a>
+                    <!-- <button class="btn btn-primary" type="submit" style="border-color:gray;">Lihat Hari Ini</button> -->
+                  </div>
+                </form>
+              </small>
+            </h1>
+          </section>
         </div>
       </div>
+    </div>
 
-      <!-- MAIN CONTENT (ISI HALAMAN MULAI) -->
-      <section class="content container-fluid">
-      <br>
-        <div class="row">
-          <!-- Kotak Start -->
-          <div class="col-md-6">
+    <!-- MAIN CONTENT (ISI HALAMAN MULAI) -->
+    <section class="content container-fluid"><br>
+      <div class="row">
+        <!-- Kotak Start -->
+        <div class="col-md-8">
           <div class="box box-default">
-          <div class="box-body">
-            <div class="box-header with-border">
-                <h3 class="box-title">Ruang Rawat Inap</h3>          
-            </div><br>
-            <div class="col-lg-3 col-xs-6">
-              <!-- small box -->
-              <div class="small-box bg-red" id="index-chart">
-                <div class="inner">
-                <!-- <p>KES.ANAK</p> -->
-
-                  <h3> 11</h3>
-                </div>
-                <div class="icon">
-                  <i class="fa fa-arrow-up"></i>3
-                </div>
-                <a href="content/index-chart.html" class="small-box-footer">KES.ANAK <i class="fa fa-arrow-circle-right"></i></a>
-              </div>
-            </div>
-            <!-- ./col -->
-            <div class="col-lg-3 col-xs-6">
-              <!-- small box -->
-              <div class="small-box bg-white" id="index-chart">
-                <div class="inner">
-                  <!-- <p>NUSA INDAH</p> -->
-
-                  <h3> 2</h3>
-                </div>
-                <div class="icon">
-                  <i class="fa fa-arrow-up"></i>2
-                </div>
-                <a href="#" class="small-box-footer">NUSA INDAH <i class="fa fa-arrow-circle-right"></i></a>
-              </div>
-            </div>
-            <!-- ./col -->
-            <div class="col-lg-3 col-xs-6" id="index-chart">
-              <!-- small box -->
-              <div class="small-box bg-white">
-                <div class="inner">
-                  <!-- <p>PAV.MELATI</p> -->
-
-                  <h3> 2</h3>
-                </div>
-                <div class="icon">
-                  <i class="fa fa-arrow-up"></i>2
-                </div>
-                <a href="#" class="small-box-footer">PAV.MELATI <i class="fa fa-arrow-circle-right"></i></a>
-              </div>
-            </div>
-            <!-- ./col -->
-            <div class="col-lg-3 col-xs-6" id="index-chart">
-              <!-- small box -->
-              <div class="small-box bg-white">
-                <div class="inner">
-                  <!-- <p>PAV.MAWAR</p> -->
-
-                  <h3> 2</h3>
-                </div>
-                <div class="icon">
-                  <i class="fa fa-exchange"></i>
-                </div>
-                <a href="#" class="small-box-footer">PAV.MAWAR <i class="fa fa-arrow-circle-right"></i></a>
-              </div>
-            </div>
-            <!-- ./col -->
-            <div class="col-lg-3 col-xs-6" id="index-chart">
-              <!-- small box -->
-              <div class="small-box bg-white">
-                <div class="inner">
-                  <!-- <p>ICU</p> -->
-
-                  <h3> 2</h3>
-                </div>
-                <div class="icon">
-                  <i class="fa fa-exchange"></i>
-                </div>
-                <a href="#" class="small-box-footer">ICU <i class="fa fa-arrow-circle-right"></i></a>
-              </div>
-            </div>
-            <!-- ./col -->
-            <div class="col-lg-3 col-xs-6" id="index-chart">
-              <!-- small box -->
-              <div class="small-box bg-white">
-                <div class="inner">
-                  <!-- <p>ANYELIR</p> -->
-
-                  <h3> 2</h3>
-                </div>
-                <div class="icon">
-                  <i class="fa fa-exchange"></i>
-                </div>
-                <a href="#" class="small-box-footer">ANYELIR <i class="fa fa-arrow-circle-right"></i></a>
-              </div>
-            </div>
-            <!-- ./col -->
-            <div class="col-lg-3 col-xs-6" id="index-chart">
-              <!-- small box -->
-              <div class="small-box bg-white">
-                <div class="inner">
-                  <!-- <p>ALAMANDA</p> -->
-
-                  <h3> 2</h3>
-                </div>
-                <div class="icon">
-                  <i class="fa fa-exchange"></i>
-                </div>
-                <a href="#" class="small-box-footer">ALAMANDA <i class="fa fa-arrow-circle-right"></i></a>
-              </div>
-            </div>
-            <!-- ./col -->
-            <div class="col-lg-3 col-xs-6" id="index-chart">
-              <!-- small box -->
-              <div class="small-box bg-white">
-                <div class="inner">
-                  <!-- <p>KEBIDANAN</p> -->
-
-                  <h3> 2</h3>
-                </div>
-                <div class="icon">
-                  <i class="fa fa-exchange"></i>
-                </div>
-                <a href="#" class="small-box-footer">KEBIDANAN <i class="fa fa-arrow-circle-right"></i></a>
-              </div>
-            </div>
-            <!-- ./col -->
-            <div class="col-lg-3 col-xs-6" id="index-chart">
-              <!-- small box -->
-              <div class="small-box bg-white">
-                <div class="inner">
-                  <!-- <p>FLAMBOYAN</p> -->
-
-                  <h3> 2</h3>
-                </div>
-                <div class="icon">
-                  <i class="fa fa-exchange"></i>
-                </div>
-                <a href="#" class="small-box-footer">FLAMBOYAN <i class="fa fa-arrow-circle-right"></i></a>
-              </div>
-            </div>
-            <!-- ./col -->
-            <div class="col-lg-3 col-xs-6" id="index-chart">
-              <!-- small box -->
-              <div class="small-box bg-white">
-                <div class="inner">
-                  <!-- <p>DAHLIA</p> -->
-
-                  <h3> 2</h3>
-                </div>
-                <div class="icon">
-                  <i class="fa fa-arrow-down"></i>2
-                </div>
-                <a href="#" class="small-box-footer">DAHLIA <i class="fa fa-arrow-circle-right"></i></a>
-              </div>
-            </div>
-            <!-- ./col -->
-            <div class="col-lg-3 col-xs-6" id="index-chart">
-              <!-- small box -->
-              <div class="small-box bg-white">
-                <div class="inner">
-                  <!-- <p>AMARILIS</p> -->
-
-                  <h3> 2</h3>
-                </div>
-                <div class="icon">
-                  <i class="fa fa-arrow-down"></i>2
-                </div>
-                <a href="#" class="small-box-footer">AMARILIS <i class="fa fa-arrow-circle-right"></i></a>
-              </div>
-            </div>
-            <!-- ./col -->
-            <div class="col-lg-3 col-xs-6" id="index-chart">
-              <!-- small box -->
-              <div class="small-box bg-white">
-                <div class="inner">
-                  <!-- <p>CASABLANCA</p> -->
-
-                  <h3> 2</h3>
-                </div>
-                <div class="icon">
-                  <i class="fa fa-arrow-down"></i>2
-                </div>
-                <a href="#" class="small-box-footer">CASABLANCA <i class="fa fa-arrow-circle-right"></i></a>
-              </div>
-            </div>
-            <!-- ./col -->
-            <div class="col-lg-3 col-xs-6" id="index-chart">
-              <!-- small box -->
-              <div class="small-box bg-white">
-                <div class="inner">
-                  <!-- <p>CATLEYA</p> -->
-
-                  <h3> 2</h3>
-                </div>
-                <div class="icon">
-                  <i class="fa fa-arrow-down"></i>2
-                </div>
-                <a href="#" class="small-box-footer">CATLEYA <i class="fa fa-arrow-circle-right"></i></a>
-              </div>
-            </div>
-            <!-- ./col -->
-            <div class="col-lg-3 col-xs-6" id="index-chart">
-              <!-- small box -->
-              <div class="small-box bg-white">
-                <div class="inner">
-                  <!-- <p>ANGGREK</p> -->
-
-                  <h3> 2</h3>
-                </div>
-                <div class="icon">
-                  <i class="fa fa-arrow-down"></i>2
-                </div>
-                <a href="#" class="small-box-footer">ANGGREK <i class="fa fa-arrow-circle-right"></i></a>
-              </div>
-            </div>
-            <!-- ./col -->
-            <div class="col-lg-3 col-xs-6" id="index-chart">
-              <!-- small box -->
-              <div class="small-box bg-white">
-                <div class="inner">
-                  <!-- <p>TULIP</p> -->
-
-                  <h3> 2</h3>
-                </div>
-                <div class="icon">
-                  <i class="fa fa-arrow-down"></i>2
-                </div>
-                <a href="#" class="small-box-footer">TULIP <i class="fa fa-arrow-circle-right"></i></a>
-              </div>
-            </div>
-            <!-- ./col -->
-            <div class="col-lg-3 col-xs-6" id="index-chart">
-              <!-- small box -->
-              <div class="small-box bg-white">
-                <div class="inner">
-                  <!-- <p>KEMUNING</p> -->
-
-                  <h3> 2</h3>
-                </div>
-                <div class="icon">
-                  <i class="fa fa-arrow-down"></i>2
-                </div>
-                <a href="#" class="small-box-footer">KEMUNING <i class="fa fa-arrow-circle-right"></i></a>
-              </div>
-            </div>
-            <!-- ./col -->
-          </div></div></div>
-          <!-- ./col-md-8 -->
-          <!-- Kotak Ends -->
-
-          <!-- Legends -->
-          <div class="col-md-6">
-            <!-- <h4 style="font-weight:bold;">Keterangan</h4>
-            <button type="" class="btn bg-red btn-flat margin"></button>Jumlah Kejadian Meningkat dengan Bulan Lalu<br>
-            <button type="" class="btn bg-yellow btn-flat margin"></button>Jumlah Kejadian Sama dengan Bulan Lalu<br>
-            <button type="" class="btn bg-green btn-flat margin"></button>Jumlah Kejadian Menurun dengan Bulan Lalu<br><br><br> -->
-
-            <!-- <div id="insert-chart"></div> -->
-
-            <div class="box box-default">
             <div class="box-body">
               <div class="box-header with-border">
-                <h3 class="box-title">Jenis Infeksi</h3>          
+                <h3 class="box-title">Berdasarkan Ruang Rawat Inap (History)</h3>          
               </div><br>
-            <div class="col-lg-4 col-xs-6">
-              <!-- small box -->
-              <div class="small-box bg-red" id="index-chart">
-                <div class="inner">
-                  <!-- <p>IADP & Phlebitis</p> -->
-                  <h3>5</h3>
-                </div>
-                <div class="icon">
-                  <i class="fa fa-arrow-up"></i>3
-                </div>
-                <a href="content/index2-chart.html" class="small-box-footer">IADP & Phlebitis <i class="fa fa-arrow-circle-right"></i></a>
-              </div>
-            </div>
-            <!-- ./col -->
-            <div class="col-lg-5 col-xs-6">
-              <!-- small box -->
-              <div class="small-box bg-white">
-                <div class="inner">
-                  <!-- <p>ISK</p> -->
-                  <h3>2</h3>
-                </div>
-                <div class="icon">
-                  <i class="fa fa-arrow-up"></i>2
-                </div>
-                <a href="#" class="small-box-footer">Infeksi Saluran Kemih <i class="fa fa-arrow-circle-right"></i></a>
-              </div>
-            </div>
-            <!-- ./col -->
-            <div class="col-lg-3 col-xs-6">
-              <!-- small box -->
-              <div class="small-box bg-white">
-                <div class="inner">
-                  <!-- <p>VAP</p> -->
-                  <h3>2</h3>
-                </div>
-                <div class="icon">
-                  <i class="fa fa-arrow-up"></i>2
-                </div>
-                <a href="#" class="small-box-footer">VAP <i class="fa fa-arrow-circle-right"></i></a>
-              </div>
-            </div>
-            <!-- ./col -->
-            <div class="col-lg-1 col-xs-6"></div>
-            <div class="col-lg-5 col-xs-6">
-              <!-- small box -->
-              <div class="small-box bg-white">
-                <div class="inner">
-                  <!-- <p>IDO</p> -->
-                  <h3>2</h3>
-                </div>
-                <div class="icon">
-                  <i class="fa fa-exchange"></i>
-                </div>
-                <a href="#" class="small-box-footer">Infeksi Daerah Operasi <i class="fa fa-arrow-circle-right"></i></a>
-              </div>
-            </div>
-            <!-- </div> -->
-            <!-- ./col -->
-            <div class="col-lg-5 col-xs-6">
-              <!-- small box -->
-              <div class="small-box bg-white">
-                <div class="inner">
-                  <!-- <p>ILE</p> -->
-                  <h3>2</h3>
-                </div>
-                <div class="icon">
-                  <i class="fa fa-exchange"></i>
-                </div>
-                <a href="#" class="small-box-footer">Infeksi Luka Episiotomi <i class="fa fa-arrow-circle-right"></i></a>
-              </div>
-            </div>
-            <!-- ./col -->
 
-          </div></div></div>
-          <!-- ./col-md-5 -->
+              <?php
+
+              $query1 = mysqli_query($conn, "SELECT * FROM ruangan");
+              foreach ($query1 as $index => $data1){
+
+                $kode = $data1['kode_ruangan'];
+                $ruangan = $data1['nama_ruangan'];
+
+                $surv = mysqli_query($conn, "SELECT DISTINCT(jenis_surveilans) FROM keadaan_pasien");
+                $count = 0;
+                while($row = mysqli_fetch_array($surv)){
+
+                  $svlns = $row['jenis_surveilans'];
+
+                  $countquery = mysqli_fetch_array(mysqli_query($conn, "SELECT COUNT(s.id_surv) FROM surv_$svlns s 
+                    JOIN keadaan_pasien kp ON (s.id_keadaan = kp.id_keadaan)
+                    JOIN pemakaian_ruangan pr ON (pr.id_keadaan = kp.id_keadaan)
+                    WHERE s.terjadi_infeksi = 'Ya' AND pr.kode_ruangan = '$kode' AND s.tanggal_infeksi = '$this_date'"));
+                  $countdata = $countquery['COUNT(s.id_surv)'];
+                  $count = $count + $countdata;
+                }
+
+              ?>
+
+              <div class="col-lg-2 col-xs-6" id="index-chart">
+                <!-- small box -->
+                <div class="small-box bg-white">
+                  <div class="inner">
+                    <h3><?php echo $count; ?></h3>
+                  </div>
+                  <div class="icon">
+                    <!-- <i class="fa fa-caret-up"></i>2 -->
+                  </div>
+                  <a class="small-box-footer" data-toggle="modal" data-target="#myModal-<?php echo $index; ?>"><?php echo $ruangan ?>
+                  <!-- <i class="fa fa-arrow-circle-right"></i> -->
+                  </a>
+                </div>
+              </div>
+              <!-- ./col -->
+
+              <!-- Modal -->
+              <div class="modal fade" id="myModal-<?php echo $index; ?>" role="dialog">
+                <div class="modal-dialog">
+
+                  <!-- Modal content-->
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <button type="button" class="close" data-dismiss="modal">&times;</button>
+                      <h4 class="modal-title">Kejadian di Ruang <?php echo $ruangan ?> Juli 2018</h4>
+                    </div>
+                    <div class="modal-body">
+                      <!-- TABLE -->
+                      <div class="table-responsive">
+                        <table class="table no-margin">
+                          <thead>
+                            <tr>
+                              <th>No.</th>
+                              <th>Jenis Infeksi</th>
+                              <th>Jumlah</th>
+                              <th>Rate MIL</th>
+                              <th>Tingkat Rate</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            <tr>
+                              <td>1.</td>
+                              <td>IADP & Phlebitis</td>
+                              <td>5</td>
+                              <td style="color:red;font-weight:bold;">16.22%</td>
+                              <td>
+                                <span class="sparkbar">8,9,3,5,8,5,10</span>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>2.</td>
+                              <td>ISK</a></td>
+                              <td>4</td>
+                              <td>1.43%</td>
+                              <td>
+                                <span class="sparkbar">3,5,8,5,10,8,4</span>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>3.</td>
+                              <td>VAP</td>
+                              <td>0</td>
+                              <td>0%</td>
+                              <td>
+                                <span class="sparkbar">6,8,9,5,4,2,1</span>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>4.</td>
+                              <td>IDO</td>
+                              <td>2</td>
+                              <td>0.89%</td>
+                              <td>
+                                <span class="sparkbar">9,4,5,3,2,1,2</span>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>5.</td>
+                              <td>ILE</td>
+                              <td><span class="label label-success"></span>0</td>
+                              <td>0%</td>
+                              <td>
+                                <span class="sparkbar">1,2,3,0,2,1,0</span>
+                              </td>
+                            </tr>
+                          </tbody>
+                          <tfoot>
+                            <tr>
+                              <th>TOTAL</th>
+                              <th></th>
+                              <th>11</th>
+                              <th>9,08%</th>
+                              <th><span class="sparkbar">10,8,9,4,5,11,14</span></th>
+                            </tr>
+                          </tfoot>
+                        </table>
+                      </div>
+                      <!-- /.table-responsive --><br>
+
+                      <span class="label label-danger">
+                        Satu atau Lebih Rate MIL(0%) Infeksi melebihi Standar
+                      </span>
+                    </div>
+                    <div class="modal-footer">
+                      <a href="index-ruang-detail.php" class="btn btn-default">Lihat Selengkapnya</a>
+                      <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    </div>
+                  </div>
+
+                </div>
+              </div>
+              <!-- /.Modal -->
+
+              <?php } ?>
+            </div>
+            <!-- ./box-body -->
+          </div>
+          <!-- ./box-default -->
         </div>
-        <!-- /.row -->
+        <!-- ./col-md-6 -->
+        <!-- Kotak Ends -->
 
-      </section>
-      <!-- /.content (ISI HALAMAN SELESAI) -->
+        <!-- Legends -->
+        <div class="col-md-4">
+          <!-- Box jenis infeksi -->
+          <div class="box box-default">
+            <div class="box-body">
+              <div class="box-header with-border">
+                <h3 class="box-title">Berdasarkan Jenis Infeksi (History)</h3>          
+              </div><br>
 
-    </div>
-    <!-- /.content-wrapper -->
+              <?php
 
-    <!-- Main Footer -->
-    <footer class="main-footer">
-      <!-- To the right -->
-      <div class="pull-right hidden-xs">
-        Universitas Islam Indonesia
+              $query = mysqli_query($conn, "SELECT nama_infeksi FROM infeksi");
+              foreach ($query as $index1 => $data){
+
+                $surveilans = $data['nama_infeksi'];
+
+                $count = 0;
+
+                $countquery = mysqli_fetch_array(mysqli_query($conn, "SELECT COUNT(s.id_surv) FROM surv_$surveilans s 
+                  JOIN keadaan_pasien kp ON (s.id_keadaan = kp.id_keadaan)
+                  JOIN pemakaian_ruangan pr ON (pr.id_keadaan = kp.id_keadaan)
+                  WHERE s.terjadi_infeksi = 'Ya' AND kp.jenis_surveilans = '$surveilans' AND s.tanggal_infeksi = '$this_date'"));
+                $countdata = $countquery['COUNT(s.id_surv)'];
+                $count = $count + $countdata;
+
+              ?>
+
+              <div class="col-lg-5 col-xs-6">
+                <!-- small box -->
+                <div class="small-box bg-white" id="index-chart">
+                  <div class="inner">
+                    <!-- <p>IADP & Phlebitis</p> -->
+                    <h3><?php echo $count; ?></h3>
+                  </div>
+                  <div class="icon">
+                    <!-- <i class="fa fa-caret-up"></i>3 -->
+                  </div>
+                  <!-- <a href="content/index2-chart.html" class="small-box-footer">IADP & Phlebitis <i class="fa fa-arrow-circle-right"></i></a> -->
+                  <a class="small-box-footer" data-toggle="modal" data-target="#myModal2-<?php echo $index1; ?>"><?php echo $surveilans; ?>
+                  <!-- <i class="fa fa-arrow-circle-right"></i> -->
+                  </a>
+                </div>
+              </div>
+              <!-- ./col -->
+
+              <!-- Modal -->
+              <div class="modal fade" id="myModal2-<?php echo $index1; ?>" role="dialog">
+                <div class="modal-dialog modal-lg">
+
+                  <!-- Modal content-->
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <button type="button" class="close" data-dismiss="modal">&times;</button>
+                      <h4 class="modal-title">Kejadian <?php echo $surveilans; ?> Bulan Juli 2018</h4>
+                    </div>
+                    <div class="modal-body">
+                      <!-- TABLE -->
+                      <table id="example2" class="table table-bordered table-hover">
+                        <thead>
+                          <tr>
+                            <th>Jenis Pemasangan</th>
+                            <th>Jumlah Pasien Terpasang</th>
+                            <th>Jumlah Terjadi Infeksi</th>
+                            <th>Lama Hari Terpasang</th>
+                            <th>Rate MIL (0%)</th>
+                            <th>Aksi</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr>
+                            <td>Kateter V Perifer</td>
+                            <td>73</td>
+                            <td>3</td>
+                            <td>185</td>
+                            <td style="color:red;font-weight:bold;">16.22</td>
+                            <td><a type="button" class="btn btn-block btn-primary btn-xs" href="index-jenis-detail.php">Lihat Selengkapnya</a></td>
+                          </tr>
+                          <tr>
+                            <td>Kateter V Central</td>
+                            <td>0</td>
+                            <td>0</td>
+                            <td>0</td>
+                            <td>0</td>
+                            <td><a type="button" class="btn btn-block btn-primary btn-xs" href="riwayat-pasien.php">Lihat Selengkapnya</a></td>
+                          </tr>
+                          <tr>
+                            <td>Umbilikal</td>
+                            <td>13</td>
+                            <td>0</td>
+                            <td>72</td>
+                            <td>0</td>
+                            <td><a type="button" class="btn btn-block btn-primary btn-xs" href="riwayat-pasien.php">Lihat Selengkapnya</a></td>
+                          </tr>
+                          <tr>
+                            <td>Double Lumen</td>
+                            <td>22</td>
+                            <td>2</td>
+                            <td>1398</td>
+                            <td>1.43</td>
+                            <td><a type="button" class="btn btn-block btn-primary btn-xs" href="riwayat-pasien.php">Lihat Selengkapnya</a></td>
+                          </tr>
+                        </tbody>
+                        <tfoot>
+                          <tr>
+                            <th>Total</th>
+                            <th>108</th>
+                            <th>5</th>
+                            <th>1655</th>
+                            <th>3.02</th>
+                          </tr>
+                        </tfoot>
+                      </table><br>
+                    </div>
+                    <div class="modal-footer">
+                      <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    </div>
+                  </div>
+
+                </div>
+              </div>
+              <!-- /.Modal -->
+
+              <?php } ?>
+            </div>
+            <!-- ./box-body -->
+          </div>
+          <!-- ./box-default -->
+        </div>
+        <!-- ./col-md-6 -->
       </div>
-      <!-- Default to the left -->
-      <strong>Copyright &copy; 2018 <a href="#">Informatika</a>.</strong> All rights reserved.
-    </footer>
+      <!-- ./row -->
+
+    </section>
+    <!-- /.content (ISI HALAMAN SELESAI) -->
 
   </div>
-  <!-- ./wrapper -->
+  <!-- /.content-wrapper -->
 
-  <!-- jQuery 3 -->
-  <script src="bower_components/jquery/dist/jquery.min.js"></script>
-  <!-- Bootstrap 3.3.7 -->
-  <script src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
-  <!-- FastClick -->
-  <script src="bower_components/fastclick/lib/fastclick.js"></script>
-  <!-- AdminLTE App -->
-  <script src="dist/js/adminlte.min.js"></script>
-  <!-- Sparkline -->
-  <script src="bower_components/jquery-sparkline/dist/jquery.sparkline.min.js"></script>
-  <!-- jvectormap  -->
-  <script src="plugins/jvectormap/jquery-jvectormap-1.2.2.min.js"></script>
-  <script src="plugins/jvectormap/jquery-jvectormap-world-mill-en.js"></script>
-  <!-- SlimScroll -->
-  <script src="bower_components/jquery-slimscroll/jquery.slimscroll.min.js"></script>
-  <!-- ChartJS -->
-  <script src="bower_components/chart.js/Chart.js"></script>
-  <!-- AdminLTE for demo purposes -->
-  <script src="dist/js/demo.js"></script>
-  <!-- page script -->
+  <!-- Main Footer -->
+  <footer class="main-footer">
+    <!-- To the right -->
+    <div class="pull-right hidden-xs">
+      Universitas Islam Indonesia
+    </div>
+    <!-- Default to the left -->
+    <strong>Copyright &copy; 2018 <a href="#">Informatika</a>.</strong> All rights reserved.
+  </footer>
+
+</div>
+<!-- ./wrapper -->
+
+<!-- jQuery 3 -->
+<script src="bower_components/jquery/dist/jquery.min.js"></script>
+<!-- Bootstrap 3.3.7 -->
+<script src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+<!-- FastClick -->
+<script src="bower_components/fastclick/lib/fastclick.js"></script>
+<!-- AdminLTE App -->
+<script src="dist/js/adminlte.min.js"></script>
+<!-- Sparkline -->
+<script src="bower_components/jquery-sparkline/dist/jquery.sparkline.min.js"></script>
+<!-- jvectormap  -->
+<script src="plugins/jvectormap/jquery-jvectormap-1.2.2.min.js"></script>
+<script src="plugins/jvectormap/jquery-jvectormap-world-mill-en.js"></script>
+<!-- SlimScroll -->
+<script src="bower_components/jquery-slimscroll/jquery.slimscroll.min.js"></script>
+<!-- ChartJS -->
+<script src="bower_components/chart.js/Chart.js"></script>
+<!-- DataTables -->
+<script src="bower_components/datatables.net/js/jquery.dataTables.min.js"></script>
+<script src="bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
+<!-- AdminLTE for demo purposes -->
+<script src="dist/js/demo.js"></script>
+<!-- page script -->
+<script>
+  $(function () {
+    $("#index-chart a").click(function(){
+      url = $(this).attr("href");
+      $("#insert-chart").load(url);
+      return false;
+    });
+    $(document).ajaxStart(function(){
+      $("#insert-chart").css({'display':'none'});
+    });
+    $(document).ajaxComplete(function(){
+      $("#insert-chart").slideDown('slow');
+    });
+  });
+</script>
+
+<script>
+  $(function () {
+    "use strict";
+      //BAR CHART
+      
+      $(".box-chart").boxWidget();
+
+      // Bar charts using inline values
+      $('.sparkbar').sparkline('html', {type: 'bar'});
+
+      // Tri-state charts using inline values
+      $('.sparktristate').sparkline('html', {type: 'tristate'});
+      $('.sparktristatecols').sparkline('html',
+        {type: 'tristate', colorMap: {'-2': '#fa7', '2': '#44f'}});
+    });
+  </script>
+
   <script>
     $(function () {
-      $("#index-chart a").click(function(){
-        url = $(this).attr("href");
-        $("#insert-chart").load(url);
-        return false;
-      });
-      $(document).ajaxStart(function(){
-        $("#insert-chart").css({'display':'none'});
-      });
-      $(document).ajaxComplete(function(){
-        $("#insert-chart").slideDown('slow');
-      });
-    });
+      $(".box-chart").boxWidget();
+      $('#example1').DataTable()
+      $('#example2').DataTable({
+        'paging'      : true,
+        'lengthChange': false,
+        'searching'   : false,
+        'ordering'    : true,
+        'info'        : true,
+        'autoWidth'   : true
+      })
+    })
   </script>
 
 <!-- Optionally, you can add Slimscroll and FastClick plugins.
     Both of these plugins are recommended to enhance the
     user experience. -->
 
-  </body>
-  </html>
+</body>
+</html>

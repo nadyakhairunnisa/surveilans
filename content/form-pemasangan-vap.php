@@ -1,7 +1,7 @@
 <div class="form-group">
 	<label for="NoVent" class="col-sm-2 control-label">Nomor Ventilator</label>
 	<div class="col-sm-9">
-		<input type="text" name="no" placeholder="Nomor Ventilator" class="form-control" autofocus required>
+		<input type="text" name="no" placeholder="Nomor Ventilator" class="form-control" onkeypress="return hanyaAngka(event)" autofocus required>
   </div>
 </div>
 
@@ -20,12 +20,12 @@
       <div class="row">
         <div class="col-sm-4">
           <label class="radio-inline">
-            <input type="radio" name="bundles1" id="obat" value="Pemberian Obat" checked>Ya
+            <input type="radio" name="bundles1" id="Ya" value="Ya" checked>Ya
           </label>
         </div>
         <div class="col-sm-4">
           <label class="radio-inline">
-            <input type="radio" name="bundles1" id="transfusi" value="Transfusi">Tidak
+            <input type="radio" name="bundles1" id="Tidak" value="Tidak">Tidak
           </label>
         </div>
       </div>
@@ -35,12 +35,12 @@
       <div class="row">
         <div class="col-sm-4">
           <label class="radio-inline">
-            <input type="radio" name="bundles2" id="obat" value="Pemberian Obat" checked>Ya
+            <input type="radio" name="bundles2" id="Ya" value="Ya" checked>Ya
           </label>
         </div>
         <div class="col-sm-4">
           <label class="radio-inline">
-            <input type="radio" name="bundles2" id="transfusi" value="Transfusi">Tidak
+            <input type="radio" name="bundles2" id="Tidak" value="Tidak">Tidak
           </label>
         </div>
       </div>
@@ -53,12 +53,12 @@
       <div class="row">
         <div class="col-sm-4">
           <label class="radio-inline">
-            <input type="radio" name="bundles3" id="obat" value="Pemberian Obat" checked>Ya
+            <input type="radio" name="bundles3" id="Ya" value="Ya" checked>Ya
           </label>
         </div>
         <div class="col-sm-4">
           <label class="radio-inline">
-            <input type="radio" name="bundles3" id="transfusi" value="Transfusi">Tidak
+            <input type="radio" name="bundles3" id="Tidak" value="Tidak">Tidak
           </label>
         </div>
       </div>
@@ -68,12 +68,12 @@
       <div class="row">
         <div class="col-sm-4">
           <label class="radio-inline">
-            <input type="radio" name="bundles4" id="obat" value="Pemberian Obat" checked>Ya
+            <input type="radio" name="bundles4" id="Ya" value="Ya" checked>Ya
           </label>
         </div>
         <div class="col-sm-4">
           <label class="radio-inline">
-            <input type="radio" name="bundles4" id="transfusi" value="Transfusi">Tidak
+            <input type="radio" name="bundles4" id="Tidak" value="Tidak">Tidak
           </label>
         </div>
       </div>
@@ -86,12 +86,12 @@
       <div class="row">
         <div class="col-sm-4">
           <label class="radio-inline">
-            <input type="radio" name="bundles5" id="obat" value="Pemberian Obat" checked>Ya
+            <input type="radio" name="bundles5" id="Ya" value="Ya" checked>Ya
           </label>
         </div>
         <div class="col-sm-4">
           <label class="radio-inline">
-            <input type="radio" name="bundles5" id="transfusi" value="Transfusi">Tidak
+            <input type="radio" name="bundles5" id="Tidak" value="Tidak">Tidak
           </label>
         </div>
       </div>
@@ -108,13 +108,19 @@
 </div>
 
 <div class="form-group">
+    <label for="infeksiDate" class="col-sm-2 control-label">Tanggal Infeksi</label>
+    <div class="col-sm-9">
+      <input type="date" name="infeksiDate" class="form-control">
+  </div>
+</div>
+
+<div class="form-group">
     <label class="control-label col-sm-2">Tanda-Tanda Infeksi</label>
     <div class="col-sm-9">
       <div class="row">
         <div class="col-sm-5">
           <div class="checkbox">
             <label>
-              <input type="hidden" name="tanda[]" id="" value="" checked>
               <input type="checkbox" name="tanda[]" id="suhu" value="Suhu>38C">Suhu >38C
             </label>
           </div>
@@ -143,6 +149,7 @@
           <div class="checkbox">
             <label>
               <input type="checkbox" name="tanda[]" id="fio2Kurang" value="FIO2/PO2 < 240 mmHg">FIO2/PO2 (Kurang dari 240 mmHg)
+              <input type="hidden" name="tanda[]" id="" value="" checked>
             </label>
           </div>
         </div>
@@ -153,7 +160,7 @@
 <div class="form-group">
   <label for="keterangan" class="col-sm-2 control-label">Keterangan</label>
     <div class="col-sm-9">
-      <textarea name="keterangan" placeholder="Masukkan Keterangan Tanda-Tanda Infeksi" rows="3" class="form-control" required></textarea>
+      <textarea name="keterangan" placeholder="Masukkan Keterangan Tanda-Tanda Infeksi" rows="3" class="form-control"></textarea>
     </div>
 </div><!-- /.form-group -->
 
@@ -190,11 +197,22 @@
     <div class="col-sm-9">
       <div class="row">
         <div class="col-sm-3">
-          <input type="date" name="dateKultur" class="form-control" required>
+          <input type="date" name="dateKultur" class="form-control">
         </div>
         <div class="col-sm-6">
-          <input type="text" name="hasilKultur" placeholder="Hasil" class="form-control" required>
+          <input type="text" name="hasilKultur" placeholder="Hasil" class="form-control">
         </div>
       </div>
     </div>
 </div><br> <!-- /.form-group -->
+
+<script>
+  //Hanya Angka
+  function hanyaAngka(evt) {
+    var charCode = (evt.which) ? evt.which : event.keyCode
+    if (charCode > 31 && (charCode < 48 || charCode > 57))
+     
+      return false;
+    return true;
+  }
+</script>

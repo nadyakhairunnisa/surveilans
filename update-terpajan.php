@@ -1,7 +1,7 @@
 <?php
 include("connect/connect.php");
 $id=$_GET['id'];
-$data = mysqli_fetch_array(mysqli_query($conn, "SELECT * FROM kejadian_terpajan WHERE id_kejadian=$id LIMIT 1"));
+$data = mysqli_fetch_array(mysqli_query($conn, "SELECT * FROM kejadian_terpajan WHERE id_kejadian_terpajan=$id LIMIT 1"));
 ?>
 
 <!DOCTYPE html>
@@ -9,7 +9,7 @@ $data = mysqli_fetch_array(mysqli_query($conn, "SELECT * FROM kejadian_terpajan 
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>AdminLTE 2 | Advanced form elements</title>
+  <title>SURVEILANS PPI | RSUI Harapan Anda</title>
   <!-- Tell the browser to be responsive to screen width -->
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
   <!-- Bootstrap 3.3.7 -->
@@ -54,7 +54,7 @@ $data = mysqli_fetch_array(mysqli_query($conn, "SELECT * FROM kejadian_terpajan 
     <header class="main-header"  style="background-color: white;">
 
       <!-- Logo -->
-      <a href="index2.html" class="logo">
+      <a href="index.php" class="logo">
         <!-- mini logo for sidebar mini 50x50 pixels -->
         <span class="logo-mini"><b>PPI</b></span>
         <!-- logo for regular state and mobile devices -->
@@ -146,7 +146,7 @@ $data = mysqli_fetch_array(mysqli_query($conn, "SELECT * FROM kejadian_terpajan 
             </a>
             <ul class="treeview-menu">
               <li><a href="data-pasien.php"><i class="fa fa-circle-o"></i>Pasien</a></li>
-              <li><a href="data-terpajan.php"><i class="fa fa-circle-o"></i>Perawat</a></li>
+              <li><a href="data-terpajan.php"><i class="fa fa-circle-o"></i>Terpajan</a></li>
               <li><a href="data-dokter.php"><i class="fa fa-circle-o"></i>Dokter</a></li>
               <li><a href="data-ruangan.php"><i class="fa fa-circle-o"></i>Ruangan</a></li>
             </ul>
@@ -179,7 +179,7 @@ $data = mysqli_fetch_array(mysqli_query($conn, "SELECT * FROM kejadian_terpajan 
         <div class="box box-default">
           <div class="box-body"><br>
 
-            <form class="form-horizontal" role="form" method="post" action="process/add-terpajan.php" align="">
+            <form class="form-horizontal" role="form" method="post" action="process/edit-terpajan.php" align="">
               <input type="hidden" value="<?php echo $id ?>" name="id">
               <div class="form-group">
                 <label for="birthDate" class="col-sm-2 control-label">Tanggal Laporan</label>
@@ -209,10 +209,15 @@ $data = mysqli_fetch_array(mysqli_query($conn, "SELECT * FROM kejadian_terpajan 
 
                     <?php 
                     $query = mysqli_query($conn, "SELECT * FROM ruangan");
-                    while($data = mysqli_fetch_assoc($query)) {
-                      $id_r = $data['kode_ruangan'];
-                      $nama_r = $data['nama_ruangan'];
-                      echo "<option value='$id_r'>$nama_r</option>"; }
+                    while($dt = mysqli_fetch_assoc($query)) {
+                      $id_r = $dt['kode_ruangan'];
+                      $nama_r = $dt['nama_ruangan'];
+                      if($id_r == $data['kode_ruangan']){
+                        echo "<option value='$id_r' selected>$nama_r</option>";
+                      } else {
+                        echo "<option value='$id_r'>$nama_r</option>"; 
+                      }
+                    }
                     ?>
 
                   </select>
@@ -232,17 +237,17 @@ $data = mysqli_fetch_array(mysqli_query($conn, "SELECT * FROM kejadian_terpajan 
                 </div>
                 <label for="firstName" class="col-sm-1 control-label">Alamat</label>
                 <div class="col-sm-5">
-                  <input type="text" name="alamatPj" class="form-control">
+                  <input type="text" name="alamatPj" class="form-control" value="<?php echo $data['alamat_terpajan']; ?>">
                 </div>
               </div>
               <div class="form-group">
                 <label for="firstName" class="col-sm-2 control-label">Atasan Langsung</label>
                 <div class="col-sm-3">
-                  <input type="text" name="namaAts" class="form-control">
+                  <input type="text" name="namaAts" class="form-control" value="<?php echo $data['nama_atasan']; ?>">
                 </div>
                 <label for="firstName" class="col-sm-1 control-label">Alamat</label>
                 <div class="col-sm-5">
-                  <input type="text" name="alamatAts" class="form-control">
+                  <input type="text" name="alamatAts" class="form-control" value="<?php echo $data['alamat_atasan']; ?>">
                 </div>
               </div>
               <div class="box-header with-border"></div><br>
@@ -252,46 +257,46 @@ $data = mysqli_fetch_array(mysqli_query($conn, "SELECT * FROM kejadian_terpajan 
                   <div class="row">
                     <div class="col-sm-3">
                       <label class="radio-inline">
-                        <input type="radio" name="rute" id="femaleRadio" value="Kateter IV">Kateter IV
+                        <input type="radio" name="rute" id="femaleRadio" value="Kateter IV" <?php if($data['rute_pajanan'] == "Kateter IV"){echo "checked";} ?>>Kateter IV
                       </label>
                     </div>
                     <div class="col-sm-4">
                       <label class="radio-inline">
-                        <input type="radio" name="rute" id="maleRadio" value="Kateter Urine">Kateter Urine
+                        <input type="radio" name="rute" id="maleRadio" value="Kateter Urine" <?php if($data['rute_pajanan'] == "Kateter Urine"){echo "checked";} ?>>Kateter Urine
                       </label>
                     </div>
                     <div class="col-sm-5">
                       <label class="radio-inline">
-                        <input type="radio" name="rute" id="femaleRadio" value="Tusukan Jarum Suntik">Tusukan Jarum Suntik
+                        <input type="radio" name="rute" id="femaleRadio" value="Tusukan Jarum Suntik" <?php if($data['rute_pajanan'] == "Tusukan Jarum Suntik"){echo "checked";} ?>>Tusukan Jarum Suntik
                       </label>
                     </div>
                   </div>
                   <div class="row">
                     <div class="col-sm-3">
                       <label class="radio-inline">
-                        <input type="radio" name="rute" id="maleRadio" value="Gigitan">Gigitan
+                        <input type="radio" name="rute" id="maleRadio" value="Gigitan" value="Gigitan" <?php if($data['rute_pajanan'] == "Gigitan"){echo "checked";} ?>>Gigitan
                       </label>
                     </div>
                     <div class="col-sm-4">
                       <label class="radio-inline">
-                        <input type="radio" name="rute" id="femaleRadio" value="Mulut">Mulut
+                        <input type="radio" name="rute" id="femaleRadio" value="Mulut" <?php if($data['rute_pajanan'] == "Mulut"){echo "checked";} ?>>Mulut
                       </label>
                     </div>
                     <div class="col-sm-5">
                       <label class="radio-inline">
-                        <input type="radio" name="rute" id="maleRadio" value="Luka Pada Kulit">Luka Pada Kulit
+                        <input type="radio" name="rute" id="maleRadio" value="Luka Pada Kulit" <?php if($data['rute_pajanan'] == "Luka Pada Kulit"){echo "checked";} ?>>Luka Pada Kulit
                       </label>
                     </div>
                   </div>
                   <div class="row">
                     <div class="col-sm-3">
                       <label class="radio-inline">
-                        <input type="radio" name="rute" id="femaleRadio" value="Mata">Mata
+                        <input type="radio" name="rute" id="femaleRadio" value="Mata" <?php if($data['rute_pajanan'] == "Mata"){echo "checked";} ?>>Mata
                       </label>
                     </div>
                     <div class="col-sm-4">
                       <label class="radio-inline">
-                        <input type="radio" name="rute" id="maleRadio" value="Lain-Lain">Lain-Lain
+                        <input type="radio" name="rute" id="maleRadio" value="Lain-Lain" <?php if($data['rute_pajanan'] == "Lain-Lain"){echo "checked";} ?>>Lain-Lain
                       </label>
                     </div>
                   </div>
@@ -303,33 +308,33 @@ $data = mysqli_fetch_array(mysqli_query($conn, "SELECT * FROM kejadian_terpajan 
                   <div class="row">
                     <div class="col-sm-3">
                       <label class="radio-inline">
-                        <input type="radio" name="sumberpjn" id="femaleRadio" value="Darah">Darah
+                        <input type="radio" name="sumberpjn" id="femaleRadio" value="Darah" <?php if($data['sumber_pajanan'] == "Darah"){echo "checked";} ?>>Darah
                       </label>
                     </div>
                     <div class="col-sm-3">
                       <label class="radio-inline">
-                        <input type="radio" name="sumberpjn" id="maleRadio" value="Sputum">Sputum
+                        <input type="radio" name="sumberpjn" id="maleRadio" value="Sputum" <?php if($data['sumber_pajanan'] == "Sputum"){echo "checked";} ?>>Sputum
                       </label>
                     </div>
                     <div class="col-sm-3">
                       <label class="radio-inline">
-                        <input type="radio" name="sumberpjn" id="femaleRadio" value="Air Liur">Air Liur
+                        <input type="radio" name="sumberpjn" id="femaleRadio" value="Air Liur" <?php if($data['sumber_pajanan'] == "Air Liur"){echo "checked";} ?>>Air Liur
                       </label>
                     </div>
                     <div class="col-sm-3">
                       <label class="radio-inline">
-                        <input type="radio" name="sumberpjn" id="femaleRadio" value="Feses">Feses
+                        <input type="radio" name="sumberpjn" id="femaleRadio" value="Feses" <?php if($data['sumber_pajanan'] == "Feses"){echo "checked";} ?>>Feses
                       </label>
                     </div>
                   </div><br>
                   <div class="row">
                     <div class="col-sm-3">
                       <label class="radio-inline">
-                        <input type="radio" name="sumberpjn" id="femaleRadio">Lain-Lain
+                        <input type="radio" name="sumberpjn" id="femaleRadio" value="Lain-Lain" <?php if($data['sumber_pajanan'] == "Lain-Lain"){echo "checked";} ?>>Lain-Lain
                       </label>
                     </div>
                     <div class="col-sm-3">
-                      <input type="text" name="sumberpjnlain" placeholder="Sebutkan" class="form-control">
+                      <input type="text" name="sumberpjnlain" value="<?php echo $data['sumber_pajanan_lain'] ?>" class="form-control">
                     </div>
                   </div>
                 </div>
@@ -340,21 +345,21 @@ $data = mysqli_fetch_array(mysqli_query($conn, "SELECT * FROM kejadian_terpajan 
                   <div class="row">
                     <div class="col-sm-3">
                       <label class="radio-inline">
-                        <input type="radio" name="sumberps" id="femaleRadio" value="HIV - AIDS">HIV - AIDS
+                        <input type="radio" name="sumberps" id="femaleRadio" value="HIV - AIDS" <?php if($data['sumber_pasien'] == "HIV - AIDS"){echo "checked";} ?>>HIV - AIDS
                       </label>
                     </div>
                     <div class="col-sm-3">
                       <label class="radio-inline">
-                        <input type="radio" name="sumberps" id="maleRadio" value="Hepatitis A/B/C">Hepatitis A/B/C
+                        <input type="radio" name="sumberps" id="maleRadio" value="Hepatitis A/B/C" <?php if($data['sumber_pasien'] == "Hepatitis A/B/C"){echo "checked";} ?>>Hepatitis A/B/C
                       </label>
                     </div>
                     <div class="col-sm-3">
                       <label class="radio-inline">
-                        <input type="radio" name="sumberps" id="femaleRadio">Lain-Lain
+                        <input type="radio" name="sumberps" id="femaleRadio" value="Lain-Lain" <?php if($data['sumber_pasien'] == "Lain-Lain"){echo "checked";} ?>>Lain-Lain
                       </label>
                     </div>
                     <div class="col-sm-3">
-                      <input type="text" name="sumberpslain" class="form-control">
+                      <input type="text" name="sumberpslain" class="form-control" value="<?php echo $data['sumber_pasien_lain'] ?>">
                     </div>
                   </div>
                 </div>
@@ -362,13 +367,13 @@ $data = mysqli_fetch_array(mysqli_query($conn, "SELECT * FROM kejadian_terpajan 
               <div class="form-group">
                 <label for="firstName" class="col-sm-2 control-label">Bagian Tubuh Terpajan</label>
                 <div class="col-sm-9">
-                  <input type="text" name="bagTbh" class="form-control">
+                  <input type="text" name="bagTbh" class="form-control" value="<?php echo $data['bagian_tubuh_terpajan']; ?>">
                 </div>
               </div>
               <div class="form-group">
                 <label for="address" class="col-sm-2 control-label">Urutan Kejadian</label>
                 <div class="col-sm-9">
-                  <textarea placeholder="Jelaskan ..." rows="3" class="form-control" type="text" name="keterangan"></textarea>
+                  <textarea placeholder="Jelaskan ..." rows="3" class="form-control" type="text" name="keterangan"><?php echo $data['urutan_kejadian']; ?></textarea>
                 </div>
               </div>
               <div class="form-group">
@@ -377,12 +382,12 @@ $data = mysqli_fetch_array(mysqli_query($conn, "SELECT * FROM kejadian_terpajan 
                   <div class="row">
                     <div class="col-sm-3">
                       <label class="radio-inline">
-                        <input type="radio" name="imunhpt" id="femaleRadio" value="Sudah">Sudah
+                        <input type="radio" name="imunhpt" id="femaleRadio" value="Sudah" <?php if($data['imunisasi_hepatitis'] == "Sudah"){echo "checked";} ?>>Sudah
                       </label>
                     </div>
                     <div class="col-sm-3">
                       <label class="radio-inline">
-                        <input type="radio" name="imunhpt" id="maleRadio" value="Belum">Belum
+                        <input type="radio" name="imunhpt" id="maleRadio" value="Belum" <?php if($data['imunisasi_hepatitis'] == "Belum"){echo "checked";} ?>>Belum
                       </label>
                     </div>
                   </div>
@@ -394,16 +399,16 @@ $data = mysqli_fetch_array(mysqli_query($conn, "SELECT * FROM kejadian_terpajan 
                   <div class="row">
                     <div class="col-sm-3">
                       <label class="radio-inline">
-                        <input type="radio" name="alat" id="femaleRadio" value="Dipakai">Dipakai
+                        <input type="radio" name="alat" id="femaleRadio" value="Dipakai" <?php if($data['alat_pelindung'] == "Dipakai"){echo "checked";} ?>>Dipakai
                       </label>
                     </div>
                     <div class="col-sm-3">
                       <label class="radio-inline">
-                        <input type="radio" name="alat" id="maleRadio" value="Tidak">Tidak
+                        <input type="radio" name="alat" id="maleRadio" value="Tidak" <?php if($data['alat_pelindung'] == "Tidak"){echo "checked";} ?>>Tidak
                       </label>
                     </div>
                     <div class="col-sm-5">
-                      <input type="text" name="jenis" class="form-control">
+                      <input type="text" name="jenis" class="form-control" value="<?php echo $data['jenis_alat']; ?>">
                     </div>
                   </div>
                 </div>
@@ -411,7 +416,7 @@ $data = mysqli_fetch_array(mysqli_query($conn, "SELECT * FROM kejadian_terpajan 
               <div class="form-group">
                 <label for="firstName" class="col-sm-2 control-label">Pertolongan Pertama</label>
                 <div class="col-sm-9">
-                  <input type="text" name="pp" class="form-control">
+                  <input type="text" name="pp" class="form-control" value="<?php echo $data['pertolongan_pertama']; ?>">
                 </div>
               </div>
               <div class="form-group">
