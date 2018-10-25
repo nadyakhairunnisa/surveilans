@@ -154,19 +154,14 @@
                 <small>
                   <div class="col-sm-1">
                     <div class="form-group">
-                      <select id="ruangan" class="form-control" data-placeholder="Pilih Tahun" style="width: 140%;">
-                        <option>2018</option>
-                        <option>2017</option>
-                        <option>2015</option>
-                        <option>2014</option>
-                        <option>2013</option>
-                        <option>2012</option>
-                        <option>2011</option>
-                        <option>2010</option>
-                        <option>2009</option>
-                        <option>2008</option>
-                        <option>2007</option>
-                        <option>2006</option>
+                      <select name="tahun" id="ruangan" class="form-control" data-placeholder="Pilih Tahun" style="width: 140%;margin-left:-90px;">
+                        <?php
+                        $mulai= date('Y') - 4;
+                        for($i = $mulai;$i<$mulai+5;$i++){
+                          $sel = $i == date('Y') ? ' selected="selected"' : '';
+                          echo '<option value="'.$i.'"'.$sel.'>'.$i.'</option>';
+                        }
+                        ?>
                       </select>
                     </div> <!-- /.form-group -->
                   </div>

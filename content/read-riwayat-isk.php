@@ -2,12 +2,13 @@
 
 include("../connect/connect.php");
 $id=$_GET['id'];
-$query = mysqli_query($conn, "SELECT * FROM surv_isk WHERE id_keadaan = $id");
+$query = mysqli_query($conn, "SELECT * FROM surv_isk WHERE id_pemakaian_ruangan = $id");
 
 $row = mysqli_fetch_array($query); ?>
 
 <br>
 <strong><i class="fa fa-medkit margin-r-5"></i> Jenis Pemasangan : </strong><?php echo $row['jenis_invasif'] ?><br><br>
+<strong><i class="fa fa-medkit margin-r-5"></i> Jenis Kateter : </strong><?php echo $row['jenis_kateter'] ?><br><br>
 <strong><i class="fa fa-medkit margin-r-5"></i> Jenis Surveilans : </strong>ISK<br><br>
 <strong><i class="fa fa-medkit margin-r-5"></i> Jenis Pemeriksaan : </strong><?php echo $row['jenis_pemeriksaan'] ?><br><br>
 
@@ -41,7 +42,7 @@ $row = mysqli_fetch_array($query); ?>
     foreach ($query2 as $index => $row2) { ?>
     <tr>
       <td><?php echo $row2['tanggal_pasang']; ?></td>
-      <td><?php echo $row2['tanggal_pasang']; ?></td>
+      <td><?php echo $row2['tanggal_lepas']; ?></td>
       <td><?php echo $row2['total_hari']; ?></td>
       <td><?php echo $row2['tanda_infeksi']; ?></td>
       <td><?php echo $row2['tanggal_infeksi']; ?></td>

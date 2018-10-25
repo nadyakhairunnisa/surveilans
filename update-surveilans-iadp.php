@@ -421,7 +421,6 @@ $tanda = explode(', ', $data['tanda_infeksi']);
                       <div class="checkbox">
                         <label>
                           <input type="checkbox" name="tanda[]" id="bengkak" value="Bengkak" <?php in_array ('Bengkak', $tanda) ? print "checked" : ""; ?>>Bengkak
-                          <input type="hidden" name="tanda[]" id="" value="" checked>
                         </label>
                       </div>
                     </div>
@@ -431,7 +430,7 @@ $tanda = explode(', ', $data['tanda_infeksi']);
               <div class="form-group">
                 <label for="infeksiDate" class="col-sm-2 control-label">Tanggal Terjadi Infeksi</label>
                 <div class="col-sm-9">
-                <input type="date" name="infeksiDate" class="form-control" value="<?php echo $data['tanggal_infeksi']; ?>" required>
+                <input type="date" name="infeksiDate" class="form-control" value="<?php echo $data['tanggal_infeksi']; ?>">
                 </div>
               </div><br>
 

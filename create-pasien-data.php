@@ -191,13 +191,13 @@ include("connect/connect.php");
               <li id="navStep2" class="li-nav disabled" step="#step-2">
                 <a>
                   <h4 class="list-group-item-heading">Step 2</h4>
-                  <p class="list-group-item-text">Tambah Data Informasi Keadaan</p>
+                  <p class="list-group-item-text">Tambah Informasi Keadaan</p>
                 </a>
               </li>
               <li id="navStep3" class="li-nav disabled" step="#step-3">
                 <a>
                   <h4 class="list-group-item-heading">Step 3</h4>
-                  <p class="list-group-item-text">Tambah Data Pemakaian Ruangan</p>
+                  <p class="list-group-item-text">Tambah Pemakaian Ruangan</p>
                 </a>
               </li>
               <li id="navStep4" class="li-nav disabled" step="#step-4">

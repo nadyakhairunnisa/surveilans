@@ -17,14 +17,14 @@ $selected_tanda = substr($selected_tanda, 0, -2);
 
 mysqli_begin_transaction($conn);
 
-$id_k = mysqli_fetch_array(mysqli_query($conn, "SELECT id_keadaan FROM surv_ido WHERE id_surv = '$id_surv'"));
+$id_k = mysqli_fetch_array(mysqli_query($conn, "SELECT id_pemakaian_ruangan FROM surv_ido WHERE id_surv = '$id_surv'"));
 		
 $sql = mysqli_query($conn, "INSERT INTO surv_gejala_ido (id_surv, tanggal_kejadian, tanda_infeksi, keterangan_infeksi, tanggal_kultur, hasil_kultur) values ('$id_surv', '$infeksiDate', '$selected_tanda', '$keterangan', '$dateKultur', '$hasilKultur')") && mysqli_query($conn, "UPDATE surv_ido SET terjadi_infeksi = '$terjadi', tanggal_infeksi = '$infeksiDate' WHERE id_surv = $id_surv");
 
 if($sql) {
 	mysqli_commit($conn);
 
-	$id = mysqli_fetch_array(mysqli_query($conn, "SELECT no_rm FROM keadaan_pasien WHERE id_keadaan = $id_k[id_keadaan]"));
+	$id = mysqli_fetch_array(mysqli_query($conn, "SELECT no_rm FROM keadaan_pasien WHERE id_keadaan = (SELECT id_keadaan FROM pemakaian_ruangan WHERE id_pemakaian_ruangan = $id_k[id_pemakaian_ruangan])"));
 
 	echo "<script>alert('Data berhasil disimpan!');
 	window.location.href='../riwayat-pasien.php?id=".$id['no_rm']."' </script>";

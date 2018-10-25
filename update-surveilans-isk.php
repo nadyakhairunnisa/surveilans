@@ -425,7 +425,6 @@ $tanda = explode(', ', $data['tanda_infeksi']);
                       <div class="checkbox">
                         <label>
                           <input type="checkbox" name="tanda[]" id="Nyeri-Berkemih" value="Nyeri Berkemih" <?php in_array ('Nyeri Berkemih', $tanda) ? print "checked" : ""; ?>>Nyeri Berkemih
-                          <input type="hidden" name="tanda[]" id="" value="" checked>
                         </label>
                       </div>
                     </div>

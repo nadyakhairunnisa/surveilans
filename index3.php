@@ -1,6 +1,5 @@
 <?php
 include("connect/connect.php");
-$this_date = $_POST['tanggal'];
 ?>
 
 <!DOCTYPE html>
@@ -157,17 +156,21 @@ $this_date = $_POST['tanggal'];
           <div class="row">
             <section class="content-header">
               <h1>
-                <div class="col-md-4">
-                  JUMLAH KEJADIAN INFEKSI
+                <div class="col-md-6">
+                  REKAPITULASI JUMLAH KEJADIAN INFEKSI
                 </div>
                 <small>
-                <form action="indexharian.php" method="post">
+                <form action="indexbulan.php" method="post">
                   <div class="col-sm-2">
-                    <a href="index2.php" class="btn btn-primary" style="border-color:gray;">Lihat Data Hari Ini</a>
+                    <a href="index2.php" class="btn btn-primary" style="border-color:gray;margin-left:-30px;">Lihat Data Hari Ini</a>
+                    <!-- <button class="btn btn-primary" type="submit" style="border-color:gray;">Lihat Hari Ini</button> -->
+                  </div>
+                  <div class="col-sm-2">
+                    <a href="index.php" class="btn btn-primary" style="border-color:gray;margin-left:-60px;">Lihat Data Bulan Ini</a>
                     <!-- <button class="btn btn-primary" type="submit" style="border-color:gray;">Lihat Hari Ini</button> -->
                   </div>
                   <div class="col-sm-1">
-                    <a href="index.php" class="btn btn-primary" style="border-color:gray;">Lihat Data Hari Ini</a>
+                    <a href="index3.php" class="btn btn-primary disabled" style="border-color:gray;margin-left:-80px;">Lihat Rekapitulasi</a>
                     <!-- <button class="btn btn-primary" type="submit" style="border-color:gray;">Lihat Hari Ini</button> -->
                   </div>
                 </form>
@@ -186,7 +189,7 @@ $this_date = $_POST['tanggal'];
           <div class="box box-default">
             <div class="box-body">
               <div class="box-header with-border">
-                <h3 class="box-title">Berdasarkan Ruang Rawat Inap (History)</h3>          
+                <h3 class="box-title">Berdasarkan Ruang Rawat Inap (Rekapitulasi)</h3>          
               </div><br>
 
               <?php
@@ -203,10 +206,9 @@ $this_date = $_POST['tanggal'];
 
                   $svlns = $row['jenis_surveilans'];
 
-                  $countquery = mysqli_fetch_array(mysqli_query($conn, "SELECT COUNT(s.id_surv) FROM surv_$svlns s 
-                    JOIN keadaan_pasien kp ON (s.id_keadaan = kp.id_keadaan)
-                    JOIN pemakaian_ruangan pr ON (pr.id_keadaan = kp.id_keadaan)
-                    WHERE s.terjadi_infeksi = 'Ya' AND pr.kode_ruangan = '$kode' AND s.tanggal_infeksi = '$this_date'"));
+                  $countquery = mysqli_fetch_array(mysqli_query($conn, "SELECT COUNT(s.id_surv) FROM surv_$svlns s
+                    JOIN pemakaian_ruangan pr ON (s.id_pemakaian_ruangan = pr.id_pemakaian_ruangan)
+                    WHERE s.terjadi_infeksi = 'Ya' AND pr.kode_ruangan = '$kode'"));
                   $countdata = $countquery['COUNT(s.id_surv)'];
                   $count = $count + $countdata;
                 }
@@ -237,7 +239,7 @@ $this_date = $_POST['tanggal'];
                   <div class="modal-content">
                     <div class="modal-header">
                       <button type="button" class="close" data-dismiss="modal">&times;</button>
-                      <h4 class="modal-title">Kejadian di Ruang <?php echo $ruangan ?> Juli 2018</h4>
+                      <h4 class="modal-title">Kejadian di Ruang <?php echo $ruangan ?></h4>
                     </div>
                     <div class="modal-body">
                       <!-- TABLE -->
@@ -252,58 +254,38 @@ $this_date = $_POST['tanggal'];
                               <th>Tingkat Rate</th>
                             </tr>
                           </thead>
+                          <?php
+
+                          $surv = mysqli_query($conn, "SELECT nama_infeksi FROM infeksi");
+                          $i = 0;
+                          while($row = mysqli_fetch_array($surv)){
+
+                            $svlns = $row['nama_infeksi'];
+
+                            $detailquery = mysqli_query($conn, "SELECT COUNT(s.id_surv) FROM surv_$svlns s 
+                              JOIN pemakaian_ruangan pr ON (s.id_pemakaian_ruangan = pr.id_pemakaian_ruangan)
+                              WHERE s.terjadi_infeksi = 'Ya' AND pr.kode_ruangan = (SELECT kode_ruangan FROM ruangan WHERE nama_ruangan = '$ruangan')");
+                            while($detailrow = mysqli_fetch_array($detailquery)){                              
+                              $countdata = $detailrow['COUNT(s.id_surv)'];
+                          ?>
+
                           <tbody>
                             <tr>
-                              <td>1.</td>
-                              <td>IADP & Phlebitis</td>
-                              <td>5</td>
+                              <td><?php echo $i=$i+1; ?></td>
+                              <td><?php echo $svlns; ?></td>
+                              <td><?php echo $countdata; ?></td>
                               <td style="color:red;font-weight:bold;">16.22%</td>
                               <td>
                                 <span class="sparkbar">8,9,3,5,8,5,10</span>
                               </td>
                             </tr>
-                            <tr>
-                              <td>2.</td>
-                              <td>ISK</a></td>
-                              <td>4</td>
-                              <td>1.43%</td>
-                              <td>
-                                <span class="sparkbar">3,5,8,5,10,8,4</span>
-                              </td>
-                            </tr>
-                            <tr>
-                              <td>3.</td>
-                              <td>VAP</td>
-                              <td>0</td>
-                              <td>0%</td>
-                              <td>
-                                <span class="sparkbar">6,8,9,5,4,2,1</span>
-                              </td>
-                            </tr>
-                            <tr>
-                              <td>4.</td>
-                              <td>IDO</td>
-                              <td>2</td>
-                              <td>0.89%</td>
-                              <td>
-                                <span class="sparkbar">9,4,5,3,2,1,2</span>
-                              </td>
-                            </tr>
-                            <tr>
-                              <td>5.</td>
-                              <td>ILE</td>
-                              <td><span class="label label-success"></span>0</td>
-                              <td>0%</td>
-                              <td>
-                                <span class="sparkbar">1,2,3,0,2,1,0</span>
-                              </td>
-                            </tr>
                           </tbody>
+                          <?php } } ?>                          
                           <tfoot>
                             <tr>
                               <th>TOTAL</th>
                               <th></th>
-                              <th>11</th>
+                              <th><?php echo $count; ?></th>
                               <th>9,08%</th>
                               <th><span class="sparkbar">10,8,9,4,5,11,14</span></th>
                             </tr>
@@ -341,7 +323,7 @@ $this_date = $_POST['tanggal'];
           <div class="box box-default">
             <div class="box-body">
               <div class="box-header with-border">
-                <h3 class="box-title">Berdasarkan Jenis Infeksi (History)</h3>          
+                <h3 class="box-title">Berdasarkan Jenis Infeksi (Rekapitulasi)</h3>          
               </div><br>
 
               <?php
@@ -353,16 +335,12 @@ $this_date = $_POST['tanggal'];
 
                 $count = 0;
 
-                $countquery = mysqli_fetch_array(mysqli_query($conn, "SELECT COUNT(s.id_surv) FROM surv_$surveilans s 
-                  JOIN keadaan_pasien kp ON (s.id_keadaan = kp.id_keadaan)
-                  JOIN pemakaian_ruangan pr ON (pr.id_keadaan = kp.id_keadaan)
-                  WHERE s.terjadi_infeksi = 'Ya' AND kp.jenis_surveilans = '$surveilans' AND s.tanggal_infeksi = '$this_date'"));
-                $countdata = $countquery['COUNT(s.id_surv)'];
-                $count = $count + $countdata;
+                $countquery = mysqli_fetch_array(mysqli_query($conn, "SELECT COUNT(id_surv) FROM surv_$surveilans WHERE terjadi_infeksi = 'Ya'"));
+                $count = $countquery['COUNT(id_surv)'];
 
               ?>
 
-              <div class="col-lg-5 col-xs-6">
+              <div class="col-lg-6 col-xs-6">
                 <!-- small box -->
                 <div class="small-box bg-white" id="index-chart">
                   <div class="inner">
@@ -403,47 +381,36 @@ $this_date = $_POST['tanggal'];
                             <th>Aksi</th>
                           </tr>
                         </thead>
+                        <?php 
+
+                        $invsf = mysqli_query($conn, "SELECT nama_invasif FROM invasif WHERE jenis_surveilans = '$surveilans'");
+                        $countpasien = 0;
+                        while($invsfrow = mysqli_fetch_array($invsf)){
+                          $invasif = $invsfrow['nama_invasif'];
+                          $allquery = mysqli_fetch_array(mysqli_query($conn, "SELECT COUNT(id_surv) FROM surv_$surveilans WHERE jenis_invasif = '$invasif'"));
+                          $yaquery = mysqli_fetch_array(mysqli_query($conn, "SELECT COUNT(id_surv) FROM surv_$surveilans WHERE jenis_invasif = '$invasif' AND terjadi_infeksi = 'Ya'"));
+
+                        ?>
                         <tbody>
                           <tr>
-                            <td>Kateter V Perifer</td>
-                            <td>73</td>
-                            <td>3</td>
-                            <td>185</td>
-                            <td style="color:red;font-weight:bold;">16.22</td>
+                            <td><?php echo $invasif; ?></td>
+                            <td><?php echo $allquery['COUNT(id_surv)']; ?></td>
+                            <td><?php echo $yaquery['COUNT(id_surv)']; ?></td>
+                            <td>(dummy)</td>
+                            <td style="color:red;font-weight:bold;">(dummy)</td>
                             <td><a type="button" class="btn btn-block btn-primary btn-xs" href="index-jenis-detail.php">Lihat Selengkapnya</a></td>
                           </tr>
-                          <tr>
-                            <td>Kateter V Central</td>
-                            <td>0</td>
-                            <td>0</td>
-                            <td>0</td>
-                            <td>0</td>
-                            <td><a type="button" class="btn btn-block btn-primary btn-xs" href="riwayat-pasien.php">Lihat Selengkapnya</a></td>
-                          </tr>
-                          <tr>
-                            <td>Umbilikal</td>
-                            <td>13</td>
-                            <td>0</td>
-                            <td>72</td>
-                            <td>0</td>
-                            <td><a type="button" class="btn btn-block btn-primary btn-xs" href="riwayat-pasien.php">Lihat Selengkapnya</a></td>
-                          </tr>
-                          <tr>
-                            <td>Double Lumen</td>
-                            <td>22</td>
-                            <td>2</td>
-                            <td>1398</td>
-                            <td>1.43</td>
-                            <td><a type="button" class="btn btn-block btn-primary btn-xs" href="riwayat-pasien.php">Lihat Selengkapnya</a></td>
-                          </tr>
                         </tbody>
+                        <?php 
+                        $countpasien = $countpasien + $allquery['COUNT(id_surv)'];
+                        } ?>
                         <tfoot>
                           <tr>
                             <th>Total</th>
-                            <th>108</th>
-                            <th>5</th>
-                            <th>1655</th>
-                            <th>3.02</th>
+                            <th><?php echo $countpasien; ?></th>
+                            <th><?php echo $count; ?></th>
+                            <th>(dummy)</th>
+                            <th>(dummy)</th>
                           </tr>
                         </tfoot>
                       </table><br>
@@ -457,7 +424,30 @@ $this_date = $_POST['tanggal'];
               </div>
               <!-- /.Modal -->
 
-              <?php } ?>
+              <?php }
+
+              // <!-- TERPAJAN -->
+
+              $countpjn = 0;
+
+                $countquerypjn = mysqli_fetch_array(mysqli_query($conn, "SELECT COUNT(id_kejadian_terpajan) FROM surv_terpajan"));
+                $countpjn = $countquerypjn['COUNT(id_kejadian_terpajan)'];
+
+              ?>
+
+              <div class="col-lg-6 col-xs-6">
+                <!-- small box -->
+                <div class="small-box bg-white" id="index-chart">
+                  <div class="inner">
+                    <!-- <p>IADP & Phlebitis</p> -->
+                    <h3><?php echo $countpjn; ?></h3>
+                  </div>
+                  <a class="small-box-footer" data-toggle="modal" data-target="#myModal2-<?php echo $index1; ?>">Terpajan
+                  <!-- <i class="fa fa-arrow-circle-right"></i> -->
+                  </a>
+                </div>
+              </div>
+              <!-- ./col -->
             </div>
             <!-- ./box-body -->
           </div>

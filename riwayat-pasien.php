@@ -1,7 +1,7 @@
 <?php
 include("connect/connect.php");
 $norm=$_GET['id'];
-$dt = mysqli_query($conn, "SELECT * FROM identitas_pasien ip JOIN keadaan_pasien kp ON (ip.no_rm = kp.no_rm) WHERE kp.no_rm =$norm LIMIT 1");
+$dt = mysqli_query($conn, "SELECT * FROM identitas_pasien ip JOIN keadaan_pasien kp ON (ip.no_rm = kp.no_rm) JOIN pemakaian_ruangan pr ON (kp.id_keadaan = pr.id_keadaan) WHERE kp.no_rm =$norm LIMIT 1");
 $data = mysqli_fetch_array($dt);
 
 $surveilans = strtolower($data['jenis_surveilans']);
@@ -305,7 +305,7 @@ $surveilans = strtolower($data['jenis_surveilans']);
                           JOIN keadaan_pasien kp ON (ip.no_rm = kp.no_rm) 
                           JOIN pemakaian_ruangan pr ON (pr.id_keadaan = kp.id_keadaan)
                           JOIN dokter d ON (pr.id_dokter = d.id_dokter) 
-                          JOIN ruangan r ON (pr.kode_ruangan = r.kode_ruangan) WHERE ip.no_rm =$norm");
+                          JOIN ruangan r ON (pr.kode_ruangan = r.kode_ruangan) WHERE ip.no_rm =$norm ORDER BY pr.tanggal_masuk_ruangan DESC");
 
                         while($data2 = mysqli_fetch_array($dt2)){
 
@@ -462,7 +462,7 @@ $surveilans = strtolower($data['jenis_surveilans']);
 
 <script>
   $(document).ready(function(){
-      $("#konten-surveilans").load("content/read-riwayat-<?php echo $surveilans; ?>.php?id=<?php echo $data['id_keadaan']; ?>");
+      $("#konten-surveilans").load("content/read-riwayat-<?php echo $surveilans; ?>.php?id=<?php echo $data['id_pemakaian_ruangan']; ?>");
   });
 
   $(function () {

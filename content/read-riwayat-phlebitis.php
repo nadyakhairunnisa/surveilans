@@ -2,7 +2,7 @@
 
 include("../connect/connect.php");
 $id=$_GET['id'];
-$query = mysqli_query($conn, "SELECT * FROM surv_phlebitis WHERE id_keadaan = $id");
+$query = mysqli_query($conn, "SELECT * FROM surv_phlebitis WHERE id_pemakaian_ruangan = $id");
 
 $row = mysqli_fetch_array($query); ?>
 
@@ -43,7 +43,7 @@ $row = mysqli_fetch_array($query); ?>
     <tr>
       <td><?php echo $row2['lokasi_pasang']; ?></td>
       <td><?php echo $row2['tanggal_pasang']; ?></td>
-      <td><?php echo $row2['tanggal_pasang']; ?></td>
+      <td><?php echo $row2['tanggal_lepas']; ?></td>
       <td><?php echo $row2['total_hari']; ?></td>
       <td><?php echo $row2['tanda_infeksi']; ?></td>
       <td><?php echo $row2['tanggal_infeksi']; ?></td>

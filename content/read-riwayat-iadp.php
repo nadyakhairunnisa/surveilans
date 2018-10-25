@@ -2,7 +2,7 @@
 
 include("../connect/connect.php");
 $id=$_GET['id'];
-$query = mysqli_query($conn, "SELECT * FROM surv_iadp WHERE id_keadaan = $id");
+$query = mysqli_query($conn, "SELECT * FROM surv_iadp WHERE id_pemakaian_ruangan = $id");
 
 while($row = mysqli_fetch_array($query)){
 
@@ -18,7 +18,7 @@ while($row = mysqli_fetch_array($query)){
     <h4 style="color: #689999;"><strong>Riwayat Pemasangan</strong></h4>
   </div>
   <div class="col-md-4">
-    <h4><small><a href="create-surveilans-<?php echo $surveilans; ?>.php?id=<?php echo $row['id_surv']; ?>"><i class="fa fa-plus-circle margin-r-5"></i>Tambah Pemasangan</a></small><h4>
+    <h4><small><a href="create-surveilans-iadp.php?id=<?php echo $row['id_surv']; ?>"><i class="fa fa-plus-circle margin-r-5"></i>Tambah Pemasangan</a></small><h4>
   </div>
 </div><br>
 
@@ -44,7 +44,7 @@ while($row = mysqli_fetch_array($query)){
     <tr>
       <td><?php echo $row2['lokasi_pasang']; ?></td>
       <td><?php echo $row2['tanggal_pasang']; ?></td>
-      <td><?php echo $row2['tanggal_pasang']; ?></td>
+      <td><?php echo $row2['tanggal_lepas']; ?></td>
       <td><?php echo $row2['total_hari']; ?></td>
       <td><?php echo $row2['tanda_infeksi']; ?></td>
       <td><?php echo $row2['tanggal_infeksi']; ?></td>

@@ -1,7 +1,6 @@
 <?php
 include("connect/connect.php");
 $id=$_GET['id'];
-$data = mysqli_fetch_array(mysqli_query($conn, "SELECT tanggal_masuk_rs FROM keadaan_pasien WHERE id_keadaan =$id LIMIT 1"));
 ?>
 
 <!DOCTYPE html>
@@ -191,19 +190,21 @@ $data = mysqli_fetch_array(mysqli_query($conn, "SELECT tanggal_masuk_rs FROM kea
               <li id="navStep2" class="li-nav disabled" step="#step-2">
                 <a>
                   <h4 class="list-group-item-heading">Step 2</h4>
-                  <p class="list-group-item-text">Tambah Data Informasi Keadaan</p>
+                  <p class="list-group-item-text">Tambah Informasi Keadaan</p>
                 </a>
               </li>
               <li id="navStep3" class="li-nav disabled" step="#step-3">
                 <a>
                   <h4 class="list-group-item-heading">Step 3</h4>
-                  <p class="list-group-item-text">Tambah Data Pemakaian Ruangan</p>
+                  <p class="list-group-item-text">Tambah Pemakaian Ruangan</p>
                 </a>
               </li>
               <li id="navStep4" class="li-nav active" step="#step-4">
                 <a>
                   <h4 class="list-group-item-heading">Step 4</h4>
                   <p class="list-group-item-text">Tambah Data Pemasangan</p>
+                </a>
+              </li>
                 </a>
               </li>
             </ul>
@@ -216,7 +217,7 @@ $data = mysqli_fetch_array(mysqli_query($conn, "SELECT tanggal_masuk_rs FROM kea
 
             <form class="form-horizontal" role="form" role="form" method="post" action="process/add-pemasangan.php">
 
-              <input type="hidden" value="<?php echo $id; ?>" name="id_keadaan">
+              <input type="hidden" value="<?php echo $id; ?>" name="id_pemakaian_ruangan">
 
               <div class="form-group">
                 <label for="country" class="col-sm-2 control-label">Jenis Surveilans Infeksi</label>

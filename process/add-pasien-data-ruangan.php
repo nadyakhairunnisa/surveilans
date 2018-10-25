@@ -38,8 +38,10 @@ if($tanggal_masuk <= $today && $tanggal_keluar <= $today){
 			if($sql) {
 				mysqli_commit($conn);
 
+				$id = mysqli_fetch_array(mysqli_query($conn, "SELECT MAX(id_pemakaian_ruangan) FROM pemakaian_ruangan"));
+
 				echo "<script>alert('Data berhasil disimpan!');
-				window.location.href='../create-pasien-data-pemasangan.php?id=$id_keadaan' </script>";
+				window.location.href='../create-pasien-data-pemasangan.php?id=".$id['MAX(id_pemakaian_ruangan)']."' </script>";
 			} else {
 				echo mysqli_error ($conn );
 				die;
