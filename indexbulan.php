@@ -267,11 +267,11 @@ $this_year = $_POST['tahun'];
                   </div>
                   <div class="icon">
                     <?php if($diff>0){
-                        echo "<i class='fa fa-caret-up' style='color:red;'></i>".$diff;
+                        echo "<div style='color:rgb(255,0,0,0.5);'><i class='fa fa-caret-up'></i>".$diff."</div>";
                       } else if($diff==0){
                         echo "<i class='fa fa-exchange' style='color:#b2d8b2;'></i>";
                       } else {
-                        echo "<i class='fa fa-caret-down' style='color:rgba(0,174,227,0.4);'></i>".$diff;
+                        echo "<div style='color:rgba(0,174,227,0.4);'><i class='fa fa-caret-down'></i>".-$diff."</div>";
                       }
                     ?>
                   </div>
@@ -412,7 +412,7 @@ $this_year = $_POST['tahun'];
                       } else if($diff==0){
                         echo "<i class='fa fa-exchange' style='color:#b2d8b2;'></i>";
                       } else {
-                        echo "<i class='fa fa-caret-down' style='color:rgba(0,174,227,0.4);'></i>".$diff;
+                        echo "<div style='color:rgba(0,174,227,0.4);'><i class='fa fa-caret-down'></i>".-$diff."</div>";
                       }
                     ?>
                   </div>
@@ -521,7 +521,7 @@ $this_year = $_POST['tahun'];
                       } else if($diff==0){
                         echo "<i class='fa fa-exchange' style='color:#b2d8b2;'></i>";
                       } else {
-                        echo "<i class='fa fa-caret-down' style='color:rgba(0,174,227,0.4);'></i>".$diff;
+                        echo "<div style='color:rgba(0,174,227,0.4);'><i class='fa fa-caret-down'></i>".-$diff."</div>";
                       }
                     ?>
                   </div>

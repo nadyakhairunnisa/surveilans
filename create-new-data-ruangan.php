@@ -1,7 +1,8 @@
 <?php
 include("connect/connect.php");
 $id=$_GET['id'];
-$data = mysqli_fetch_array(mysqli_query($conn, "SELECT tanggal_keluar_rs FROM keadaan_pasien WHERE id_keadaan =$id LIMIT 1"));
+$dataps = mysqli_fetch_array(mysqli_query($conn, "SELECT tanggal_masuk_rs, tanggal_keluar_rs FROM keadaan_pasien WHERE id_keadaan =$id LIMIT 1"));
+$datapr = mysqli_fetch_array(mysqli_query($conn, "SELECT tanggal_keluar_ruangan FROM pemakaian_ruangan WHERE id_keadaan =$id ORDER BY tanggal_masuk_ruangan DESC LIMIT 1"));
 ?>
 
 <!DOCTYPE html>
@@ -190,9 +191,9 @@ $data = mysqli_fetch_array(mysqli_query($conn, "SELECT tanggal_keluar_rs FROM ke
                     <option value="" selected disabled>Pilih Ruangan</option>
                     <?php 
                     $query = mysqli_query($conn, "SELECT * FROM ruangan");
-                    while($data = mysqli_fetch_assoc($query)) {
-                      $id_r = $data['kode_ruangan'];
-                      $nama_r = $data['nama_ruangan'];
+                    while($datar = mysqli_fetch_assoc($query)) {
+                      $id_r = $datar['kode_ruangan'];
+                      $nama_r = $datar['nama_ruangan'];
                       if($id_r == $kode){
                         echo "<option value='$id_r' disabled>$nama_r</option>";
                       } else {
@@ -208,6 +209,7 @@ $data = mysqli_fetch_array(mysqli_query($conn, "SELECT tanggal_keluar_rs FROM ke
                 <label for="outroomDate" class="col-sm-2 control-label">Tanggal Masuk</label>
                 <div class="col-sm-9">
                   <input type="date" name="inDate" class="form-control" required>
+                  <span class="help-block">Tanggal Masuk RS : <?php echo $dataps['tanggal_masuk_rs']; ?></span>
                 </div>
               </div>
               <div class="form-group">
@@ -221,7 +223,7 @@ $data = mysqli_fetch_array(mysqli_query($conn, "SELECT tanggal_keluar_rs FROM ke
                 <label for="outroomDate" class="col-sm-2 control-label">Tanggal Keluar</label>
                 <div class="col-sm-9">
                   <input type="date" name="outDate" class="form-control">
-                  <span class="help-block">Tanggal Keluar RS : <?php echo $data['tanggal_keluar_rs']; ?></span>
+                  <span class="help-block">Tanggal Keluar RS : <?php echo $dataps['tanggal_keluar_rs']; ?></span>
                 </div>
               </div>
               <div class="form-group">

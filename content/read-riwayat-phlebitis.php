@@ -2,7 +2,7 @@
 
 include("../connect/connect.php");
 $id=$_GET['id'];
-$query = mysqli_query($conn, "SELECT * FROM surv_phlebitis WHERE id_pemakaian_ruangan = $id");
+$query = mysqli_query($conn, "SELECT * FROM surv_phlebitis WHERE id_surv = $id");
 
 $row = mysqli_fetch_array($query); ?>
 

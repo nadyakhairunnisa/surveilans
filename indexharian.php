@@ -245,7 +245,7 @@ $last_date = date('Y-m-d', strtotime('-1 days', strtotime($this_date)));
                       } else if($diff==0){
                         echo "<i class='fa fa-exchange' style='color:#b2d8b2;'></i>";
                       } else {
-                        echo "<i class='fa fa-caret-down' style='color:rgba(0,174,227,0.4);'></i>".$diff;
+                        echo "<div style='color:rgba(0,174,227,0.4);'><i class='fa fa-caret-down'></i>".-$diff."</div>";
                       }
                     ?>
                     <!-- <i class="fa fa-caret-up"></i>1 -->
@@ -388,7 +388,7 @@ $last_date = date('Y-m-d', strtotime('-1 days', strtotime($this_date)));
                       } else if($diff==0){
                         echo "<i class='fa fa-exchange' style='color:#b2d8b2;'></i>";
                       } else {
-                        echo "<i class='fa fa-caret-down' style='color:rgba(0,174,227,0.4);'></i>".$diff;
+                        echo "<div style='color:rgba(0,174,227,0.4);'><i class='fa fa-caret-down'></i>".-$diff."</div>";
                       }
                     ?>
                   </div>
@@ -496,7 +496,7 @@ $last_date = date('Y-m-d', strtotime('-1 days', strtotime($this_date)));
                       } else if($diff==0){
                         echo "<i class='fa fa-exchange' style='color:#b2d8b2;'></i>";
                       } else {
-                        echo "<i class='fa fa-caret-down' style='color:rgba(0,174,227,0.4);'></i>".$diff;
+                        echo "<div style='color:rgba(0,174,227,0.4);'><i class='fa fa-caret-down'></i>".-$diff."</div>";
                       }
                     ?>
                   </div>

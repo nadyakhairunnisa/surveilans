@@ -1,25 +1,11 @@
 <?php
 include("connect/connect.php");
 $norm=$_GET['id'];
-$dt = mysqli_query($conn, "SELECT * FROM identitas_pasien ip JOIN keadaan_pasien kp ON (ip.no_rm = kp.no_rm) JOIN pemakaian_ruangan pr ON (kp.id_keadaan = pr.id_keadaan) WHERE kp.no_rm =$norm LIMIT 1");
+$dt = mysqli_query($conn, "SELECT * FROM identitas_pasien WHERE no_rm =$norm");
 $data = mysqli_fetch_array($dt);
 
-$surveilans = strtolower($data['jenis_surveilans']);
+// $surveilans = strtolower($data['jenis_surveilans']);
 
-// $query = mysqli_query($conn, "SELECT * FROM surv_$surveilans WHERE id_keadaan = $data[id_keadaan]");
-// $data3 = mysqli_fetch_array($query);
-
-// if($surveilans=="phlebitis"){
-//   $query = mysqli_query($conn, "SELECT * FROM surv_phlebitis WHERE id_keadaan = $data[id_keadaan]");
-// } else if($surveilans=="iadp"){
-//   $query = mysqli_query($conn, "SELECT * FROM surv_iadp WHERE id_keadaan = $data[id_keadaan]");
-// } else if($surveilans=="isk"){
-//   $query = mysqli_query($conn, "SELECT * FROM surv_isk WHERE id_keadaan = $data[id_keadaan]");
-// } else if($surveilans=="ido"){
-//   $query = mysqli_query($conn, "SELECT * FROM surv_ido WHERE id_keadaan = $data[id_keadaan]");
-// } else {
-//   $query = mysqli_query($conn, "SELECT * FROM surv_vap WHERE id_keadaan = $data[id_keadaan]");
-// }
 ?>
 
 <!DOCTYPE html>
@@ -54,6 +40,36 @@ $surveilans = strtolower($data['jenis_surveilans']);
   <!-- Google Font -->
   <link rel="stylesheet"
   href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
+
+  <style type="text/css">
+    .tooltipsurv {
+      position: relative;
+      display: inline-block;
+      /*border-bottom: 1px dotted black;*/
+    }
+
+    .tooltipsurv .tooltiptext {
+      visibility: hidden;
+      width: 300px;
+      background-color: #7bb9ca;
+      color: white;
+      text-align: center;
+      border-radius: 6px;
+      padding: 5px 0;
+      font-size: 17px;
+
+      /* Position the tooltip */
+      position: absolute;
+      z-index: 1;
+      top: -5px;
+      left: 105%;
+    }
+
+    .tooltipsurv:hover .tooltiptext {
+      visibility: visible;
+    }
+  </style>
+
 </head>
 <body class="hold-transition skin-green-light sidebar-mini">
   <div class="wrapper">
@@ -240,7 +256,7 @@ $surveilans = strtolower($data['jenis_surveilans']);
                 ?>
 
                 <!-- Box Comment -->
-                <div class="box box-widget collapsed-box">
+                <div class="box box-widget">
                   <div class="box-header">
                     <!-- <div class="user-block"> -->
                     <span class="username" style="font-size: 20px; color:#72afd2; text-decoration:underline;"><strong>CATATAN MEDIS&nbsp</strong></span>
@@ -248,7 +264,7 @@ $surveilans = strtolower($data['jenis_surveilans']);
                     <!-- </div> -->
                     <!-- /.user-block -->
                     <div class="box-tools">
-                      <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-plus"></i></button>
+                      <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
                     </div>
                     <!-- /.box-tools -->
                   </div>
@@ -280,9 +296,39 @@ $surveilans = strtolower($data['jenis_surveilans']);
                       <div class="col-md-4">
                         <h4 style="color: #689999;"><strong>Riwayat Pemakaian Ruangan</strong></h4>
                       </div>
+
+                      <?php
+
+                      $tgl = mysqli_fetch_array(mysqli_query($conn, "SELECT pr.tanggal_keluar_ruangan, pr.jam_keluar, r.nama_ruangan FROM identitas_pasien ip 
+                        JOIN keadaan_pasien kp ON (ip.no_rm = kp.no_rm) 
+                        JOIN pemakaian_ruangan pr ON (pr.id_keadaan = kp.id_keadaan)
+                        JOIN ruangan r ON (pr.kode_ruangan = r.kode_ruangan) WHERE ip.no_rm =$norm ORDER BY pr.tanggal_masuk_ruangan DESC LIMIT 1"));
+
+                      ?>
+
                       <div class="col-md-4">
 
-                        <h4><small><a href="create-new-data-ruangan.php?id=<?php echo $data1['id_keadaan']; ?>"><i class="fa fa-plus-circle margin-r-5"></i>Tambah Pemakaian Ruangan</a></small><h4>
+                      <?php
+
+                      if($tgl['tanggal_keluar_ruangan'] == "0000-00-00" && $tgl['jam_keluar'] == "00:00:00"){ ?>
+
+                        <div class="tooltipsurv">
+                          <h4><small><i class='fa fa-plus-circle margin-r-5'></i>Tambah Pemakaian Ruangan</small><h4>
+                          <span class="tooltiptext">Belum ada konfirmasi tanggal/jam keluar pasien dari ruangan <?php echo $tgl['nama_ruangan']; ?>.</span>                        
+                        </div>
+
+                      <?php
+
+                      } else {
+
+                      ?>
+
+                        <h4><small><a href='create-new-data-ruangan.php?id=<?php echo $data1['id_keadaan']; ?>'><i class='fa fa-plus-circle margin-r-5'></i>Tambah Pemakaian Ruangan</a></small><h4>                                          
+                      <?php
+                      }
+
+                      ?>
+
                       </div>
                     </div><br>
 
@@ -338,17 +384,23 @@ $surveilans = strtolower($data['jenis_surveilans']);
                   <!-- Start Informasi Pemasangan -->
                   <?php
 
-                  // $data3 = mysqli_fetch_array(mysqli_query($conn, "SELECT * FROM surv_iadp WHERE id_keadaan = $data[id_keadaan]"));
+                  $dt3 = mysqli_query($conn, "SELECT * FROM identitas_pasien ip JOIN keadaan_pasien kp ON (ip.no_rm = kp.no_rm) WHERE ip.no_rm =$norm");
 
-                  // while($data3 = mysqli_fetch_array($query)){
+                  while($data3 = mysqli_fetch_array($dt3)){
+
+                    $surveilans = strtolower($data3['jenis_surveilans']);
+
+                    $dt4 = mysqli_query($conn, "SELECT * FROM pemakaian_ruangan pr JOIN surv_$surveilans sv ON (pr.id_pemakaian_ruangan = sv.id_pemakaian_ruangan) WHERE pr.id_keadaan = $data3[id_keadaan]");
+
+                    while($data4 = mysqli_fetch_array($dt4)){
 
                   ?>
                   
 
                   <div id="konten-surveilans">
                   </div>
-
                   <hr>
+                  <?php } } ?>
                 </div>
                 <!-- /.End Informasi Pemasangan -->
 
@@ -462,7 +514,7 @@ $surveilans = strtolower($data['jenis_surveilans']);
 
 <script>
   $(document).ready(function(){
-      $("#konten-surveilans").load("content/read-riwayat-<?php echo $surveilans; ?>.php?id=<?php echo $data['id_pemakaian_ruangan']; ?>");
+      $("#konten-surveilans").load("content/read-riwayat-<?php echo $surveilans; ?>.php?id=<?php echo $data4[' id_surv']; ?>");
   });
 
   $(function () {

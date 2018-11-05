@@ -2,30 +2,35 @@
 
 include("../connect/connect.php");
 $id=$_GET['id'];
-$query = mysqli_query($conn, "SELECT * FROM surv_iadp WHERE id_pemakaian_ruangan = $id");
+$query = mysqli_fetch_array(mysqli_query($conn, "SELECT * FROM surv_iadp WHERE id_pemakaian_ruangan = $id LIMIT 1"));
 
-while($row = mysqli_fetch_array($query)){
+// while($row = mysqli_fetch_array($query)){
 
 ?>
 
 <br>
-<strong><i class="fa fa-medkit margin-r-5"></i> Jenis Pemasangan : </strong><?php echo $row['jenis_invasif'] ?><br><br>
+<strong><i class="fa fa-medkit margin-r-5"></i> Jenis Pemasangan : </strong><?php echo $query['jenis_invasif'] ?><br><br>
 <strong><i class="fa fa-medkit margin-r-5"></i> Jenis Surveilans : </strong>IADP<br><br>
-<strong><i class="fa fa-medkit margin-r-5"></i> Tujuan Pemasangan : </strong><?php echo $row['tujuan_pemasangan'] ?><br><br>
+<strong><i class="fa fa-medkit margin-r-5"></i> Tujuan Pemasangan : </strong><?php echo $query['tujuan_pemasangan'] ?><br><br>
 
 <div class="row">
   <div class="col-md-4">
     <h4 style="color: #689999;"><strong>Riwayat Pemasangan</strong></h4>
   </div>
+
+  <?php if($row['tanggal_keluar'] == "0000-00-00") ?>
+
   <div class="col-md-4">
     <h4><small><a href="create-surveilans-iadp.php?id=<?php echo $row['id_surv']; ?>"><i class="fa fa-plus-circle margin-r-5"></i>Tambah Pemasangan</a></small><h4>
   </div>
+
 </div><br>
 
 <table id="example1" class="table table-bordered table-striped">
   <thead>
     <tr>
-      <th>Lokasi</th>
+      <th>Ruangan</th>
+      <th>Lokasi Pasang</th>
       <th>Tanggal Pasang</th>
       <th>Tanggal Lepas</th>
       <th>Total Hari</th>
